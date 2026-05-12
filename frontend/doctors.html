@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Doctor – HEALIX</title>
+<meta name="description" content="Consult verified doctors online. Book appointments with India's best specialists on HEALIX.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="location.css">
+<style>
+/* ===== DOCTORS PAGE ===== */
+.doc-hero {
+  padding: 70px 5% 50px;
+  background: linear-gradient(135deg, #EFF6FF 0%, #F5F3FF 50%, #F0FDF4 100%);
+  position: relative; overflow: hidden;
+}
+.doc-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(37,99,235,0.08), transparent);
+  pointer-events: none;
+}
+.doc-hero-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+.doc-hero-h1 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(32px, 4vw, 52px); font-weight: 900;
+  letter-spacing: -1.5px; color: #0F172A; margin-bottom: 12px;
+}
+.doc-hero-sub { font-size: 17px; color: #64748B; margin-bottom: 36px; max-width: 560px; }
+
+/* SPECIALTIES FILTER */
+.specialties-wrap {
+  max-width: 1200px; margin: 0 auto; padding: 30px 5% 10px;
+}
+.spec-scroll {
+  display: flex; gap: 10px; overflow-x: auto; padding-bottom: 8px;
+  scrollbar-width: none;
+}
+.spec-scroll::-webkit-scrollbar { display: none; }
+.spec-chip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 18px; border-radius: 40px;
+  background: white; border: 1.5px solid #E2E8F0;
+  font-size: 14px; font-weight: 600; cursor: pointer;
+  transition: all 0.25s; white-space: nowrap; color: #475569;
+}
+.spec-chip:hover { border-color: #2563EB; color: #2563EB; background: #EFF6FF; }
+.spec-chip.active { background: #2563EB; color: white; border-color: #2563EB; }
+
+/* SEARCH BAR */
+.doc-search-wrap {
+  display: flex; gap: 12px; max-width: 560px;
+  background: white; border: 2px solid #E2E8F0; border-radius: 16px;
+  padding: 8px 8px 8px 16px; align-items: center; margin-bottom: 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+.doc-search-wrap:focus-within { border-color: #2563EB; }
+.doc-search-input {
+  flex: 1; border: none; outline: none; font-size: 15px;
+  background: transparent; font-family: inherit; color: #0F172A;
+}
+.doc-search-btn {
+  background: #2563EB; color: white; border: none;
+  padding: 10px 20px; border-radius: 10px; font-weight: 700;
+  font-size: 14px; cursor: pointer; transition: 0.2s;
+}
+.doc-search-btn:hover { background: #1D4ED8; }
+
+/* DOCTORS GRID */
+.docs-wrap { max-width: 1200px; margin: 0 auto; padding: 24px 5% 60px; }
+.docs-toolbar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+}
+.docs-count { font-size: 14px; color: #64748B; font-weight: 600; }
+.docs-count strong { color: #0F172A; }
+.docs-sort {
+  background: #F8FAFC; border: 1.5px solid #E2E8F0; color: #0F172A;
+  padding: 9px 14px; border-radius: 10px; font-size: 14px; font-weight: 600;
+  cursor: pointer; outline: none;
+}
+
+.docs-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;
+}
+
+/* DOCTOR CARD */
+.doc-list-card {
+  background: white; border-radius: 22px; border: 1.5px solid #E2E8F0;
+  overflow: hidden; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  display: flex; flex-direction: column;
+}
+.doc-list-card:hover { transform: translateY(-6px); box-shadow: 0 24px 50px rgba(0,0,0,0.12); border-color: #2563EB; }
+.doc-card-top {
+  background: linear-gradient(135deg, #EFF6FF, #F5F3FF);
+  padding: 24px; display: flex; align-items: center; gap: 16px;
+}
+.doc-av-circle {
+  width: 68px; height: 68px; border-radius: 50%;
+  background: linear-gradient(135deg, #2563EB, #7C3AED);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px; flex-shrink: 0;
+  box-shadow: 0 8px 24px rgba(37,99,235,0.3);
+}
+.doc-card-info h4 { font-size: 16px; font-weight: 800; color: #0F172A; margin-bottom: 3px; }
+.doc-card-spec { font-size: 13px; color: #2563EB; font-weight: 700; margin-bottom: 4px; }
+.doc-card-exp { font-size: 12px; color: #64748B; font-weight: 500; }
+.doc-verified-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: #D1FAE5; color: #065F46; font-size: 11px; font-weight: 700;
+  padding: 3px 8px; border-radius: 20px; margin-top: 4px;
+}
+
+.doc-card-bottom { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.doc-card-meta { display: flex; justify-content: space-between; align-items: center; }
+.doc-rating-row { display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; }
+.doc-rating-row .stars { color: #F59E0B; }
+.doc-reviews { color: #94A3B8; font-size: 12px; }
+.doc-fee { font-size: 14px; font-weight: 800; color: #0F172A; }
+.doc-fee span { font-size: 11px; color: #64748B; font-weight: 500; }
+.doc-avail-row {
+  font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 12px; border-radius: 10px; background: #F8FAFC;
+}
+.avail-dot { width: 8px; height: 8px; border-radius: 50%; }
+.avail-dot.green { background: #10B981; }
+.avail-dot.yellow { background: #F59E0B; }
+.doc-book-btn {
+  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  color: white; border: none; padding: 13px;
+  border-radius: 12px; font-weight: 800; font-size: 14px;
+  cursor: pointer; width: 100%; transition: all 0.3s;
+  margin-top: auto;
+}
+.doc-book-btn:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(37,99,235,0.4); }
+
+/* BOOKING MODAL */
+.book-modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(8px); display: none; justify-content: center;
+  align-items: center; z-index: 9000; animation: fadeIn 0.2s;
+}
+.book-modal-overlay.open { display: flex; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.book-modal {
+  background: white; border-radius: 28px; padding: 36px;
+  width: 100%; max-width: 480px; margin: 20px;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.25);
+  animation: slideUp 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+@keyframes slideUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform:translateY(0); } }
+.book-modal h2 { font-size: 22px; font-weight: 900; margin-bottom: 4px; color: #0F172A; }
+.book-modal .book-sub { color: #64748B; font-size: 14px; margin-bottom: 24px; }
+.book-doc-head {
+  display: flex; gap: 14px; align-items: center;
+  background: linear-gradient(135deg, #EFF6FF, #F5F3FF);
+  border-radius: 16px; padding: 16px; margin-bottom: 24px;
+}
+.book-doc-av { font-size: 38px; }
+.book-doc-name { font-size: 16px; font-weight: 800; color: #0F172A; }
+.book-doc-spec { font-size: 13px; color: #2563EB; font-weight: 600; }
+.form-row { margin-bottom: 16px; }
+.form-row label { display: block; font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 6px; }
+.form-row input, .form-row select, .form-row textarea {
+  width: 100%; padding: 12px 14px; border: 1.5px solid #E2E8F0;
+  border-radius: 12px; font-size: 14px; font-family: inherit;
+  outline: none; transition: 0.2s; background: #F8FAFC; color: #0F172A;
+}
+.form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+  border-color: #2563EB; background: white;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+}
+.form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.book-actions { display: flex; gap: 12px; margin-top: 24px; }
+.book-cancel-btn {
+  flex: 1; background: #F8FAFC; border: 1.5px solid #E2E8F0;
+  padding: 13px; border-radius: 12px; font-weight: 700; font-size: 14px;
+  cursor: pointer; transition: 0.2s;
+}
+.book-cancel-btn:hover { background: #F1F5F9; }
+.book-confirm-btn {
+  flex: 2; background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  color: white; border: none; padding: 13px; border-radius: 12px;
+  font-weight: 800; font-size: 14px; cursor: pointer; transition: all 0.3s;
+}
+.book-confirm-btn:hover { box-shadow: 0 10px 30px rgba(37,99,235,0.4); transform: scale(1.01); }
+
+/* SUCCESS MODAL */
+.success-modal {
+  background: white; border-radius: 28px; padding: 40px; text-align: center;
+  width: 100%; max-width: 400px; margin: 20px;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.25);
+  animation: slideUp 0.35s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.success-icon { font-size: 64px; margin-bottom: 16px; }
+.success-modal h2 { font-size: 24px; font-weight: 900; color: #0F172A; margin-bottom: 8px; }
+.success-modal p { color: #64748B; font-size: 15px; margin-bottom: 24px; line-height: 1.6; }
+.success-close-btn {
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: white; border: none; padding: 14px 36px; border-radius: 14px;
+  font-weight: 800; font-size: 15px; cursor: pointer; transition: 0.2s;
+}
+.success-close-btn:hover { transform: scale(1.03); }
+
+/* NIGHT MODE */
+body.night .doc-hero { background: linear-gradient(135deg, #050810, #0F1B4D, #0a1a20); }
+body.night .doc-hero-h1 { color: #F8FAFC; }
+body.night .spec-chip { background: #111827; border-color: #1E293B; color: #94A3B8; }
+body.night .spec-chip:hover { border-color: #2563EB; color: #60A5FA; background: #1E293B; }
+body.night .spec-chip.active { background: #2563EB; color: white; }
+body.night .doc-search-wrap { background: #111827; border-color: #1E293B; }
+body.night .doc-search-input { color: #F8FAFC; }
+body.night .doc-list-card { background: #0D1117; border-color: #1E293B; }
+body.night .doc-card-top { background: linear-gradient(135deg, #0F1B4D, #1a0030); }
+body.night .doc-card-info h4 { color: #F8FAFC; }
+body.night .doc-card-bottom { background: #0D1117; }
+body.night .doc-avail-row { background: #111827; }
+body.night .doc-fee { color: #F8FAFC; }
+body.night .docs-count strong { color: #F8FAFC; }
+body.night .docs-sort { background: #111827; border-color: #1E293B; color: #F8FAFC; }
+body.night .book-modal { background: #111827; }
+body.night .book-modal h2 { color: #F8FAFC; }
+body.night .book-doc-head { background: linear-gradient(135deg, #0F1B4D, #1a0030); }
+body.night .book-doc-name { color: #F8FAFC; }
+body.night .form-row input, body.night .form-row select, body.night .form-row textarea {
+  background: #1E293B; border-color: #334155; color: #F8FAFC;
+}
+body.night .book-cancel-btn { background: #1E293B; border-color: #334155; color: #F8FAFC; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <div class="logo" onclick="location.href='pharmacy.html'">🏥 <span class="logo-healix">HEALIX</span><span class="logo-pill">Rx</span></div>
+    <div class="nav-links">
+      <a href="pharmacy.html" class="navlink">Medicines</a>
+      <a href="labtests.html" class="navlink">Lab Tests</a>
+      <a href="doctors.html" class="navlink active">Doctors</a>
+      <a href="category.html?type=ayurveda" class="navlink">Ayurveda</a>
+    </div>
+    <div class="nav-right">
+      <button class="delivery-pill" id="deliveryPill" onclick="openLocModal()" style="display:flex;align-items:center;gap:8px;background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:14px;padding:7px 14px;cursor:pointer;font-family:inherit;transition:all 0.2s;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div style="text-align:left">
+          <div style="font-size:10px;color:#64748B;font-weight:700;text-transform:uppercase;line-height:1">Deliver to</div>
+          <div style="font-size:13px;font-weight:800;color:#0F172A;line-height:1.3" id="navLocText">Select Location</div>
+        </div>
+      </button>
+      <a href="cart.html" class="cart-icon-btn">
+        <i data-lucide="shopping-cart"></i>
+        <span id="cart-count" class="cart-badge">0</span>
+      </a>
+      <button class="login-pill"><i data-lucide="user" style="width:15px"></i> Login</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="doc-hero">
+  <div class="doc-hero-inner">
+    <h1 class="doc-hero-h1">👨‍⚕️ Book a Verified Doctor</h1>
+    <p class="doc-hero-sub">Consult India's top specialists online or at your nearest clinic. Same-day appointments available.</p>
+    <div class="doc-search-wrap">
+      <input type="text" id="doctor-search" class="doc-search-input" placeholder="Search by doctor name or specialty…" oninput="filterDoctors()">
+      <button class="doc-search-btn" onclick="filterDoctors()">Search</button>
+    </div>
+  </div>
+</div>
+
+<!-- SPECIALTIES -->
+<div class="specialties-wrap">
+  <div class="spec-scroll" id="spec-scroll">
+    <div class="spec-chip active" onclick="filterBySpec('All', this)">🏥 All Doctors</div>
+    <div class="spec-chip" onclick="filterBySpec('Cardiology', this)">🫀 Cardiology</div>
+    <div class="spec-chip" onclick="filterBySpec('Endocrinology', this)">🩸 Diabetology</div>
+    <div class="spec-chip" onclick="filterBySpec('General Physician', this)">🩺 General Physician</div>
+    <div class="spec-chip" onclick="filterBySpec('Dermatology', this)">✨ Dermatology</div>
+    <div class="spec-chip" onclick="filterBySpec('Orthopedics', this)">🦴 Orthopedics</div>
+    <div class="spec-chip" onclick="filterBySpec('Neurology', this)">🧠 Neurology</div>
+    <div class="spec-chip" onclick="filterBySpec('Pediatrics', this)">👶 Pediatrics</div>
+    <div class="spec-chip" onclick="filterBySpec('Gynecology', this)">👩‍⚕️ Gynecology</div>
+    <div class="spec-chip" onclick="filterBySpec('Psychiatry', this)">🧘 Psychiatry</div>
+    <div class="spec-chip" onclick="filterBySpec('ENT', this)">👂 ENT</div>
+    <div class="spec-chip" onclick="filterBySpec('Ophthalmology', this)">👁️ Ophthalmology</div>
+  </div>
+</div>
+
+<!-- DOCS GRID -->
+<div class="docs-wrap">
+  <div class="docs-toolbar">
+    <span class="docs-count" id="docs-count">Loading doctors...</span>
+    <select class="docs-sort" id="docs-sort" onchange="applySort()">
+      <option value="">Sort: Most Relevant</option>
+      <option value="fee-low">Fee: Low → High</option>
+      <option value="fee-high">Fee: High → Low</option>
+      <option value="rating">Rating: Highest</option>
+      <option value="exp">Experience: Most</option>
+    </select>
+  </div>
+  <div class="docs-grid" id="docs-grid">
+    <!-- Skeleton placeholders -->
+    <div class="doc-list-card" style="opacity:0.4;pointer-events:none"><div class="doc-card-top" style="height:120px;background:linear-gradient(90deg,#f0f4f8 25%,#e4ecf4 50%,#f0f4f8 75%);background-size:400% 100%;animation:shimSkel 1.8s infinite"></div></div>
+    <div class="doc-list-card" style="opacity:0.4;pointer-events:none"><div class="doc-card-top" style="height:120px;background:linear-gradient(90deg,#f0f4f8 25%,#e4ecf4 50%,#f0f4f8 75%);background-size:400% 100%;animation:shimSkel 1.8s infinite"></div></div>
+    <div class="doc-list-card" style="opacity:0.4;pointer-events:none"><div class="doc-card-top" style="height:120px;background:linear-gradient(90deg,#f0f4f8 25%,#e4ecf4 50%,#f0f4f8 75%);background-size:400% 100%;animation:shimSkel 1.8s infinite"></div></div>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="book-modal-overlay" id="bookModal">
+  <div class="book-modal" id="bookModalInner">
+    <h2>📋 Book Appointment</h2>
+    <p class="book-sub">Fill in your details to confirm your consultation</p>
+    <div class="book-doc-head">
+      <div class="book-doc-av" id="modal-doc-av">👨‍⚕️</div>
+      <div>
+        <div class="book-doc-name" id="modal-doc-name">Dr. Name</div>
+        <div class="book-doc-spec" id="modal-doc-spec">Specialty</div>
+      </div>
+    </div>
+    <div class="form-2col">
+      <div class="form-row">
+        <label>Your Name *</label>
+        <input type="text" id="patient-name" placeholder="Full name">
+      </div>
+      <div class="form-row">
+        <label>Phone *</label>
+        <input type="tel" id="patient-phone" placeholder="+91 XXXXX XXXXX">
+      </div>
+    </div>
+    <div class="form-2col">
+      <div class="form-row">
+        <label>Date *</label>
+        <input type="date" id="appt-date">
+      </div>
+      <div class="form-row">
+        <label>Time Slot *</label>
+        <select id="appt-time">
+          <option value="">Select time</option>
+          <option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option>
+          <option>12:00 PM</option><option>2:00 PM</option><option>3:00 PM</option>
+          <option>4:00 PM</option><option>5:00 PM</option><option>6:00 PM</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Consultation Type</label>
+      <select id="consult-type">
+        <option value="online">🖥️ Online (Video Call)</option>
+        <option value="clinic">🏥 In-Clinic Visit</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Describe your concern (optional)</label>
+      <textarea id="patient-concern" rows="3" placeholder="e.g. I have been experiencing chest pain for 2 days..."></textarea>
+    </div>
+    <div class="book-actions">
+      <button class="book-cancel-btn" onclick="closeBookModal()">Cancel</button>
+      <button class="book-confirm-btn" onclick="confirmBooking()">✅ Confirm Appointment</button>
+    </div>
+  </div>
+
+  <!-- Success State (hidden initially) -->
+  <div class="success-modal" id="successModal" style="display:none">
+    <div class="success-icon">✅</div>
+    <h2>Appointment Confirmed!</h2>
+    <p id="success-text">Your appointment with <strong>Dr. Name</strong> has been booked for <strong>Tomorrow at 10:00 AM</strong>. You'll receive a confirmation SMS shortly.</p>
+    <button class="success-close-btn" onclick="closeBookModal()">Done 🎉</button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<style>
+@keyframes shimSkel { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+</style>
+
+<script>
+const API_URL = 'http://localhost:5000';
+
+// All doctors from API + local fallback
+const FALLBACK_DOCTORS = [
+  { name: "Dr. Arjun Mehta", specialty: "Cardiology", exp: "15 years", rating: 4.9, reviews: 312, fee: 600, avatar: "👨‍⚕️", avail: "Available Today", avail_green: true },
+  { name: "Dr. Priya Sharma", specialty: "Endocrinology", exp: "8 years", rating: 4.8, reviews: 198, fee: 500, avatar: "👩‍⚕️", avail: "Available Today", avail_green: true },
+  { name: "Dr. Rahul Singh", specialty: "General Physician", exp: "15 years", rating: 4.7, reviews: 421, fee: 400, avatar: "👨‍⚕️", avail: "Next: 2 PM", avail_green: false },
+  { name: "Dr. Anita Patel", specialty: "Dermatology", exp: "10 years", rating: 4.9, reviews: 267, fee: 550, avatar: "👩‍⚕️", avail: "Available Today", avail_green: true },
+  { name: "Dr. Sanya Iyer", specialty: "Neurology", exp: "10 years", rating: 4.8, reviews: 156, fee: 700, avatar: "👩‍⚕️", avail: "Next: 4 PM", avail_green: false },
+  { name: "Dr. Rohan Sharma", specialty: "Orthopedics", exp: "12 years", rating: 4.6, reviews: 289, fee: 600, avatar: "👨‍⚕️", avail: "Available Today", avail_green: true },
+  { name: "Dr. Ananya Gupta", specialty: "Pediatrics", exp: "8 years", rating: 4.9, reviews: 445, fee: 450, avatar: "👩‍⚕️", avail: "Available Today", avail_green: true },
+  { name: "Dr. Kabir Khan", specialty: "Psychiatry", exp: "14 years", rating: 4.7, reviews: 178, fee: 800, avatar: "👨‍⚕️", avail: "Next: 5 PM", avail_green: false },
+  { name: "Dr. Ishani Roy", specialty: "Ophthalmology", exp: "9 years", rating: 4.8, reviews: 220, fee: 520, avatar: "👩‍⚕️", avail: "Available Today", avail_green: true },
+  { name: "Dr. Kunal Sen", specialty: "General Physician", exp: "16 years", rating: 4.5, reviews: 398, fee: 350, avatar: "👨‍⚕️", avail: "Available Today", avail_green: true },
+  { name: "Dr. Zara Sheikh", specialty: "ENT", exp: "10 years", rating: 4.7, reviews: 143, fee: 580, avatar: "👩‍⚕️", avail: "Available Today", avail_green: true },
+  { name: "Dr. Ritu Malik", specialty: "Gynecology", exp: "15 years", rating: 4.9, reviews: 512, fee: 650, avatar: "👩‍⚕️", avail: "Next: 3 PM", avail_green: false },
+  { name: "Dr. Sahil Kapur", specialty: "Cardiology", exp: "12 years", rating: 4.6, reviews: 197, fee: 700, avatar: "👨‍⚕️", avail: "Available Today", avail_green: true },
+  { name: "Dr. Vikram Singh", specialty: "Dermatology", exp: "20 years", rating: 4.9, reviews: 621, fee: 900, avatar: "👨‍⚕️", avail: "Next: 6 PM", avail_green: false },
+  { name: "Dr. Tanya Bajaj", specialty: "Pediatrics", exp: "8 years", rating: 4.7, reviews: 334, fee: 420, avatar: "👩‍⚕️", avail: "Available Today", avail_green: true },
+  { name: "Dr. Abhay Joshi", specialty: "Orthopedics", exp: "19 years", rating: 4.8, reviews: 289, fee: 750, avatar: "👨‍⚕️", avail: "Next: 11 AM", avail_green: false },
+];
+
+let allDoctors = [...FALLBACK_DOCTORS];
+let currentFilter = 'All';
+let currentSearch = '';
+
+async function loadDoctors() {
+  try {
+    const res = await fetch(`${API_URL}/doctors`);
+    if (!res.ok) throw new Error('API Error');
+    const data = await res.json();
+    if (data && data.length > 0) {
+      // Map API format to our card format
+      allDoctors = data.map(d => ({
+        name: d.name,
+        specialty: d.specialty,
+        exp: d.exp,
+        rating: d.rating || 4.5 + (Math.random() * 0.4),
+        reviews: Math.floor(Math.random() * 400) + 100,
+        fee: d.fees || 500,
+        avatar: Math.random() > 0.5 ? '👨‍⚕️' : '👩‍⚕️',
+        avail: Math.random() > 0.5 ? 'Available Today' : 'Next: 2 PM',
+        avail_green: Math.random() > 0.5,
+      }));
+    }
+  } catch (e) {
+    console.log('Using local doctor data');
+  }
+  renderDoctors(allDoctors);
+
+  // Handle pre-book from pharmacy page
+  const bookParam = new URLSearchParams(window.location.search).get('book');
+  if (bookParam) {
+    const d = allDoctors.find(doc => doc.name === decodeURIComponent(bookParam));
+    if (d) setTimeout(() => openBookModal(d), 500);
+  }
+}
+
+function filterDoctors() {
+  const q = document.getElementById('doctor-search').value.trim().toLowerCase();
+  currentSearch = q;
+  applyFilters();
+}
+
+function filterBySpec(spec, el) {
+  document.querySelectorAll('.spec-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter = spec;
+  applyFilters();
+}
+
+function applyFilters() {
+  let docs = [...allDoctors];
+  if (currentFilter !== 'All') {
+    docs = docs.filter(d => d.specialty.toLowerCase().includes(currentFilter.toLowerCase()));
+  }
+  if (currentSearch) {
+    docs = docs.filter(d =>
+      d.name.toLowerCase().includes(currentSearch) ||
+      d.specialty.toLowerCase().includes(currentSearch)
+    );
+  }
+  renderDoctors(docs);
+}
+
+function applySort() {
+  const val = document.getElementById('docs-sort').value;
+  let docs = [...allDoctors];
+  if (currentFilter !== 'All') docs = docs.filter(d => d.specialty.toLowerCase().includes(currentFilter.toLowerCase()));
+  if (currentSearch) docs = docs.filter(d => d.name.toLowerCase().includes(currentSearch) || d.specialty.toLowerCase().includes(currentSearch));
+
+  if (val === 'fee-low') docs.sort((a,b) => a.fee - b.fee);
+  else if (val === 'fee-high') docs.sort((a,b) => b.fee - a.fee);
+  else if (val === 'rating') docs.sort((a,b) => b.rating - a.rating);
+  else if (val === 'exp') docs.sort((a,b) => parseInt(b.exp) - parseInt(a.exp));
+  renderDoctors(docs);
+}
+
+function renderDoctors(docs) {
+  const grid = document.getElementById('docs-grid');
+  document.getElementById('docs-count').innerHTML = `Showing <strong>${docs.length} doctors</strong>`;
+
+  if (docs.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:80px 20px;color:#64748B">
+      <div style="font-size:48px;margin-bottom:16px">🔍</div>
+      <h3 style="font-size:20px;font-weight:800;color:#0F172A;margin-bottom:8px">No doctors found</h3>
+      <p>Try a different specialty or search term.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = '';
+  docs.forEach(doc => {
+    const card = document.createElement('div');
+    card.className = 'doc-list-card';
+    card.innerHTML = `
+      <div class="doc-card-top">
+        <div class="doc-av-circle">${doc.avatar}</div>
+        <div class="doc-card-info">
+          <h4>${doc.name}</h4>
+          <div class="doc-card-spec">${doc.specialty}</div>
+          <div class="doc-card-exp">${doc.exp} experience</div>
+          <div class="doc-verified-badge">✔ HEALIX Verified</div>
+        </div>
+      </div>
+      <div class="doc-card-bottom">
+        <div class="doc-card-meta">
+          <div class="doc-rating-row">
+            <span class="stars">⭐</span>
+            <strong>${doc.rating.toFixed(1)}</strong>
+            <span class="doc-reviews">(${doc.reviews} reviews)</span>
+          </div>
+          <div class="doc-fee">₹${doc.fee} <span>/ consult</span></div>
+        </div>
+        <div class="doc-avail-row">
+          <div class="avail-dot ${doc.avail_green ? 'green' : 'yellow'}"></div>
+          ${doc.avail}
+        </div>
+        <button class="doc-book-btn" onclick='openBookModal(${JSON.stringify(doc).replace(/'/g, "&#39;")})'>
+          Book Appointment
+        </button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// BOOKING MODAL
+let selectedDoctor = null;
+
+function openBookModal(doctor) {
+  selectedDoctor = doctor;
+  document.getElementById('modal-doc-av').innerText = doctor.avatar || '👨‍⚕️';
+  document.getElementById('modal-doc-name').innerText = doctor.name;
+  document.getElementById('modal-doc-spec').innerText = `${doctor.specialty} • ₹${doctor.fee}/consult`;
+  document.getElementById('bookModalInner').style.display = 'block';
+  document.getElementById('successModal').style.display = 'none';
+  document.getElementById('bookModal').classList.add('open');
+
+  // Set min date to today
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('appt-date').min = today;
+  document.getElementById('appt-date').value = '';
+}
+
+function closeBookModal() {
+  document.getElementById('bookModal').classList.remove('open');
+  selectedDoctor = null;
+}
+
+document.getElementById('bookModal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('bookModal')) closeBookModal();
+});
+
+async function confirmBooking() {
+  const name = document.getElementById('patient-name').value.trim();
+  const phone = document.getElementById('patient-phone').value.trim();
+  const date = document.getElementById('appt-date').value;
+  const time = document.getElementById('appt-time').value;
+
+  if (!name) return showToast('⚠️ Please enter your name');
+  if (!phone) return showToast('⚠️ Please enter your phone number');
+  if (!date) return showToast('⚠️ Please select a date');
+  if (!time) return showToast('⚠️ Please select a time slot');
+
+  const btn = document.querySelector('.book-confirm-btn');
+  btn.innerHTML = '⏳ Confirming...';
+  btn.disabled = true;
+
+  try {
+    // Save to backend
+    await fetch(`${API_URL}/api/doctor/appointments`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        doctor: selectedDoctor?.name,
+        specialty: selectedDoctor?.specialty,
+        patient: name,
+        phone,
+        date,
+        time,
+        type: document.getElementById('consult-type').value,
+        concern: document.getElementById('patient-concern').value,
+        fee: selectedDoctor?.fee
+      })
+    }).catch(() => {}); // Silent fail — still show success UI
+  } catch(e) {}
+
+  // Show success
+  document.getElementById('bookModalInner').style.display = 'none';
+  const dateStr = new Date(date).toLocaleDateString('en-IN', { weekday:'long', month:'short', day:'numeric' });
+  document.getElementById('success-text').innerHTML =
+    `Your appointment with <strong>${selectedDoctor?.name || 'Doctor'}</strong> has been booked for <strong>${dateStr} at ${time}</strong>. You'll receive a confirmation SMS on ${phone} shortly.`;
+  document.getElementById('successModal').style.display = 'block';
+
+  btn.innerHTML = '✅ Confirm Appointment';
+  btn.disabled = false;
+}
+
+// Cart badge
+function updateCartBadge() {
+  const cart = JSON.parse(localStorage.getItem('healix_cart')) || [];
+  const count = cart.reduce((s,i) => s + i.qty, 0);
+  const el = document.getElementById('cart-count');
+  if (el) el.innerText = count;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.innerText = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+window.onload = () => {
+  loadDoctors();
+  updateCartBadge();
+  lucide.createIcons();
+};
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeBookModal();
+});
+</script>
+<script>if(localStorage.getItem("theme")==="night"){document.body.classList.add("night");}</script>
+<script src="location.js"></script>
+</body>
+</html>

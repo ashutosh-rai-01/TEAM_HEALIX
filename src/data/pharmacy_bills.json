@@ -1,0 +1,49 @@
+[
+  {
+    "items": [
+      {
+        "id": "1",
+        "name": "Accu-Chek Active Test Strips",
+        "price": 981,
+        "image": "https://cdn.1mg.com/uploads/medicine_image/Accu-Chek-Active.jpg",
+        "quantity": 1
+      },
+      {
+        "id": "2",
+        "name": "Ensure Diabetes Care Vanilla",
+        "price": 1852,
+        "image": "https://onemg.gumlet.io/l_watermark_346,w_120,h_120/a_ignore,w_380,h_380,c_fit,q_auto,f_auto/6e6de9a5aa204a3f8c990beb666d0023.jpg",
+        "quantity": 1
+      },
+      {
+        "id": "3",
+        "name": "Glycomet 500mg Tablets",
+        "price": 35,
+        "image": "https://onemg.gumlet.io/l_watermark_346,w_120,h_120/a_ignore,w_380,h_380,c_fit,q_auto,f_auto/6e6de9a5aa204a3f8c990beb666d0023.jpg",
+        "quantity": 1
+      },
+      {
+        "id": "4",
+        "name": "Januvia 100mg Tablets",
+        "price": 2099,
+        "image": "https://onemg.gumlet.io/l_watermark_346,w_120,h_120/a_ignore,w_380,h_380,c_fit,q_auto,f_auto/6e6de9a5aa204a3f8c990beb666d0023.jpg",
+        "quantity": 1
+      },
+      {
+        "id": "6",
+        "name": "Diabecon DS Himalaya",
+        "price": 175,
+        "image": "https://onemg.gumlet.io/l_watermark_346,w_120,h_120/a_ignore,w_380,h_380,c_fit,q_auto,f_auto/6e6de9a5aa204a3f8c990beb666d0023.jpg",
+        "quantity": 2
+      }
+    ],
+    "total": 5955.040000000001,
+    "paymentMethod": "cod",
+    "customer": {
+      "email": "palakrai567@gmail.com",
+      "phone": "6264596395"
+    },
+    "id": "BILL1001",
+    "timestamp": "2026-04-09T18:33:43.884907"
+  }
+]

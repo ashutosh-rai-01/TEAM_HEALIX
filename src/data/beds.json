@@ -1,0 +1,92 @@
+[
+  {
+    "bedId": "ICU-101",
+    "ward": "ICU Ward",
+    "status": "Available",
+    "assignedPatientId": null
+  },
+  {
+    "bedId": "ICU-102",
+    "ward": "ICU Ward",
+    "status": "Occupied",
+    "assignedPatientId": "PAT1026"
+  },
+  {
+    "bedId": "ICU-103",
+    "ward": "ICU Ward",
+    "status": "Available",
+    "assignedPatientId": null
+  },
+  {
+    "bedId": "ICU-104",
+    "ward": "ICU Ward",
+    "status": "Available",
+    "assignedPatientId": null
+  },
+  {
+    "bedId": "ICU-105",
+    "ward": "ICU Ward",
+    "status": "Occupied",
+    "assignedPatientId": "PAT1031"
+  },
+  {
+    "bedId": "GEN-106",
+    "ward": "General Ward",
+    "status": "Occupied",
+    "assignedPatientId": "PAT1018"
+  },
+  {
+    "bedId": "GEN-107",
+    "ward": "General Ward",
+    "status": "Available",
+    "assignedPatientId": null
+  },
+  {
+    "bedId": "GEN-108",
+    "ward": "General Ward",
+    "status": "Available",
+    "assignedPatientId": null
+  },
+  {
+    "bedId": "GEN-109",
+    "ward": "General Ward",
+    "status": "Occupied",
+    "assignedPatientId": "PAT1037"
+  },
+  {
+    "bedId": "GEN-110",
+    "ward": "General Ward",
+    "status": "Occupied",
+    "assignedPatientId": "PAT1025"
+  },
+  {
+    "bedId": "GEN-111",
+    "ward": "General Ward",
+    "status": "Available",
+    "assignedPatientId": null
+  },
+  {
+    "bedId": "GEN-112",
+    "ward": "General Ward",
+    "status": "Occupied",
+    "assignedPatientId": "PAT1001"
+  },
+  {
+    "bedId": "GEN-113",
+    "ward": "General Ward",
+    "status": "Occupied",
+    "assignedPatientId": "PAT1039"
+  },
+  {
+    "bedId": "GEN-114",
+    "ward": "General Ward",
+    "status": "Occupied",
+    "assignedPatientId": "PAT1018"
+  },
+  {
+    "bedId": "GEN-115",
+    "ward": "General Ward",
+    "status": "Occupied",
+    "assignedPatientId": "PAT1006"
+  }
+]

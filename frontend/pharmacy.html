@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HEALIX Pharmacy – Medicine, Lab Tests & Doctors</title>
+<meta name="description" content="Order medicines, book lab tests and consult verified doctors. India's most trusted healthcare platform.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="location.css">
+<script src="cart-manager.js"></script>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <div class="logo" onclick="location.href='../index.html'">🏥 <span class="logo-healix">HEALIX</span><span class="logo-pill">Rx</span></div>
+
+    <div class="nav-links">
+      <a href="pharmacy.html" class="navlink active">Medicines</a>
+      <a href="labtests.html" class="navlink">Lab Tests</a>
+      <a href="doctors.html" class="navlink">Doctors</a>
+      <a href="category.html?type=ayurveda" class="navlink">Ayurveda</a>
+      <a href="../health-tracking.html" class="navlink">Health Records</a>
+    </div>
+
+    <div class="nav-right">
+      <button class="delivery-pill" id="deliveryPill" onclick="openLocModal()" style="display:flex;align-items:center;gap:8px;background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:14px;padding:7px 14px;cursor:pointer;font-family:inherit;transition:all 0.2s;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div style="text-align:left">
+          <div style="font-size:10px;color:#64748B;font-weight:700;text-transform:uppercase;line-height:1">Deliver to</div>
+          <div style="font-size:13px;font-weight:800;color:#0F172A;line-height:1.3" id="navLocText">Select Location</div>
+        </div>
+      </button>
+      <a href="cart.html" class="cart-icon-btn">
+        <i data-lucide="shopping-cart"></i>
+        <span id="cart-count" class="cart-badge">0</span>
+      </a>
+      <div id="user-nav-area">
+        <button class="login-pill" onclick="location.href='login.html'"><i data-lucide="user" style="width:15px"></i> Login</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-particles" id="heroParticles"></div>
+  <div class="hero-inner">
+    <!-- LEFT TEXT -->
+    <div class="hero-text">
+      <div class="hero-badge-wrap">
+        <span class="hero-badge">🏆 India's #1 Healthcare Platform</span>
+        <span class="hero-badge-stat">4.9 ⭐ 2M+ Reviews</span>
+      </div>
+      <h1 class="hero-h1">
+        Your Health,<br>
+        Delivered at Your<br>
+        <span class="hero-accent">Doorstep.</span>
+      </h1>
+      <p class="hero-sub">Order genuine medicines, book home lab tests &amp; consult 500+ verified doctors — all from one trusted platform.</p>
+
+      <div class="hero-search-wrap">
+        <div class="search-icon-wrap"><i data-lucide="search" style="width:20px;"></i></div>
+        <input type="text" id="search-med" class="hero-search-input" placeholder="Search medicines, vitamins, lab tests…" onkeyup="filterMeds()">
+        <button class="search-btn" onclick="filterMeds()">Search</button>
+      </div>
+
+      <div class="hero-cta-row">
+        <button class="cta-primary" onclick="scrollToMeds()">
+          <span>💊 Buy Medicines</span>
+          <span class="cta-shimmer"></span>
+        </button>
+        <button class="cta-secondary" onclick="location.href='labtests.html'">🧪 Lab Tests</button>
+        <button class="cta-ghost" onclick="location.href='doctors.html'">👨‍⚕️ Book Doctor</button>
+      </div>
+    </div>
+
+    <!-- RIGHT STATS GLASS CARDS -->
+    <div class="hero-right">
+      <div class="stats-wrap">
+        <div class="stat-card sc1">
+          <div class="stat-icon">📦</div>
+          <div class="stat-num">10K+</div>
+          <div class="stat-label">Orders Delivered Daily</div>
+        </div>
+        <div class="stat-card sc2">
+          <div class="stat-icon">👨‍⚕️</div>
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Verified Doctors</div>
+        </div>
+        <div class="stat-card sc3">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">Support Available</div>
+        </div>
+        <div class="stat-card sc4">
+          <div class="stat-icon">💊</div>
+          <div class="stat-num">50K+</div>
+          <div class="stat-label">Medicine SKUs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK FLAGS -->
+<div class="container">
+  <div class="quick-flags">
+    <div class="flag bg-blue" onclick="scrollToMeds()" style="cursor:pointer"><div class="flag-icon"><i data-lucide="percent"></i></div><div class="flag-text"><span>Get 20%* off on Medicines</span><b>SHOP NOW ↗</b></div></div>
+    <div class="flag bg-purple" onclick="location.href='doctors.html'" style="cursor:pointer"><div class="flag-icon"><i data-lucide="calendar"></i></div><div class="flag-text"><span>Doctor Appointment</span><b>BOOK NOW ↗</b></div></div>
+    <div class="flag bg-orange" onclick="showToast('🛡️ Health Insurance coming soon!')" style="cursor:pointer"><div class="flag-icon"><i data-lucide="shield-check"></i></div><div class="flag-text"><span>Health Insurance</span><b>EXPLORE PLANS ↗</b></div></div>
+    <div class="flag bg-pink" onclick="location.href='labtests.html'" style="cursor:pointer"><div class="flag-icon"><i data-lucide="test-tube-2"></i></div><div class="flag-text"><span>Lab Tests at Home</span><b>BOOK NOW ↗</b></div></div>
+  </div>
+
+  <!-- HEALTH CONDITIONS -->
+  <section class="section-block">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Browse by Health Conditions</h2>
+        <p class="section-sub">Find the right medicines for your specific needs</p>
+      </div>
+    </div>
+    <div class="conditions-grid">
+      <div class="cond-card cc-blue" onclick="setCategory('Diabetes')"><div class="cond-icon">🩸</div><span>Diabetes</span></div>
+      <div class="cond-card cc-red" onclick="setCategory('Cardiac')"><div class="cond-icon">❤️</div><span>Heart Care</span></div>
+      <div class="cond-card cc-orange" onclick="setCategory('Stomach')"><div class="cond-icon">🫃</div><span>Digestive</span></div>
+      <div class="cond-card cc-green" onclick="setCategory('Pain')"><div class="cond-icon">⚡</div><span>Pain Relief</span></div>
+      <div class="cond-card cc-teal" onclick="setCategory('Respiratory')"><div class="cond-icon">🫁</div><span>Respiratory</span></div>
+      <div class="cond-card cc-purple" onclick="setCategory('Cold')"><div class="cond-icon">🤧</div><span>Immunity</span></div>
+      <div class="cond-card cc-indigo" onclick="setCategory('Liver')"><div class="cond-icon">🫀</div><span>Liver Care</span></div>
+      <div class="cond-card cc-pink" onclick="setCategory('ayurveda')"><div class="cond-icon">🌿</div><span>Ayurveda</span></div>
+    </div>
+  </section>
+
+  <!-- VALUE DEALS — HORIZONTAL SCROLL -->
+  <section class="section-block" id="medicine-section">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">🔥 Value Deals at HEALIX</h2>
+        <p class="section-sub">Genuine medicines at the best prices</p>
+      </div>
+      <a href="#" class="view-all">View All →</a>
+    </div>
+    <div id="medicine-grid" class="med-scroll-row">
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+  </section>
+
+  <!-- AI HEALTH TIPS CAROUSEL -->
+  <section class="section-block">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">✨ AI-Powered Health Tips</h2>
+        <p class="section-sub">Personalized insights powered by HEALIX AI</p>
+      </div>
+    </div>
+    <div class="tips-carousel">
+      <div class="tip-card tc1">
+        <div class="tip-glow"></div>
+        <div class="tip-emoji-wrap">💧</div>
+        <div class="tip-content">
+          <h4>Stay Hydrated</h4>
+          <p>Drink 8+ glasses of water daily. Dehydration reduces cognitive performance by 20%.</p>
+          <span class="tip-tag">Wellness</span>
+        </div>
+      </div>
+      <div class="tip-card tc2">
+        <div class="tip-glow"></div>
+        <div class="tip-emoji-wrap">🥦</div>
+        <div class="tip-content">
+          <h4>Eat More Greens</h4>
+          <p>Leafy greens can reduce chronic disease risk by up to 30%. Make them 50% of your plate.</p>
+          <span class="tip-tag">Nutrition</span>
+        </div>
+      </div>
+      <div class="tip-card tc3">
+        <div class="tip-glow"></div>
+        <div class="tip-emoji-wrap">🧘</div>
+        <div class="tip-content">
+          <h4>Manage Stress</h4>
+          <p>10 minutes of mindfulness daily significantly lowers cortisol and improves sleep quality.</p>
+          <span class="tip-tag">Mental Health</span>
+        </div>
+      </div>
+      <div class="tip-card tc4">
+        <div class="tip-glow"></div>
+        <div class="tip-emoji-wrap">😴</div>
+        <div class="tip-content">
+          <h4>Prioritize Sleep</h4>
+          <p>7–9 hours of deep sleep nightly boosts immunity, memory, and metabolism significantly.</p>
+          <span class="tip-tag">Recovery</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOCTORS -->
+  <section class="section-block">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">👨‍⚕️ Top Doctors Near You</h2>
+        <p class="section-sub">Consult with India's best verified specialists</p>
+      </div>
+      <a href="../appointments.html" class="view-all">Book Appointment →</a>
+    </div>
+    <div class="doctors-row">
+      <div class="doc-card">
+        <div class="doc-verified">✔ Verified</div>
+        <div class="doc-avatar">👨‍⚕️</div>
+        <div class="doc-info">
+          <h4>Dr. Arjun Mehta</h4>
+          <p class="doc-spec">🫀 Cardiologist</p>
+          <p class="doc-exp"><strong>12 yrs</strong> experience</p>
+          <div class="doc-rating">⭐ 4.9 &nbsp;•&nbsp; <span>312 reviews</span></div>
+          <div class="doc-avail">🟢 Available Today</div>
+        </div>
+        <button class="doc-btn" onclick="bookDoctor('Dr. Arjun Mehta', 'Cardiology')">Book Now</button>
+      </div>
+      <div class="doc-card">
+        <div class="doc-verified">✔ Verified</div>
+        <div class="doc-avatar">👩‍⚕️</div>
+        <div class="doc-info">
+          <h4>Dr. Priya Sharma</h4>
+          <p class="doc-spec">🩸 Diabetologist</p>
+          <p class="doc-exp"><strong>8 yrs</strong> experience</p>
+          <div class="doc-rating">⭐ 4.8 &nbsp;•&nbsp; <span>198 reviews</span></div>
+          <div class="doc-avail">🟢 Available Today</div>
+        </div>
+        <button class="doc-btn" onclick="bookDoctor('Dr. Priya Sharma', 'Diabetology')">Book Now</button>
+      </div>
+      <div class="doc-card">
+        <div class="doc-verified">✔ Verified</div>
+        <div class="doc-avatar">👨‍⚕️</div>
+        <div class="doc-info">
+          <h4>Dr. Rahul Singh</h4>
+          <p class="doc-spec">🩺 General Physician</p>
+          <p class="doc-exp"><strong>15 yrs</strong> experience</p>
+          <div class="doc-rating">⭐ 4.7 &nbsp;•&nbsp; <span>421 reviews</span></div>
+          <div class="doc-avail">🟡 Next: 2 PM</div>
+        </div>
+        <button class="doc-btn" onclick="bookDoctor('Dr. Rahul Singh', 'General Physician')">Book Now</button>
+      </div>
+      <div class="doc-card">
+        <div class="doc-verified">✔ Verified</div>
+        <div class="doc-avatar">👩‍⚕️</div>
+        <div class="doc-info">
+          <h4>Dr. Anita Patel</h4>
+          <p class="doc-spec">✨ Dermatologist</p>
+          <p class="doc-exp"><strong>10 yrs</strong> experience</p>
+          <div class="doc-rating">⭐ 4.9 &nbsp;•&nbsp; <span>267 reviews</span></div>
+          <div class="doc-avail">🟢 Available Today</div>
+        </div>
+        <button class="doc-btn" onclick="bookDoctor('Dr. Anita Patel', 'Dermatology')">Book Now</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMO BANNER -->
+  <div class="promo-banner">
+    <div class="promo-bg-anim"></div>
+    <div class="promo-text">
+      <div class="promo-eyebrow">🏆 EXCLUSIVE MEMBERSHIP</div>
+      <h2>Get <span>25% OFF</span> with</h2>
+      <h1>HEALIX <em>FAST-PASS</em></h1>
+      <p>Priority delivery • Free consultations • Exclusive discounts on every order</p>
+      <button class="promo-btn" onclick="showToast('🎉 HEALIX Fast-Pass enrollment opening soon!')">Enroll Now — Free for 30 days →</button>
+    </div>
+    <div class="promo-floaters">
+      <div class="pf pf1">💊</div>
+      <div class="pf pf2">🩺</div>
+      <div class="pf pf3">❤️</div>
+      <div class="pf pf4">🧬</div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+<script>
+// ─── NAVIGATION ───────────────────────────────────────────
+function setCategory(cat) {
+  window.location.href = `category.html?type=${cat.toLowerCase()}`;
+}
+
+function scrollToMeds() {
+  document.getElementById('medicine-section').scrollIntoView({behavior:'smooth'});
+}
+
+// ─── BOOK DOCTOR ──────────────────────────────────────────
+function bookDoctor(name, specialty) {
+  // Store appointment intent in session
+  sessionStorage.setItem('book_doctor', name);
+  sessionStorage.setItem('book_specialty', specialty);
+  window.location.href = 'doctors.html?book=' + encodeURIComponent(name);
+}
+
+// ─── SEARCH ───────────────────────────────────────────────
+function filterMeds() {
+  if (typeof allMeds !== 'undefined' && allMeds.length) {
+    const q = document.getElementById('search-med').value.trim().toLowerCase();
+    if (!q) { renderMeds(allMeds); return; }
+    const f = allMeds.filter(m => m.name.toLowerCase().includes(q) || (m.category||'').toLowerCase().includes(q));
+    renderMeds(f.length ? f : allMeds);
+  } else {
+    // Redirect to search if meds not loaded yet
+    const q = document.getElementById('search-med').value.trim();
+    if (q) window.location.href = `category.html?type=${encodeURIComponent(q)}`;
+  }
+}
+
+// ─── SCROLL GLASS ─────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ─── PARTICLES ────────────────────────────────────────────
+(function spawnParticles() {
+  const c = document.getElementById('heroParticles');
+  if (!c) return;
+  const emojis = ['💊','🩺','🧪','💉','❤️','🌿','⚕️'];
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `left:${Math.random()*100}%;top:${Math.random()*100}%;font-size:${Math.random()*18+12}px;animation-delay:${Math.random()*6}s;animation-duration:${Math.random()*6+5}s;opacity:${Math.random()*0.18+0.07};`;
+    p.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+    c.appendChild(p);
+  }
+})();
+
+lucide.createIcons();
+
+// Check user session
+(function checkUser() {
+    const user = JSON.parse(localStorage.getItem('healix_user'));
+    if(user && user.isLoggedIn) {
+        const area = document.getElementById('user-nav-area');
+        if(area) {
+            area.innerHTML = `
+                <div class="user-profile-nav" style="display:flex; align-items:center; gap:10px; cursor:pointer;" onclick="toggleUserMenu()">
+                    <div style="width:32px; height:32px; border-radius:50%; background:var(--primary); color:white; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px;">
+                        ${user.name.charAt(0)}
+                    </div>
+                    <span style="font-size:14px; font-weight:700; color:var(--text);">${user.name.split(' ')[0]}</span>
+                </div>
+            `;
+        }
+    }
+})();
+
+function toggleUserMenu() {
+    if(confirm("Do you want to logout?")) {
+        localStorage.removeItem('healix_user');
+        location.reload();
+    }
+}
+</script>
+<script>if(localStorage.getItem("theme")==="night"){document.body.classList.add("night");}</script>
+<script src="location.js"></script>
+</body>
+</html>

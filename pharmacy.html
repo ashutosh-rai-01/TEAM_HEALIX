@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Management - Healix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #818cf8;
+            --primary-dark: #3730a3;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --sidebar-bg: #ffffff;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        /* NIGHT MODE (Globally injected) */
+        body.night {
+            --bg: #000000;
+            --card: #111111;
+            --panel: #111111;
+            --text: #ffffff;
+            --text-light: #cbd5e1;
+            --muted: #cbd5e1;
+            --border: #334155;
+            --border-color: #334155;
+            --primary-light: #1e3a8a;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background: var(--sidebar-bg);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: fixed;
+            height: 100vh;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 2rem;
+            max-width: 1400px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header-left h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+        }
+
+        .header-left p {
+            color: var(--text-muted);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.625rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            background: #f8fafc;
+        }
+
+        /* Tabs Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--card-bg), #ffffffaa); backdrop-filter: blur(15px);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-details h3 {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .stat-details p {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Table Styles */
+        .card {
+            backdrop-filter: blur(15px); background: linear-gradient(135deg, var(--card), #ffffffaa);
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .search-bar {
+            position: relative;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.625rem 1rem 0.625rem 2.5rem;
+            border-radius: 0.625rem;
+            border: 1px solid var(--border);
+            outline: none;
+            transition: all 0.2s;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .search-bar input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            width: 18px;
+            height: 18px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            background: #f8fafc;
+            padding: 1rem 1.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            display: inline-flex;
+            padding: 0.25rem 0.625rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-danger { background: #fee2e2; color: #991b1b; }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .btn-icon:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        /* Billing Section Layout */
+        .billing-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 1.5rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .summary-total {
+            border-top: 2px solid var(--border);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .modal-content {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 1rem;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.625rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+            outline: none;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        /* Print Styles */
+        @media print {
+            .sidebar, header, .nav-links, .btn, .search-bar, .card-header, th:last-child, td:last-child {
+                display: none !important;
+            }
+            .main-content {
+                margin-left: 0 !important;
+                padding: 0 !important;
+            }
+            .billing-grid {
+                display: block !important;
+            }
+            .card {
+                border: none !important;
+                box-shadow: none !important;
+            }
+            #billing {
+                display: block !important;
+            }
+            #inventory, #prescriptions {
+                display: none !important;
+            }
+            .summary-total {
+                border-top: 1px solid #000 !important;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <i data-lucide="pill" style="width: 32px; height: 32px;"></i>
+            Healix Pharm
+        </div>
+        <div class="nav-links">
+            <div class="nav-item active" onclick="showTab('inventory')">
+                <i data-lucide="package"></i>
+                Inventory
+            </div>
+            <div class="nav-item" onclick="showTab('prescriptions')">
+                <i data-lucide="file-text"></i>
+                Prescriptions
+            </div>
+            <div class="nav-item" onclick="showTab('billing')">
+                <i data-lucide="receipt"></i>
+                Billing
+            </div>
+            <a href="/" class="nav-item" style="margin-top: auto;">
+                <i data-lucide="home"></i>
+                Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- HEADER -->
+        <header>
+            <div class="header-left">
+                <h1 id="tab-title">Medicine Inventory</h1>
+                <p id="tab-desc">Track and manage hospital medicine stock</p>
+            </div>
+            <div class="header-right" id="header-actions">
+                <button class="btn btn-primary" onclick="openModal()">
+                    <i data-lucide="plus"></i> Add Medicine
+                </button>
+            </div>
+        </header>
+
+        <!-- INVENTORY TAB -->
+        <div id="inventory" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #e0e7ff; color: #4338ca;">
+                        <i data-lucide="database"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Total Medicines</h3>
+                        <p id="stat-total-meds">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fef3c7; color: #d97706;">
+                        <i data-lucide="alert-triangle"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Low Stock</h3>
+                        <p id="stat-low-stock">0</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: #fee2e2; color: #dc2626;">
+                        <i data-lucide="clock"></i>
+                    </div>
+                    <div class="stat-details">
+                        <h3>Expiring Soon</h3>
+                        <p id="stat-expiring">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="search-bar">
+                        <i data-lucide="search"></i>
+                        <input type="text" placeholder="Search medicines..." onkeyup="filterTable('inventory-table', this.value)">
+                    </div>
+                    <button class="btn btn-outline" onclick="loadInventory()">
+                        <i data-lucide="refresh-cw"></i> Refresh
+                    </button>
+                </div>
+                <table id="inventory-table">
+                    <thead>
+                        <tr>
+                            <th>Medicine ID</th>
+                            <th>Medicine Name</th>
+                            <th>Category</th>
+                            <th>Stock</th>
+                            <th>Price</th>
+                            <th>Expiry</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inventory-body">
+                        <!-- Loaded via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- PRESCRIPTIONS TAB -->
+        <div id="prescriptions" class="tab-content">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Active Prescriptions</h2>
+                    <div class="search-bar">
+                        <i data-lucide="search"></i>
+                        <input type="text" placeholder="Search patient..." onkeyup="filterTable('prescription-table', this.value)">
+                    </div>
+                </div>
+                <table id="prescription-table">
+                    <thead>
+                        <tr>
+                            <th>RX ID</th>
+                            <th>Patient Name</th>
+                            <th>Medicines</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prescription-body">
+                        <!-- Loaded via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- BILLING TAB -->
+        <div id="billing" class="tab-content">
+            <div class="billing-grid">
+                <div class="card" style="margin-bottom: 0;">
+                    <div class="card-header">
+                        <h2>Select Medicines</h2>
+                        <div class="search-bar">
+                            <i data-lucide="search"></i>
+                            <input type="text" id="billing-search" placeholder="Search for billing..." onkeyup="searchBilling(this.value)">
+                        </div>
+                    </div>
+                    <table id="billing-selection-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Stock</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="billing-search-results">
+                            <!-- Loaded via JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Bill Summary</h2>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <div class="form-group">
+                            <label>Patient Name</label>
+                            <input type="text" id="bill-patient-name" placeholder="Enter patient name">
+                        </div>
+                        <div id="cart-items">
+                            <p style="text-align: center; color: var(--text-muted); margin: 1rem 0;">No items added</p>
+                        </div>
+                        <div class="summary-total">
+                            <span>Subtotal</span>
+                            <span id="bill-subtotal">₹ 0.00</span>
+                        </div>
+                        <div class="summary-row" style="margin-top: 0.5rem;">
+                            <span>GST (12%)</span>
+                            <span id="bill-gst">₹ 0.00</span>
+                        </div>
+                        <div class="summary-total">
+                            <span>Total</span>
+                            <span id="bill-total">₹ 0.00</span>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;" onclick="generateBill()">
+                            <i data-lucide="printer"></i> Complete & Print Bill
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD MEDICINE MODAL -->
+    <div id="med-modal" class="modal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 1.5rem;">Add New Medicine</h2>
+            <div class="form-group">
+                <label>Medicine Name</label>
+                <input type="text" id="m-name" placeholder="e.g. Paracetamol">
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="m-cat">
+                    <option value="Painkiller">Painkiller</option>
+                    <option value="Antibiotic">Antibiotic</option>
+                    <option value="Antihistamine">Antihistamine</option>
+                    <option value="Antidiabetic">Antidiabetic</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label>Stock Quantity</label>
+                    <input type="number" id="m-stock" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Price (per unit)</label>
+                    <input type="number" id="m-price" value="0.00">
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label>Expiry Date</label>
+                    <input type="date" id="m-expiry">
+                </div>
+                <div class="form-group">
+                    <label>Supplier</label>
+                    <input type="text" id="m-supp" placeholder="Supplier name">
+                </div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem;">
+                <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveMedicine()">Save Medicine</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+        let currentInventory = [];
+        let cart = [];
+
+        // Tab Switching
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(t => t.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+
+            const titles = {
+                'inventory': 'Medicine Inventory',
+                'prescriptions': 'Prescription Handling',
+                'billing': 'Billing System'
+            };
+            const descs = {
+                'inventory': 'Track and manage hospital medicine stock',
+                'prescriptions': 'Fulfill patient medicine requests',
+                'billing': 'Generate invoices and collect payments'
+            };
+
+            document.getElementById('tab-title').textContent = titles[tabId];
+            document.getElementById('tab-desc').textContent = descs[tabId];
+            document.getElementById('header-actions').style.display = tabId === 'inventory' ? 'block' : 'none';
+
+            if (tabId === 'inventory') loadInventory();
+            if (tabId === 'prescriptions') loadPrescriptions();
+        }
+
+        // --- INVENTORY LOGIC ---
+        async function loadInventory() {
+            try {
+                const res = await fetch('/api/pharmacy/inventory');
+                const data = await res.json();
+                currentInventory = data;
+                renderInventory(data);
+                updateStats(data);
+            } catch (err) {
+                console.error("Failed to load inventory", err);
+            }
+        }
+
+        function renderInventory(data) {
+            const body = document.getElementById('inventory-body');
+            body.innerHTML = data.map(item => `
+                <tr>
+                    <td><b>${item.id}</b></td>
+                    <td>${item.name}</td>
+                    <td>${item.category}</td>
+                    <td>${item.stock}</td>
+                    <td>₹${item.price.toFixed(2)}</td>
+                    <td>${item.expiry}</td>
+                    <td>
+                        <span class="badge ${item.stock < 30 ? 'badge-danger' : (item.stock < 60 ? 'badge-warning' : 'badge-success')}">
+                            ${item.stock < 30 ? 'Low Stock' : 'Available'}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="actions">
+                            <button class="btn-icon" title="Edit" onclick="editMed('${item.id}')"><i data-lucide="edit-2" style="width:14px"></i></button>
+                            <button class="btn-icon" title="Delete" style="color:var(--danger)" onclick="deleteMed('${item.id}')"><i data-lucide="trash-2" style="width:14px"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function updateStats(data) {
+            document.getElementById('stat-total-meds').textContent = data.length;
+            document.getElementById('stat-low-stock').textContent = data.filter(i => i.stock < 30).length;
+            
+            const today = new Date();
+            const sixMonths = new Date();
+            sixMonths.setMonth(today.getMonth() + 6);
+            document.getElementById('stat-expiring').textContent = data.filter(i => new Date(i.expiry) < sixMonths).length;
+        }
+
+        function openModal() {
+            document.getElementById('med-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('med-modal').style.display = 'none';
+        }
+
+        async function saveMedicine() {
+            const med = {
+                name: document.getElementById('m-name').value,
+                category: document.getElementById('m-cat').value,
+                stock: parseInt(document.getElementById('m-stock').value),
+                price: parseFloat(document.getElementById('m-price').value),
+                expiry: document.getElementById('m-expiry').value,
+                supplier: document.getElementById('m-supp').value
+            };
+
+            await fetch('/api/pharmacy/inventory', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(med)
+            });
+
+            closeModal();
+            loadInventory();
+        }
+
+        async function deleteMed(id) {
+            if (confirm("Are you sure you want to delete this medicine?")) {
+                await fetch(`/api/pharmacy/inventory/${id}`, { method: 'DELETE' });
+                loadInventory();
+            }
+        }
+
+        // --- PRESCRIPTION LOGIC ---
+        async function loadPrescriptions() {
+            const res = await fetch('/api/pharmacy/prescriptions');
+            const data = await res.json();
+            const body = document.getElementById('prescription-body');
+            body.innerHTML = data.map(rx => `
+                <tr>
+                    <td><b>${rx.id}</b></td>
+                    <td>${rx.patientName}</td>
+                    <td>${rx.medicines.join(', ')}</td>
+                    <td>${rx.date}</td>
+                    <td><span class="badge ${rx.status === 'Pending' ? 'badge-warning' : 'badge-success'}">${rx.status}</span></td>
+                    <td>
+                        ${rx.status === 'Pending' ? 
+                            `<button class="btn btn-outline" style="padding:4px 10px; font-size:12px" onclick="fillFromPrescription('${rx.id}', '${rx.patientName}')">Dispense</button>` : 
+                            '--'
+                        }
+                    </td>
+                </tr>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function fillFromPrescription(rxId, patientName) {
+            document.getElementById('bill-patient-name').value = patientName;
+            showTab('billing');
+            // Auto fill logic would go here, matching names
+            alert(`Prescription ${rxId} selected for ${patientName}`);
+        }
+
+        // --- BILLING LOGIC ---
+        function searchBilling(query) {
+            const results = currentInventory.filter(i => i.name.toLowerCase().includes(query.toLowerCase()));
+            const body = document.getElementById('billing-search-results');
+            body.innerHTML = results.map(item => `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.stock}</td>
+                    <td>₹${item.price}</td>
+                    <td>
+                        <button class="btn btn-outline btn-icon" onclick="addToCart('${item.id}')"><i data-lucide="plus"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function addToCart(id) {
+            const med = currentInventory.find(i => i.id === id);
+            const exists = cart.find(i => i.id === id);
+            if (exists) {
+                exists.quantity++;
+            } else {
+                cart.push({...med, quantity: 1});
+            }
+            renderCart();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            renderCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items');
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-muted); margin: 1rem 0;">No items added</p>';
+                document.getElementById('bill-subtotal').textContent = "₹ 0.00";
+                document.getElementById('bill-gst').textContent = "₹ 0.00";
+                document.getElementById('bill-total').textContent = "₹ 0.00";
+                return;
+            }
+
+            let subtotal = 0;
+            container.innerHTML = cart.map(item => {
+                const total = item.price * item.quantity;
+                subtotal += total;
+                return `
+                    <div class="cart-item">
+                        <div>
+                            <p><b>${item.name}</b></p>
+                            <small>${item.quantity} x ₹${item.price}</small>
+                        </div>
+                        <div style="display:flex; align-items:center; gap:10px">
+                            <b>₹${total.toFixed(2)}</b>
+                            <i data-lucide="x-circle" style="cursor:pointer; color:var(--danger); width:18px" onclick="removeFromCart('${item.id}')"></i>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const gst = subtotal * 0.12;
+            const total = subtotal + gst;
+
+            document.getElementById('bill-subtotal').textContent = `₹ ${subtotal.toFixed(2)}`;
+            document.getElementById('bill-gst').textContent = `₹ ${gst.toFixed(2)}`;
+            document.getElementById('bill-total').textContent = `₹ ${total.toFixed(2)}`;
+            lucide.createIcons();
+        }
+
+        async function generateBill() {
+            if (cart.length === 0) return alert("Select medicines first!");
+            const patient = document.getElementById('bill-patient-name').value;
+            if (!patient) return alert("Enter patient name!");
+
+            const bill = {
+                patientName: patient,
+                items: cart,
+                subtotal: parseFloat(document.getElementById('bill-subtotal').textContent.replace('₹ ', '')),
+                gst: parseFloat(document.getElementById('bill-gst').textContent.replace('₹ ', '')),
+                total: parseFloat(document.getElementById('bill-total').textContent.replace('₹ ', ''))
+            };
+
+            const res = await fetch('/api/pharmacy/bills', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(bill)
+            });
+
+            if (res.ok) {
+                alert("Bill generated and stock updated!");
+                window.print(); // Trigger Print dialog for the invoice
+                cart = [];
+                document.getElementById('bill-patient-name').value = '';
+                renderCart();
+                loadInventory();
+            }
+        }
+
+        // Initialize
+        loadInventory();
+
+        function filterTable(tableId, query) {
+            const rows = document.getElementById(tableId).getElementsByTagName('tr');
+            for (let i = 1; i < rows.length; i++) {
+                const text = rows[i].textContent.toLowerCase();
+                rows[i].style.display = text.includes(query.toLowerCase()) ? '' : 'none';
+            }
+        }
+    </script>
+<script>if(localStorage.getItem("theme") === "night") { document.body.classList.add("night"); }</script></body>
+</html>

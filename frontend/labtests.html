@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab Tests at Home – HEALIX</title>
+<meta name="description" content="Book home blood tests, scans & lab packages on HEALIX. Certified labs, sample pickup at your door.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="location.css">
+<style>
+/* ===== LAB TESTS PAGE ===== */
+.lab-hero {
+  padding: 70px 5% 60px;
+  background: linear-gradient(135deg, #F0FDF4 0%, #EFF6FF 50%, #FFF7ED 100%);
+  position: relative; overflow: hidden;
+}
+.lab-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 75% 40%, rgba(16,185,129,0.08), transparent);
+  pointer-events: none;
+}
+.lab-hero-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+.lab-hero-h1 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(32px, 4vw, 52px); font-weight: 900;
+  letter-spacing: -1.5px; color: #0F172A; margin-bottom: 12px;
+}
+.lab-hero-sub { font-size: 17px; color: #64748B; margin-bottom: 24px; max-width: 560px; }
+.lab-trust-row {
+  display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 0;
+}
+.lab-trust-chip {
+  display: flex; align-items: center; gap: 8px;
+  background: white; border-radius: 30px; padding: 8px 16px;
+  font-size: 13px; font-weight: 700; color: #059669;
+  border: 1.5px solid #BBF7D0; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* CATEGORIES */
+.lab-cats-wrap {
+  max-width: 1200px; margin: 0 auto; padding: 36px 5% 0;
+}
+.lab-cats-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px;
+  margin-bottom: 8px;
+}
+.lab-cat-card {
+  background: white; border: 1.5px solid #E2E8F0; border-radius: 18px;
+  padding: 20px 14px; text-align: center; cursor: pointer;
+  transition: all 0.25s; box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+.lab-cat-card:hover { border-color: #10B981; transform: translateY(-4px); box-shadow: 0 14px 30px rgba(0,0,0,0.08); }
+.lab-cat-card.active { background: linear-gradient(135deg, #10B981, #059669); border-color: #10B981; color: white; }
+.lab-cat-card.active .lab-cat-label { color: white; }
+.lab-cat-icon { font-size: 30px; margin-bottom: 8px; }
+.lab-cat-label { font-size: 12px; font-weight: 700; color: #374151; }
+
+/* TESTS GRID */
+.tests-wrap { max-width: 1200px; margin: 0 auto; padding: 30px 5% 60px; }
+.tests-toolbar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 24px; flex-wrap: wrap; gap: 12px;
+}
+.tests-count { font-size: 14px; color: #64748B; font-weight: 600; }
+.tests-count strong { color: #0F172A; }
+.tests-sort {
+  background: #F8FAFC; border: 1.5px solid #E2E8F0; color: #0F172A;
+  padding: 9px 14px; border-radius: 10px; font-size: 14px; font-weight: 600;
+  cursor: pointer; outline: none;
+}
+.tests-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;
+}
+
+/* TEST CARD */
+.test-card {
+  background: white; border: 1.5px solid #E2E8F0; border-radius: 22px;
+  overflow: hidden; transition: all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.05); display: flex; flex-direction: column;
+}
+.test-card:hover { transform: translateY(-6px); box-shadow: 0 22px 50px rgba(0,0,0,0.12); border-color: #10B981; }
+.test-card-top {
+  background: linear-gradient(135deg, #F0FDF4, #ECFDF5);
+  padding: 20px; display: flex; align-items: flex-start; gap: 14px;
+}
+.test-icon-circle {
+  width: 56px; height: 56px; border-radius: 16px; flex-shrink: 0;
+  background: linear-gradient(135deg, #10B981, #059669);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; box-shadow: 0 6px 20px rgba(16,185,129,0.3);
+}
+.test-card-info h4 { font-size: 15px; font-weight: 800; color: #0F172A; margin-bottom: 4px; line-height: 1.3; }
+.test-category-tag {
+  display: inline-flex; align-items: center;
+  background: #D1FAE5; color: #065F46; font-size: 11px;
+  font-weight: 700; padding: 3px 8px; border-radius: 20px; margin-bottom: 4px;
+}
+.test-includes { font-size: 12px; color: #94A3B8; font-weight: 500; }
+.test-card-bottom { padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.test-info-row {
+  display: flex; gap: 16px; flex-wrap: wrap;
+}
+.test-info-chip {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 12px; color: #64748B; font-weight: 600;
+}
+.test-price-row {
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px dashed #E2E8F0; padding-top: 12px; margin-top: auto;
+}
+.test-mrp { font-size: 12px; color: #94A3B8; text-decoration: line-through; }
+.test-price { font-size: 22px; font-weight: 900; color: #0F172A; }
+.test-disc-badge {
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: white; font-size: 11px; font-weight: 800;
+  padding: 4px 10px; border-radius: 20px;
+}
+.book-test-btn {
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: white; border: none; padding: 13px; border-radius: 12px;
+  font-weight: 800; font-size: 14px; cursor: pointer; width: 100%;
+  transition: all 0.3s;
+}
+.book-test-btn:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(16,185,129,0.4); }
+
+/* BOOKING MODAL */
+.book-modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);display:none;justify-content:center;align-items:center;z-index:9000; }
+.book-modal-overlay.open { display:flex; }
+.book-modal { background:white;border-radius:28px;padding:36px;width:100%;max-width:460px;margin:20px;box-shadow:0 40px 120px rgba(0,0,0,0.25);animation:slideUp 0.35s cubic-bezier(0.175,0.885,0.32,1.275); }
+@keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+.book-modal h2 { font-size:22px;font-weight:900;margin-bottom:4px;color:#0F172A; }
+.book-sub { color:#64748B;font-size:14px;margin-bottom:24px; }
+.test-selected-head {
+  display:flex;gap:12px;align-items:center;
+  background:linear-gradient(135deg,#F0FDF4,#ECFDF5);
+  border-radius:16px;padding:14px;margin-bottom:20px;
+}
+.test-sel-icon { font-size:32px; }
+.test-sel-name { font-size:15px;font-weight:800;color:#0F172A; }
+.test-sel-price { font-size:13px;color:#059669;font-weight:700; }
+.form-row { margin-bottom:14px; }
+.form-row label { display:block;font-size:13px;font-weight:700;color:#374151;margin-bottom:6px; }
+.form-row input, .form-row select {
+  width:100%;padding:12px 14px;border:1.5px solid #E2E8F0;
+  border-radius:12px;font-size:14px;font-family:inherit;
+  outline:none;transition:0.2s;background:#F8FAFC;color:#0F172A;
+}
+.form-row input:focus, .form-row select:focus { border-color:#10B981;background:white;box-shadow:0 0 0 3px rgba(16,185,129,0.12); }
+.form-2col { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+.book-actions { display:flex;gap:12px;margin-top:20px; }
+.book-cancel-btn { flex:1;background:#F8FAFC;border:1.5px solid #E2E8F0;padding:12px;border-radius:12px;font-weight:700;font-size:14px;cursor:pointer; }
+.book-confirm-btn { flex:2;background:linear-gradient(135deg,#10B981,#059669);color:white;border:none;padding:12px;border-radius:12px;font-weight:800;font-size:14px;cursor:pointer;transition:all 0.3s; }
+.book-confirm-btn:hover { box-shadow:0 10px 30px rgba(16,185,129,0.4);transform:scale(1.01); }
+.success-modal { background:white;border-radius:28px;padding:40px;text-align:center;width:100%;max-width:400px;margin:20px;box-shadow:0 40px 120px rgba(0,0,0,0.25);animation:slideUp 0.35s; }
+.success-icon { font-size:64px;margin-bottom:16px; }
+.success-modal h2 { font-size:22px;font-weight:900;color:#0F172A;margin-bottom:8px; }
+.success-modal p { color:#64748B;font-size:14px;margin-bottom:24px;line-height:1.6; }
+.success-close-btn { background:linear-gradient(135deg,#10B981,#059669);color:white;border:none;padding:13px 32px;border-radius:12px;font-weight:800;font-size:14px;cursor:pointer; }
+
+/* NIGHT MODE */
+body.night .lab-hero { background:linear-gradient(135deg,#05140a,#0a1a2e,#14100a); }
+body.night .lab-hero-h1 { color:#F8FAFC; }
+body.night .lab-cat-card { background:#111827;border-color:#1E293B; }
+body.night .lab-cat-label { color:#94A3B8; }
+body.night .test-card { background:#0D1117;border-color:#1E293B; }
+body.night .test-card-top { background:linear-gradient(135deg,#052010,#0a1020); }
+body.night .test-card-info h4 { color:#F8FAFC; }
+body.night .test-price { color:#F8FAFC; }
+body.night .tests-count strong { color:#F8FAFC; }
+body.night .book-modal { background:#111827; }
+body.night .book-modal h2 { color:#F8FAFC; }
+body.night .form-row input, body.night .form-row select { background:#1E293B;border-color:#334155;color:#F8FAFC; }
+body.night .book-cancel-btn { background:#1E293B;border-color:#334155;color:#F8FAFC; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <div class="logo" onclick="location.href='pharmacy.html'">🏥 <span class="logo-healix">HEALIX</span><span class="logo-pill">Rx</span></div>
+    <div class="nav-links">
+      <a href="pharmacy.html" class="navlink">Medicines</a>
+      <a href="labtests.html" class="navlink active">Lab Tests</a>
+      <a href="doctors.html" class="navlink">Doctors</a>
+      <a href="category.html?type=ayurveda" class="navlink">Ayurveda</a>
+    </div>
+    <div class="nav-right">
+      <button class="delivery-pill" id="deliveryPill" onclick="openLocModal()" style="display:flex;align-items:center;gap:8px;background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:14px;padding:7px 14px;cursor:pointer;font-family:inherit;transition:all 0.2s;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div style="text-align:left">
+          <div style="font-size:10px;color:#64748B;font-weight:700;text-transform:uppercase;line-height:1">Sample from</div>
+          <div style="font-size:13px;font-weight:800;color:#0F172A;line-height:1.3" id="navLocText">Select Location</div>
+        </div>
+      </button>
+      <a href="cart.html" class="cart-icon-btn">
+        <i data-lucide="shopping-cart"></i>
+        <span id="cart-count" class="cart-badge">0</span>
+      </a>
+      <button class="login-pill"><i data-lucide="user" style="width:15px"></i> Login</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="lab-hero">
+  <div class="lab-hero-inner">
+    <h1 class="lab-hero-h1">🧪 Lab Tests at Your Doorstep</h1>
+    <p class="lab-hero-sub">Book blood tests, full body checkups & scans. Certified labs, home sample pickup, and results in 24 hours.</p>
+    <div class="lab-trust-row">
+      <div class="lab-trust-chip">✅ NABL Certified Labs</div>
+      <div class="lab-trust-chip">🚗 Free Home Sample Pickup</div>
+      <div class="lab-trust-chip">⚡ Results in 24–48 hrs</div>
+      <div class="lab-trust-chip">🔒 100% Secure Reports</div>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<div class="lab-cats-wrap">
+  <div class="lab-cats-grid">
+    <div class="lab-cat-card active" onclick="filterByCategory('All', this)">
+      <div class="lab-cat-icon">🧪</div>
+      <div class="lab-cat-label">All Tests</div>
+    </div>
+    <div class="lab-cat-card" onclick="filterByCategory('Blood', this)">
+      <div class="lab-cat-icon">🩸</div>
+      <div class="lab-cat-label">Blood Tests</div>
+    </div>
+    <div class="lab-cat-card" onclick="filterByCategory('Diabetes', this)">
+      <div class="lab-cat-icon">💉</div>
+      <div class="lab-cat-label">Diabetes</div>
+    </div>
+    <div class="lab-cat-card" onclick="filterByCategory('Thyroid', this)">
+      <div class="lab-cat-icon">🦋</div>
+      <div class="lab-cat-label">Thyroid</div>
+    </div>
+    <div class="lab-cat-card" onclick="filterByCategory('Cardiac', this)">
+      <div class="lab-cat-icon">❤️</div>
+      <div class="lab-cat-label">Heart</div>
+    </div>
+    <div class="lab-cat-card" onclick="filterByCategory('Vitamin', this)">
+      <div class="lab-cat-icon">☀️</div>
+      <div class="lab-cat-label">Vitamins</div>
+    </div>
+    <div class="lab-cat-card" onclick="filterByCategory('Package', this)">
+      <div class="lab-cat-icon">📦</div>
+      <div class="lab-cat-label">Packages</div>
+    </div>
+    <div class="lab-cat-card" onclick="filterByCategory('Hormone', this)">
+      <div class="lab-cat-icon">🔬</div>
+      <div class="lab-cat-label">Hormones</div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTS GRID -->
+<div class="tests-wrap">
+  <div class="tests-toolbar">
+    <span class="tests-count" id="tests-count">Showing <strong>all tests</strong></span>
+    <select class="tests-sort" id="tests-sort" onchange="applySort()">
+      <option value="">Sort: Popular</option>
+      <option value="price-low">Price: Low → High</option>
+      <option value="price-high">Price: High → Low</option>
+      <option value="discount">Best Discount</option>
+    </select>
+  </div>
+  <div class="tests-grid" id="tests-grid">
+    <!-- will be rendered by JS -->
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="book-modal-overlay" id="bookModal">
+  <div class="book-modal" id="bookModalInner">
+    <h2>📋 Book Lab Test</h2>
+    <p class="book-sub">Schedule a convenient home sample pickup</p>
+    <div class="test-selected-head">
+      <div class="test-sel-icon" id="modal-test-icon">🧪</div>
+      <div>
+        <div class="test-sel-name" id="modal-test-name">Test Name</div>
+        <div class="test-sel-price" id="modal-test-price">₹ ---</div>
+      </div>
+    </div>
+    <div class="form-2col">
+      <div class="form-row">
+        <label>Patient Name *</label>
+        <input type="text" id="lab-patient-name" placeholder="Full name">
+      </div>
+      <div class="form-row">
+        <label>Phone *</label>
+        <input type="tel" id="lab-patient-phone" placeholder="+91 XXXXXXXXXX">
+      </div>
+    </div>
+    <div class="form-2col">
+      <div class="form-row">
+        <label>Date *</label>
+        <input type="date" id="lab-date">
+      </div>
+      <div class="form-row">
+        <label>Pickup Time *</label>
+        <select id="lab-time">
+          <option value="">Select slot</option>
+          <option>6:00 – 8:00 AM</option>
+          <option>8:00 – 10:00 AM</option>
+          <option>10:00 – 12:00 PM</option>
+          <option>12:00 – 2:00 PM</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label>Home Address *</label>
+      <input type="text" id="lab-address" placeholder="House/Flat no., Street, Area">
+    </div>
+    <div class="book-actions">
+      <button class="book-cancel-btn" onclick="closeBookModal()">Cancel</button>
+      <button class="book-confirm-btn" onclick="confirmLabBooking()">✅ Confirm Booking</button>
+    </div>
+  </div>
+
+  <div class="success-modal" id="successModal" style="display:none">
+    <div class="success-icon">✅</div>
+    <h2>Test Booked!</h2>
+    <p id="lab-success-text">Our technician will arrive at your home.</p>
+    <button class="success-close-btn" onclick="closeBookModal()">Done 🎉</button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="cart-manager.js"></script>
+<script>
+const ALL_TESTS = [
+  { name: "Complete Blood Count (CBC)", icon: "🩸", category: "Blood", price: 299, mrp: 499, discount: 40, includes: "25 parameters", duration: "Same Day", reports: "4-6 hrs" },
+  { name: "HbA1c (Glycated Hemoglobin)", icon: "💉", category: "Diabetes", price: 399, mrp: 650, discount: 38, includes: "1 parameter", duration: "Same Day", reports: "6-8 hrs" },
+  { name: "Fasting Blood Sugar (FBS)", icon: "💉", category: "Diabetes", price: 129, mrp: 200, discount: 35, includes: "1 parameter", duration: "Same Day", reports: "4 hrs" },
+  { name: "Thyroid Profile (T3, T4, TSH)", icon: "🦋", category: "Thyroid", price: 549, mrp: 850, discount: 35, includes: "3 parameters", duration: "Same Day", reports: "8-10 hrs" },
+  { name: "Lipid Profile", icon: "❤️", category: "Cardiac", price: 499, mrp: 800, discount: 38, includes: "6 parameters", duration: "Same Day", reports: "4-6 hrs" },
+  { name: "Vitamin D (25-OH)", icon: "☀️", category: "Vitamin", price: 699, mrp: 1100, discount: 36, includes: "1 parameter", duration: "Same Day", reports: "12 hrs" },
+  { name: "Full Body Checkup Basic", icon: "📦", category: "Package", price: 999, mrp: 1999, discount: 50, includes: "36 parameters", duration: "1 Day", reports: "24 hrs" },
+  { name: "Senior Citizen Health Package", icon: "📦", category: "Package", price: 3499, mrp: 6500, discount: 46, includes: "115 parameters", duration: "2 Days", reports: "48 hrs" },
+  { name: "Liver Function Test (LFT)", icon: "🩺", category: "Blood", price: 449, mrp: 700, discount: 36, includes: "11 parameters", duration: "Same Day", reports: "6 hrs" },
+  { name: "Kidney Function Test (KFT)", icon: "🩺", category: "Blood", price: 499, mrp: 800, discount: 38, includes: "10 parameters", duration: "Same Day", reports: "6 hrs" },
+  { name: "Testosterone (Hormone)", icon: "🔬", category: "Hormone", price: 799, mrp: 1200, discount: 33, includes: "1 parameter", duration: "Same Day", reports: "12 hrs" },
+  { name: "Vitamin B12 Check", icon: "💊", category: "Vitamin", price: 499, mrp: 750, discount: 33, includes: "1 parameter", duration: "Same Day", reports: "8 hrs" }
+];
+
+let allTests = [...ALL_TESTS];
+let currentCategory = 'All';
+let selectedTest = null;
+
+function renderTests(tests) {
+  const grid = document.getElementById('tests-grid');
+  const countDisplay = document.getElementById('tests-count');
+  if (countDisplay) countDisplay.innerHTML = `Showing <strong>${tests.length} tests</strong>`;
+
+  if (tests.length === 0) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:80px 20px"><div style="font-size:48px;margin-bottom:16px">🔬</div><h3 style="font-size:20px;font-weight:800;color:#0F172A;margin-bottom:8px">No tests found</h3><p style="color:#64748B">Try a different category</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = '';
+  tests.forEach(test => {
+    const card = document.createElement('div');
+    card.className = 'test-card';
+    card.innerHTML = \`
+      <div class="test-card-top">
+        <div class="test-icon-circle">\${test.icon}</div>
+        <div class="test-card-info">
+          <div class="test-category-tag">\${test.category}</div>
+          <h4>\${test.name}</h4>
+          <div class="test-includes">Includes: \${test.includes}</div>
+        </div>
+      </div>
+      <div class="test-card-bottom">
+        <div class="test-info-row">
+          <div class="test-info-chip">⏱️ \${test.duration} pickup</div>
+          <div class="test-info-chip">📊 Reports in \${test.reports}</div>
+          <div class="test-info-chip">🏠 Home collection</div>
+        </div>
+        <div class="test-price-row">
+          <div>
+            <div class="test-mrp">MRP ₹\${test.mrp}</div>
+            <div class="test-price">₹\${test.price}</div>
+          </div>
+          <div class="test-disc-badge">\${test.discount}% OFF</div>
+        </div>
+        <button class="book-test-btn" onclick='CartManager.addItem({id: "\${test.name.replace(/\\s+/g, "-")}", name: "\${test.name}", price: \${test.price}, type: "test"})'>
+          Add to Cart
+        </button>
+      </div>
+    \`;
+    grid.appendChild(card);
+  });
+}
+
+
+function filterByCategory(cat, el) {
+  document.querySelectorAll('.lab-cat-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentCategory = cat;
+  
+  let filtered = (cat === 'All') 
+    ? [...ALL_TESTS] 
+    : ALL_TESTS.filter(t => t.category.toLowerCase() === cat.toLowerCase() || t.category.includes(cat));
+  
+  renderTests(filtered);
+}
+
+function applySort() {
+  const val = document.getElementById('tests-sort').value;
+  let tests = [...ALL_TESTS];
+  if (currentCategory !== 'All') {
+    tests = tests.filter(t => t.category.toLowerCase() === currentCategory.toLowerCase() || t.category.includes(currentCategory));
+  }
+  
+  if (val === 'price-low') tests.sort((a,b) => a.price - b.price);
+  else if (val === 'price-high') tests.sort((a,b) => b.price - a.price);
+  else if (val === 'discount') tests.sort((a,b) => b.discount - a.discount);
+  
+  renderTests(tests);
+}
+
+function openBookModal(test) {
+  selectedTest = test;
+  document.getElementById('modal-test-icon').innerText = test.icon;
+  document.getElementById('modal-test-name').innerText = test.name;
+  document.getElementById('modal-test-price').innerText = `₹${test.price}`;
+  
+  document.getElementById('bookModalInner').style.display = 'block';
+  document.getElementById('successModal').style.display = 'none';
+  document.getElementById('bookModal').classList.add('open');
+}
+
+function closeBookModal() {
+  document.getElementById('bookModal').classList.remove('open');
+}
+
+function confirmLabBooking() {
+  const name = document.getElementById('lab-patient-name').value;
+  const phone = document.getElementById('lab-patient-phone').value;
+  const date = document.getElementById('lab-date').value;
+  const time = document.getElementById('lab-time').value;
+  const addr = document.getElementById('lab-address').value;
+
+  if(!name || !phone || !date || !time || !addr) {
+    alert("Please fill all details!");
+    return;
+  }
+
+  document.getElementById('bookModalInner').style.display = 'none';
+  document.getElementById('lab-success-text').innerHTML = `Home sample pickup scheduled for <b>${selectedTest.name}</b> on <b>${date}</b> (${time}). Our phlebotomist will contact you on ${phone}.`;
+  document.getElementById('successModal').style.display = 'block';
+}
+
+function updateCartBadge() {
+  const cart = JSON.parse(localStorage.getItem('healix_cart')) || [];
+  const el = document.getElementById('cart-count');
+  if (el) el.innerText = cart.length;
+}
+
+window.onload = () => {
+    renderTests(ALL_TESTS);
+    updateCartBadge();
+    lucide.createIcons();
+};
+</script>
+<script>if(localStorage.getItem("theme")==="night"){document.body.classList.add("night");}</script>
+<script src="location.js"></script>
+</body>
+</html>

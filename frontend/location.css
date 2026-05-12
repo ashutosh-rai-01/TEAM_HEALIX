@@ -1,0 +1,138 @@
+/* ============================================
+   HEALIX — Location Selector Module
+   Works across pharmacy.html & category.html
+   ============================================ */
+
+/* ── OVERLAY ── */
+.loc-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.loc-overlay.visible { opacity: 1; pointer-events: all; }
+
+/* ── MODAL CARD ── */
+.loc-modal {
+  background: #ffffff; border-radius: 28px;
+  width: 95%; max-width: 480px;
+  box-shadow: 0 40px 80px -20px rgba(0,0,0,0.35);
+  transform: translateY(30px) scale(0.96);
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+.loc-overlay.visible .loc-modal { transform: translateY(0) scale(1); }
+
+.loc-modal-head {
+  background: linear-gradient(135deg, #2563EB, #7C3AED);
+  padding: 24px 28px; color: white;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.loc-modal-head h3 { font-size: 20px; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif; }
+.loc-modal-head p { font-size: 13px; opacity: 0.75; margin-top: 4px; }
+.loc-close-btn {
+  background: rgba(255,255,255,0.15); border: none; color: white;
+  width: 34px; height: 34px; border-radius: 50%; font-size: 18px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: 0.2s; flex-shrink: 0;
+}
+.loc-close-btn:hover { background: rgba(255,255,255,0.3); }
+
+.loc-modal-body { padding: 24px 28px; }
+
+/* Search */
+.loc-search-wrap {
+  display: flex; gap: 10px; align-items: center;
+  border: 1.5px solid #E2E8F0; border-radius: 14px;
+  padding: 4px 4px 4px 16px; margin-bottom: 16px;
+  transition: 0.2s;
+}
+.loc-search-wrap:focus-within { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+.loc-search-input {
+  flex: 1; border: none; outline: none; font-size: 15px;
+  color: #0F172A; font-weight: 500; background: transparent;
+}
+.loc-search-input::placeholder { color: #94A3B8; }
+.loc-search-clear {
+  background: #F1F5F9; border: none; color: #64748B;
+  padding: 6px 10px; border-radius: 10px; font-size: 13px;
+  cursor: pointer; transition: 0.2s; display: none;
+}
+.loc-search-clear.show { display: block; }
+.loc-search-clear:hover { background: #E2E8F0; }
+
+/* GPS Button */
+.loc-gps-btn {
+  width: 100%; padding: 14px; border-radius: 14px;
+  background: linear-gradient(135deg, #EFF6FF, #F5F3FF);
+  border: 1.5px solid rgba(37,99,235,0.25);
+  color: #2563EB; font-size: 15px; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  gap: 10px; transition: all 0.3s; margin-bottom: 20px;
+}
+.loc-gps-btn:hover {
+  background: linear-gradient(135deg, #2563EB, #7C3AED);
+  color: white; border-color: transparent;
+  box-shadow: 0 8px 25px rgba(37,99,235,0.35);
+  transform: translateY(-2px);
+}
+.loc-gps-btn .spinner-sm {
+  width: 18px; height: 18px; border: 2px solid rgba(37,99,235,0.3);
+  border-top: 2px solid #2563EB; border-radius: 50%;
+  animation: spin 0.8s linear infinite; display: none;
+}
+.loc-gps-btn.loading .spinner-sm { display: block; }
+.loc-gps-btn.loading .gps-icon { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Divider */
+.loc-divider { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.loc-divider::before, .loc-divider::after { content: ''; flex: 1; height: 1px; background: #E2E8F0; }
+.loc-divider span { font-size: 12px; color: #94A3B8; font-weight: 700; letter-spacing: 0.5px; }
+
+/* City Grid */
+.loc-cities-label { font-size: 12px; color: #94A3B8; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+.loc-cities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+.loc-city-btn {
+  padding: 12px 10px; border-radius: 12px; background: #F8FAFC;
+  border: 1.5px solid #E2E8F0; font-size: 14px; font-weight: 600;
+  color: #334155; cursor: pointer; text-align: center;
+  transition: all 0.25s; display: flex; flex-direction: column;
+  align-items: center; gap: 4px;
+}
+.loc-city-btn:hover { background: #EFF6FF; border-color: #2563EB; color: #2563EB; transform: translateY(-2px); }
+.loc-city-btn.selected { background: #2563EB; border-color: #2563EB; color: white; box-shadow: 0 6px 20px rgba(37,99,235,0.35); }
+.loc-city-icon { font-size: 20px; }
+
+/* Search results */
+.loc-results { display: none; }
+.loc-results.show { display: block; }
+.loc-result-item {
+  display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+  border-radius: 12px; cursor: pointer; transition: 0.2s;
+  border: 1px solid transparent;
+}
+.loc-result-item:hover { background: #F8FAFC; border-color: #E2E8F0; }
+.loc-result-item .ri { font-size: 20px; }
+.loc-result-item .rt { font-size: 15px; font-weight: 600; color: #0F172A; }
+.loc-result-item .rs { font-size: 12px; color: #94A3B8; margin-top: 1px; }
+
+/* Error */
+.loc-err { display: none; background: #FEF2F2; color: #DC2626; border: 1px solid #FECACA; border-radius: 10px; padding: 10px 14px; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+.loc-err.show { display: block; }
+
+/* Navbar pill update */
+.delivery-pill .dp-loc { font-weight: 800; color: #2563EB; }
+
+/* Night mode */
+body.night .loc-modal { background: #0D1117; }
+body.night .loc-search-wrap { border-color: #1E293B; }
+body.night .loc-search-input { color: #F8FAFC; }
+body.night .loc-city-btn { background: #111827; border-color: #1E293B; color: #94A3B8; }
+body.night .loc-city-btn:hover { background: rgba(37,99,235,0.1); border-color: #2563EB; color: #60A5FA; }
+body.night .loc-result-item:hover { background: #111827; border-color: #1E293B; }
+body.night .loc-result-item .rt { color: #F8FAFC; }
+body.night .loc-cities-label { color: #475569; }
+body.night .loc-gps-btn { background: linear-gradient(135deg, rgba(37,99,235,0.1), rgba(124,58,237,0.1)); border-color: rgba(37,99,235,0.25); }

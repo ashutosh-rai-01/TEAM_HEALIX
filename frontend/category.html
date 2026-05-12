@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Category | HEALIX Pharmacy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="location.css">
+<script src="cart-manager.js"></script>
+<style>
+/* ===== CATEGORY PAGE EXTRAS ===== */
+.cat-hero {
+  padding: 60px 5% 50px;
+  background: linear-gradient(135deg, #EFF6FF 0%, #F5F3FF 60%, #FFF7ED 100%);
+  position: relative; overflow: hidden;
+}
+.cat-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 80% 50%, rgba(37,99,235,0.1), transparent);
+  pointer-events: none;
+}
+.cat-hero-inner { max-width: 1400px; margin: 0 auto; position: relative; z-index: 1; }
+.back-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: #64748B; font-size: 14px; font-weight: 600;
+  text-decoration: none; margin-bottom: 24px; transition: 0.2s;
+  background: white; padding: 8px 16px; border-radius: 10px;
+  border: 1px solid #E2E8F0;
+}
+.back-btn:hover { color: #2563EB; border-color: #2563EB; }
+.cat-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(37,99,235,0.1); color: #2563EB;
+  border: 1px solid rgba(37,99,235,0.2);
+  font-size: 12px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 20px; margin-bottom: 16px;
+}
+.cat-hero-h1 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(32px, 4vw, 52px); font-weight: 900;
+  letter-spacing: -1.5px; color: #0F172A; margin-bottom: 10px;
+  line-height: 1.1;
+}
+.cat-hero-sub { font-size: 16px; color: #64748B; max-width: 500px; line-height: 1.6; }
+
+/* TOOLBAR */
+.toolbar {
+  background: white; border-bottom: 1px solid #E2E8F0;
+  position: sticky; top: 65px; z-index: 900;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+}
+.toolbar-inner {
+  max-width: 1400px; margin: 0 auto; padding: 14px 5%;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.results-count { font-size: 14px; color: #64748B; font-weight: 600; }
+.results-count strong { color: #0F172A; }
+.sort-wrap { display: flex; align-items: center; gap: 10px; }
+.sort-label { font-size: 14px; color: #64748B; font-weight: 600; }
+.sort-select {
+  background: #F8FAFC; border: 1.5px solid #E2E8F0;
+  color: #0F172A; padding: 9px 14px; border-radius: 10px;
+  font-size: 14px; font-weight: 600; cursor: pointer; outline: none;
+  transition: 0.2s;
+}
+.sort-select:focus { border-color: #2563EB; }
+
+/* GRID */
+.cat-grid-wrap { max-width: 1400px; margin: 0 auto; padding: 36px 5% 60px; }
+.cat-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 22px;
+}
+
+/* MEDICINE CARD — overrides */
+.med-card {
+  background: white; border-radius: 20px; overflow: hidden;
+  border: 1.5px solid #E2E8F0; position: relative;
+  display: flex; flex-direction: column;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+.med-card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 28px 55px rgba(0,0,0,0.13); border-color: #2563EB; }
+
+.med-badge-top {
+  position: absolute; top: 12px; left: 12px; z-index: 5;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.disc-badge {
+  background: linear-gradient(135deg, #059669, #047857);
+  color: white; font-size: 10px; font-weight: 900;
+  padding: 4px 10px; border-radius: 20px;
+}
+.tag-badge {
+  font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 20px;
+}
+.tag-bestseller { background: #FEF3C7; color: #92400E; }
+.tag-pricedrop { background: #FEE2E2; color: #991B1B; }
+
+.med-img-wrap {
+  height: 200px; background: linear-gradient(135deg, #FAFBFF, #EEF2FF);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px; border-bottom: 1px solid #F1F5F9; overflow: hidden;
+}
+.med-img-wrap img {
+  max-width: 100%; max-height: 100%; object-fit: contain;
+  mix-blend-mode: multiply; transition: transform 0.4s;
+}
+.med-card:hover .med-img-wrap img { transform: scale(1.12); }
+
+.med-body { padding: 18px; flex: 1; display: flex; flex-direction: column; }
+.med-name { font-size: 15px; font-weight: 700; color: #0F172A; height: 44px; overflow: hidden; line-height: 1.4; margin-bottom: 6px; }
+.med-cat { font-size: 12px; color: #94A3B8; font-weight: 500; margin-bottom: 16px; }
+.med-price-row { margin-top: auto; border-top: 1px dashed #E2E8F0; padding-top: 14px; }
+.med-mrp { font-size: 12px; color: #94A3B8; text-decoration: line-through; margin-bottom: 3px; }
+.med-price-action { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.med-price { font-size: 21px; font-weight: 900; color: #0F172A; }
+.add-btn {
+  background: transparent; color: #2563EB; border: 2px solid #2563EB;
+  padding: 9px 16px; border-radius: 10px; font-weight: 800;
+  font-size: 13px; cursor: pointer; transition: all 0.3s; white-space: nowrap;
+  flex-shrink: 0;
+}
+.add-btn:hover { background: #2563EB; color: white; transform: scale(1.06); box-shadow: 0 8px 25px rgba(37,99,235,0.35); }
+.add-btn.added { background: #059669; color: white; border-color: #059669; }
+
+/* EMPTY / ERROR STATES */
+.state-box { text-align: center; padding: 100px 20px; grid-column: 1/-1; }
+.state-box .state-icon { font-size: 64px; margin-bottom: 20px; }
+.state-box h3 { font-size: 22px; font-weight: 800; margin-bottom: 10px; color: #0F172A; }
+.state-box p { color: #64748B; font-size: 16px; margin-bottom: 25px; }
+.state-box a { color: #2563EB; font-weight: 700; text-decoration: none; }
+.state-box a:hover { text-decoration: underline; }
+
+/* SKELETON */
+.skel-card { background: white; border-radius: 20px; overflow: hidden; border: 1px solid #E2E8F0; }
+.skel-img { height: 200px; background: linear-gradient(90deg, #f0f4f8 25%, #e4ecf4 50%, #f0f4f8 75%); background-size: 400% 100%; animation: shimSkel 1.8s ease infinite; }
+.skel-body { padding: 18px; }
+.skel-line { height: 14px; border-radius: 6px; background: linear-gradient(90deg, #f0f4f8 25%, #e4ecf4 50%, #f0f4f8 75%); background-size: 400% 100%; animation: shimSkel 1.8s ease infinite; margin-bottom: 10px; }
+.skel-line.w60 { width: 60%; }
+.skel-line.w40 { width: 40%; }
+@keyframes shimSkel { 0%{background-position:200% 0;} 100%{background-position:-200% 0;} }
+
+/* NIGHT MODE */
+body.night .cat-hero { background: linear-gradient(135deg, #050810 0%, #0F1B4D 60%, #1a0030 100%); }
+body.night .cat-hero-h1 { color: #F8FAFC; }
+body.night .back-btn { background: #111827; border-color: #1E293B; color: #94A3B8; }
+body.night .back-btn:hover { color: #60A5FA; border-color: #60A5FA; }
+body.night .toolbar { background: #0D1117; border-color: #1E293B; }
+body.night .sort-select { background: #111827; border-color: #1E293B; color: #F8FAFC; }
+body.night .results-count strong { color: #F8FAFC; }
+body.night .med-card { background: #0D1117; border-color: #1E293B; }
+body.night .med-card:hover { border-color: #2563EB; }
+body.night .med-img-wrap { background: white; }
+body.night .med-name { color: #F8FAFC; }
+body.night .state-box h3 { color: #F8FAFC; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <div class="logo" onclick="location.href='pharmacy.html'">🏥 <span class="logo-healix">HEALIX</span><span class="logo-pill">Rx</span></div>
+    <div class="nav-links">
+      <a href="pharmacy.html" class="navlink active">Medicines</a>
+      <a href="labtests.html" class="navlink">Lab Tests</a>
+      <a href="doctors.html" class="navlink">Doctors</a>
+    </div>
+    <div class="nav-right">
+      <!-- Delivery Location Pill -->
+      <button class="delivery-pill" id="deliveryPill" onclick="openLocModal()" style="display:flex;align-items:center;gap:8px;background:#F8FAFC;border:1.5px solid #E2E8F0;border-radius:14px;padding:7px 14px;cursor:pointer;font-family:inherit;transition:all 0.2s;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div style="text-align:left">
+          <div style="font-size:10px;color:#64748B;font-weight:700;text-transform:uppercase;line-height:1">Deliver to</div>
+          <div style="font-size:13px;font-weight:800;color:#0F172A;line-height:1.3" id="navLocText">Select Location</div>
+        </div>
+      </button>
+      <a href="cart.html" class="cart-icon-btn">
+        <i data-lucide="shopping-cart"></i>
+        <span id="cart-count" class="cart-badge">0</span>
+      </a>
+      <button class="login-pill"><i data-lucide="user" style="width:15px"></i> Login</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="cat-hero">
+  <div class="cat-hero-inner">
+    <a href="pharmacy.html" class="back-btn"><i data-lucide="arrow-left" style="width:16px;"></i> Back to Pharmacy</a>
+    <div class="cat-badge" id="cat-badge">💊 Category</div>
+    <h1 class="cat-hero-h1" id="cat-title">Loading...</h1>
+    <p class="cat-hero-sub" id="cat-sub">Finding the best health products for you.</p>
+    <div id="loc-hero-tag" style="display:none;margin-top:12px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:6px 14px;font-size:13px;font-weight:700;color:white;cursor:pointer;" onclick="openLocModal()">
+      <span>📍</span> <span id="loc-hero-city">Select delivery location</span> <span style="opacity:0.6;font-size:11px;">▾</span>
+    </div>
+  </div>
+</div>
+
+<!-- STICKY TOOLBAR -->
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <span class="results-count" id="results-count">Searching products…</span>
+    <div class="sort-wrap">
+      <span class="sort-label">Sort:</span>
+      <select class="sort-select" id="sort-select" onchange="applySort()">
+        <option value="">Most Relevant</option>
+        <option value="low">Price: Low → High</option>
+        <option value="high">Price: High → Low</option>
+        <option value="discount">Best Discount</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- GRID -->
+<div class="cat-grid-wrap">
+  <div class="cat-grid" id="cat-grid">
+    <!-- Skeleton loading -->
+    <div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line"></div><div class="skel-line w60"></div><div class="skel-line w40"></div></div></div>
+    <div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line"></div><div class="skel-line w60"></div><div class="skel-line w40"></div></div></div>
+    <div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line"></div><div class="skel-line w60"></div><div class="skel-line w40"></div></div></div>
+    <div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line"></div><div class="skel-line w60"></div><div class="skel-line w40"></div></div></div>
+    <div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line"></div><div class="skel-line w60"></div><div class="skel-line w40"></div></div></div>
+    <div class="skel-card"><div class="skel-img"></div><div class="skel-body"><div class="skel-line"></div><div class="skel-line w60"></div><div class="skel-line w40"></div></div></div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const API_URL = 'http://localhost:8888/api';
+const params = new URLSearchParams(window.location.search);
+const categoryType = params.get('type') || 'diabetes';
+
+const META = {
+  diabetes:    { icon: '🩸', title: 'Diabetes Care',       sub: 'Blood sugar monitors, test strips, insulin aids & more.' },
+  cardiac:     { icon: '❤️', title: 'Heart & Cardiac Care', sub: 'Blood pressure medicines, statins, heart health supplements.' },
+  stomach:     { icon: '🫃', title: 'Digestive Wellness',   sub: 'Antacids, probiotics, digestion enzymes & gut health.' },
+  pain:        { icon: '⚡', title: 'Pain Relief',          sub: 'Muscle pain, joint relief gels, fever & inflammation.' },
+  respiratory: { icon: '🫁', title: 'Respiratory Care',     sub: 'Inhalers, nebulizers, allergy meds & breathing aids.' },
+  cold:        { icon: '🤧', title: 'Cold & Immunity',      sub: 'Cough syrups, nasal drops, Vitamin C & immunity boosters.' },
+  liver:       { icon: '🫀', title: 'Liver Care',           sub: 'Liver detox, hepatoprotective tablets & support supplements.' },
+  ayurveda:    { icon: '🌿', title: 'Ayurveda & Wellness',  sub: 'Herbal remedies, ashwagandha, triphala & natural health.' },
+};
+
+let allMeds = [];
+
+async function loadMeds() {
+  const meta = META[categoryType.toLowerCase()] || { icon: '💊', title: categoryType + ' Care', sub: 'Health essentials for you.' };
+
+  // Update page meta
+  document.title = `${meta.title} | HEALIX Pharmacy`;
+  document.getElementById('page-title').innerText = `${meta.title} | HEALIX Pharmacy`;
+  document.getElementById('cat-badge').innerHTML = `${meta.icon} ${categoryType.charAt(0).toUpperCase() + categoryType.slice(1)}`;
+  document.getElementById('cat-title').innerText = meta.title;
+  document.getElementById('cat-sub').innerText = meta.sub;
+
+  // Show current location in hero
+  const savedLoc = localStorage.getItem('healix_location');
+  const heroTag = document.getElementById('loc-hero-tag');
+  const heroCity = document.getElementById('loc-hero-city');
+  if (savedLoc && heroTag && heroCity) {
+    heroCity.innerText = `Delivering to ${savedLoc}`;
+    heroTag.style.display = 'inline-flex';
+  }
+
+  // Update navbar pill text
+  const navLocText = document.getElementById('navLocText');
+  if (navLocText && savedLoc) navLocText.innerText = savedLoc;
+
+  try {
+    const loc = localStorage.getItem('healix_location') || '';
+    const url = `${API_URL}/medicines?category=${categoryType}${loc ? '&location=' + encodeURIComponent(loc) : ''}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('API Error');
+    allMeds = await res.json();
+    renderMeds(allMeds);
+  } catch (e) {
+    console.error(e);
+    document.getElementById('cat-grid').innerHTML = `
+      <div class="state-box">
+        <div class="state-icon">⚠️</div>
+        <h3>Something went wrong</h3>
+        <p>Could not load medicines. Make sure the backend is running on port 8888.</p>
+        <a href="pharmacy.html">← Go Back to Store</a>
+      </div>`;
+    document.getElementById('results-count').innerText = 'Error loading products';
+  }
+}
+
+function renderMeds(meds) {
+  const grid = document.getElementById('cat-grid');
+  const countEl = document.getElementById('results-count');
+
+  if (meds.length === 0) {
+    grid.innerHTML = `
+      <div class="state-box">
+        <div class="state-icon">🔍</div>
+        <h3>No products found</h3>
+        <p>We couldn't find any medicines in this category yet.</p>
+        <a href="pharmacy.html">← Explore All Products</a>
+      </div>`;
+    countEl.innerHTML = 'No products found';
+    return;
+  }
+
+  countEl.innerHTML = `Showing <strong>${meds.length} products</strong> in this category`;
+  grid.innerHTML = '';
+
+  meds.forEach(med => {
+    const card = document.createElement('div');
+    card.className = 'med-card';
+    const tagHtml = med.badge === 'Bestseller'
+      ? `<span class="tag-badge tag-bestseller">🏆 Bestseller</span>`
+      : med.badge === 'Price Drop'
+      ? `<span class="tag-badge tag-pricedrop">🔥 Price Drop</span>`
+      : '';
+
+    card.innerHTML = `
+      <div class="med-badge-top">
+        <span class="disc-badge">${med.discount}% OFF</span>
+        ${tagHtml}
+      </div>
+      <div class="med-img-wrap">
+        <img src="${med.image}" alt="${med.name}"
+          onerror="this.src='https://placehold.co/300x300/EEF2FF/2563EB?text=Medicine'">
+      </div>
+      <div class="med-body">
+        <div class="med-name">${med.name}</div>
+        <div class="med-cat">${med.category.charAt(0).toUpperCase() + med.category.slice(1)} Care • HEALIX Verified</div>
+        <div class="med-price-row">
+          <div class="med-mrp">MRP ₹${med.originalPrice.toFixed(2)}</div>
+          <div class="med-price-action">
+            <span class="med-price">₹${med.price.toFixed(2)}</span>
+            <button class="add-btn" id="btn-${med.id}" onclick="addToCart('${med.id}','${med.name.replace(/'/g,'')}',${med.price}, this)">
+              + ADD
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  lucide.createIcons();
+  updateCartBadge();
+}
+
+function applySort() {
+  const sortVal = document.getElementById('sort-select').value;
+  let sorted = [...allMeds];
+  if (sortVal === 'low') sorted.sort((a,b) => a.price - b.price);
+  else if (sortVal === 'high') sorted.sort((a,b) => b.price - a.price);
+  else if (sortVal === 'discount') sorted.sort((a,b) => b.discount - a.discount);
+  renderMeds(sorted);
+}
+
+function addToCart(id, name, price, btn) {
+  CartManager.addItem({ id, name, price });
+
+  // Button feedback
+  if (btn) {
+    btn.classList.add('added');
+    btn.innerText = '✓ Added';
+    setTimeout(() => { btn.classList.remove('added'); btn.innerText = '+ ADD'; }, 2000);
+  }
+}
+
+function updateCartBadge() {
+  CartManager.updateUI();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.innerText = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// Sticky navbar scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+window.onload = () => { loadMeds(); lucide.createIcons(); };
+
+// Refresh location display when location changes (cross-tab / re-load)
+window.addEventListener('storage', (e) => {
+  if (e.key === 'healix_location' && e.newValue) {
+    const navLocText = document.getElementById('navLocText');
+    const heroCity = document.getElementById('loc-hero-city');
+    if (navLocText) navLocText.innerText = e.newValue;
+    if (heroCity) heroCity.innerText = `Delivering to ${e.newValue}`;
+  }
+});
+</script>
+<script>if(localStorage.getItem("theme")==="night"){document.body.classList.add("night");}</script>
+<script src="location.js"></script>
+</body>
+</html>

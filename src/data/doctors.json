@@ -1,0 +1,752 @@
+[
+  {
+    "doctorId": "DOC1000",
+    "fullName": "Dr. Komal Dubey",
+    "specialization": "Nephrologist",
+    "experience": 27,
+    "phone": "+91 82181 35826",
+    "availability": "Available",
+    "assignedPatients": 14,
+    "email": "komal.dubey@softcare.com"
+  },
+  {
+    "doctorId": "DOC1001",
+    "fullName": "Dr. Varun Bansal",
+    "specialization": "Neurologist",
+    "experience": 31,
+    "phone": "+91 88023 73037",
+    "availability": "Busy",
+    "assignedPatients": 6,
+    "email": "varun.bansal@softcare.com"
+  },
+  {
+    "doctorId": "DOC1002",
+    "fullName": "Dr. Rahul Varghese",
+    "specialization": "Ophthalmologist",
+    "experience": 28,
+    "phone": "+91 76279 12064",
+    "availability": "Available",
+    "assignedPatients": 5,
+    "email": "rahul.varghese@softcare.com"
+  },
+  {
+    "doctorId": "DOC1003",
+    "fullName": "Dr. Shreya Nair",
+    "specialization": "General Physician",
+    "experience": 7,
+    "phone": "+91 97831 81201",
+    "availability": "Available",
+    "assignedPatients": 10,
+    "email": "shreya.nair@softcare.com"
+  },
+  {
+    "doctorId": "DOC1004",
+    "fullName": "Dr. Akash Khan",
+    "specialization": "Nephrologist",
+    "experience": 8,
+    "phone": "+91 81372 41498",
+    "availability": "Busy",
+    "assignedPatients": 0,
+    "email": "akash.khan@softcare.com"
+  },
+  {
+    "doctorId": "DOC1005",
+    "fullName": "Dr. Raj Sarin",
+    "specialization": "Neurologist",
+    "experience": 23,
+    "phone": "+91 92122 91996",
+    "availability": "Busy",
+    "assignedPatients": 5,
+    "email": "raj.sarin@softcare.com"
+  },
+  {
+    "doctorId": "DOC1006",
+    "fullName": "Dr. Aman Malhotra",
+    "specialization": "Pediatrician",
+    "experience": 33,
+    "phone": "+91 71949 24612",
+    "availability": "On Leave",
+    "assignedPatients": 13,
+    "email": "aman.malhotra@softcare.com"
+  },
+  {
+    "doctorId": "DOC1007",
+    "fullName": "Dr. Aman Kohli",
+    "specialization": "Orthopedic",
+    "experience": 22,
+    "phone": "+91 70869 32415",
+    "availability": "In Surgery",
+    "assignedPatients": 3,
+    "email": "aman.kohli@softcare.com"
+  },
+  {
+    "doctorId": "DOC1008",
+    "fullName": "Dr. Tanya Trivedi",
+    "specialization": "Psychiatrist",
+    "experience": 17,
+    "phone": "+91 96121 13700",
+    "availability": "Available",
+    "assignedPatients": 9,
+    "email": "tanya.trivedi@softcare.com"
+  },
+  {
+    "doctorId": "DOC1009",
+    "fullName": "Dr. Ritu Kohli",
+    "specialization": "Gastroenterologist",
+    "experience": 21,
+    "phone": "+91 92895 31775",
+    "availability": "Available",
+    "assignedPatients": 1,
+    "email": "ritu.kohli@softcare.com"
+  },
+  {
+    "doctorId": "DOC1010",
+    "fullName": "Dr. Yash Varghese",
+    "specialization": "General Physician",
+    "experience": 32,
+    "phone": "+91 81048 55849",
+    "availability": "Busy",
+    "assignedPatients": 4,
+    "email": "yash.varghese@softcare.com"
+  },
+  {
+    "doctorId": "DOC1011",
+    "fullName": "Dr. Siddharth D'Souza",
+    "specialization": "Nephrologist",
+    "experience": 23,
+    "phone": "+91 80969 50299",
+    "availability": "Available",
+    "assignedPatients": 13,
+    "email": "siddharth.d'souza@softcare.com"
+  },
+  {
+    "doctorId": "DOC1012",
+    "fullName": "Dr. Preeti Misra",
+    "specialization": "Dermatologist",
+    "experience": 15,
+    "phone": "+91 91579 43591",
+    "availability": "Available",
+    "assignedPatients": 1,
+    "email": "preeti.misra@softcare.com"
+  },
+  {
+    "doctorId": "DOC1013",
+    "fullName": "Dr. Yash Sheikh",
+    "specialization": "Ophthalmologist",
+    "experience": 7,
+    "phone": "+91 89494 30672",
+    "availability": "Busy",
+    "assignedPatients": 11,
+    "email": "yash.sheikh@softcare.com"
+  },
+  {
+    "doctorId": "DOC1014",
+    "fullName": "Dr. Riya Roy",
+    "specialization": "Psychiatrist",
+    "experience": 17,
+    "phone": "+91 70196 51841",
+    "availability": "On Leave",
+    "assignedPatients": 9,
+    "email": "riya.roy@softcare.com"
+  },
+  {
+    "doctorId": "DOC1015",
+    "fullName": "Dr. Zara Sarin",
+    "specialization": "General Physician",
+    "experience": 4,
+    "phone": "+91 82756 74530",
+    "availability": "Available",
+    "assignedPatients": 9,
+    "email": "zara.sarin@softcare.com"
+  },
+  {
+    "doctorId": "DOC1016",
+    "fullName": "Dr. Ananya Sen",
+    "specialization": "Oncologist",
+    "experience": 29,
+    "phone": "+91 96786 96320",
+    "availability": "In Surgery",
+    "assignedPatients": 3,
+    "email": "ananya.sen@softcare.com"
+  },
+  {
+    "doctorId": "DOC1017",
+    "fullName": "Dr. Priya Kapur",
+    "specialization": "General Physician",
+    "experience": 35,
+    "phone": "+91 82693 67682",
+    "availability": "On Leave",
+    "assignedPatients": 10,
+    "email": "priya.kapur@softcare.com"
+  },
+  {
+    "doctorId": "DOC1018",
+    "fullName": "Dr. Simran Kohli",
+    "specialization": "Urologist",
+    "experience": 34,
+    "phone": "+91 93332 94386",
+    "availability": "Available",
+    "assignedPatients": 6,
+    "email": "simran.kohli@softcare.com"
+  },
+  {
+    "doctorId": "DOC1019",
+    "fullName": "Dr. Divya Sheikh",
+    "specialization": "General Physician",
+    "experience": 12,
+    "phone": "+91 76636 83870",
+    "availability": "Busy",
+    "assignedPatients": 11,
+    "email": "divya.sheikh@softcare.com"
+  },
+  {
+    "doctorId": "DOC1020",
+    "fullName": "Dr. Ananya Agrawal",
+    "specialization": "Psychiatrist",
+    "experience": 23,
+    "phone": "+91 77852 25529",
+    "availability": "Available",
+    "assignedPatients": 12,
+    "email": "ananya.agrawal@softcare.com"
+  },
+  {
+    "doctorId": "DOC1021",
+    "fullName": "Dr. Aman D'Souza",
+    "specialization": "Cardiologist",
+    "experience": 34,
+    "phone": "+91 91189 30469",
+    "availability": "Available",
+    "assignedPatients": 8,
+    "email": "aman.d'souza@softcare.com"
+  },
+  {
+    "doctorId": "DOC1022",
+    "fullName": "Dr. Tanvi Chopra",
+    "specialization": "Cardiologist",
+    "experience": 29,
+    "phone": "+91 85260 65644",
+    "availability": "On Leave",
+    "assignedPatients": 13,
+    "email": "tanvi.chopra@softcare.com"
+  },
+  {
+    "doctorId": "DOC1023",
+    "fullName": "Dr. Rohan Malik",
+    "specialization": "Gastroenterologist",
+    "experience": 27,
+    "phone": "+91 94351 10259",
+    "availability": "On Leave",
+    "assignedPatients": 3,
+    "email": "rohan.malik@softcare.com"
+  },
+  {
+    "doctorId": "DOC1024",
+    "fullName": "Dr. Rohan Pandey",
+    "specialization": "General Physician",
+    "experience": 18,
+    "phone": "+91 91405 12070",
+    "availability": "Busy",
+    "assignedPatients": 0,
+    "email": "rohan.pandey@softcare.com"
+  },
+  {
+    "doctorId": "DOC1025",
+    "fullName": "Dr. Swati Malik",
+    "specialization": "Endocrinology",
+    "experience": 3,
+    "phone": "+91 70659 52183",
+    "availability": "Available",
+    "assignedPatients": 6,
+    "email": "swati.malik@softcare.com"
+  },
+  {
+    "doctorId": "DOC1026",
+    "fullName": "Dr. Sanya Hegde",
+    "specialization": "Gastroenterologist",
+    "experience": 29,
+    "phone": "+91 88721 72985",
+    "availability": "Available",
+    "assignedPatients": 13,
+    "email": "sanya.hegde@softcare.com"
+  },
+  {
+    "doctorId": "DOC1027",
+    "fullName": "Dr. Priya Saxena",
+    "specialization": "Urologist",
+    "experience": 34,
+    "phone": "+91 88909 53653",
+    "availability": "Available",
+    "assignedPatients": 9,
+    "email": "priya.saxena@softcare.com"
+  },
+  {
+    "doctorId": "DOC1028",
+    "fullName": "Dr. Varun Kohli",
+    "specialization": "Orthopedic",
+    "experience": 9,
+    "phone": "+91 83205 75511",
+    "availability": "Available",
+    "assignedPatients": 14,
+    "email": "varun.kohli@softcare.com"
+  },
+  {
+    "doctorId": "DOC1029",
+    "fullName": "Dr. Sanya Reddy",
+    "specialization": "Ophthalmologist",
+    "experience": 14,
+    "phone": "+91 85910 24411",
+    "availability": "Busy",
+    "assignedPatients": 1,
+    "email": "sanya.reddy@softcare.com"
+  },
+  {
+    "doctorId": "DOC1030",
+    "fullName": "Dr. Ananya Sheikh",
+    "specialization": "Pediatrician",
+    "experience": 10,
+    "phone": "+91 99791 34362",
+    "availability": "Available",
+    "assignedPatients": 15,
+    "email": "ananya.sheikh@softcare.com"
+  },
+  {
+    "doctorId": "DOC1031",
+    "fullName": "Dr. Siddharth Agrawal",
+    "specialization": "Neurologist",
+    "experience": 32,
+    "phone": "+91 83566 92219",
+    "availability": "Busy",
+    "assignedPatients": 4,
+    "email": "siddharth.agrawal@softcare.com"
+  },
+  {
+    "doctorId": "DOC1032",
+    "fullName": "Dr. Priya Agrawal",
+    "specialization": "Dermatologist",
+    "experience": 23,
+    "phone": "+91 70157 53626",
+    "availability": "Busy",
+    "assignedPatients": 1,
+    "email": "priya.agrawal@softcare.com"
+  },
+  {
+    "doctorId": "DOC1033",
+    "fullName": "Dr. Siddharth Mittal",
+    "specialization": "Endocrinology",
+    "experience": 11,
+    "phone": "+91 84315 79311",
+    "availability": "In Surgery",
+    "assignedPatients": 1,
+    "email": "siddharth.mittal@softcare.com"
+  },
+  {
+    "doctorId": "DOC1034",
+    "fullName": "Dr. Tanvi Malhotra",
+    "specialization": "ENT Specialist",
+    "experience": 18,
+    "phone": "+91 89298 85589",
+    "availability": "Available",
+    "assignedPatients": 0,
+    "email": "tanvi.malhotra@softcare.com"
+  },
+  {
+    "doctorId": "DOC1035",
+    "fullName": "Dr. Abhay Bansal",
+    "specialization": "Endocrinology",
+    "experience": 18,
+    "phone": "+91 94293 80920",
+    "availability": "Busy",
+    "assignedPatients": 6,
+    "email": "abhay.bansal@softcare.com"
+  },
+  {
+    "doctorId": "DOC1036",
+    "fullName": "Dr. Simran Bose",
+    "specialization": "ENT Specialist",
+    "experience": 9,
+    "phone": "+91 94152 65334",
+    "availability": "Busy",
+    "assignedPatients": 2,
+    "email": "simran.bose@softcare.com"
+  },
+  {
+    "doctorId": "DOC1037",
+    "fullName": "Dr. Neil Dubey",
+    "specialization": "General Physician",
+    "experience": 4,
+    "phone": "+91 92698 27277",
+    "availability": "Busy",
+    "assignedPatients": 4,
+    "email": "neil.dubey@softcare.com"
+  },
+  {
+    "doctorId": "DOC1038",
+    "fullName": "Dr. Priya D'Souza",
+    "specialization": "Psychiatrist",
+    "experience": 15,
+    "phone": "+91 76075 40568",
+    "availability": "Available",
+    "assignedPatients": 13,
+    "email": "priya.d'souza@softcare.com"
+  },
+  {
+    "doctorId": "DOC1039",
+    "fullName": "Dr. Aditya Agrawal",
+    "specialization": "General Physician",
+    "experience": 26,
+    "phone": "+91 87645 82735",
+    "availability": "In Surgery",
+    "assignedPatients": 12,
+    "email": "aditya.agrawal@softcare.com"
+  },
+  {
+    "doctorId": "DOC1040",
+    "fullName": "Dr. Sahil Varghese",
+    "specialization": "Pediatrician",
+    "experience": 9,
+    "phone": "+91 78929 75918",
+    "availability": "In Surgery",
+    "assignedPatients": 10,
+    "email": "sahil.varghese@softcare.com"
+  },
+  {
+    "doctorId": "DOC1041",
+    "fullName": "Dr. Divya Kapur",
+    "specialization": "Psychiatrist",
+    "experience": 16,
+    "phone": "+91 98613 74898",
+    "availability": "On Leave",
+    "assignedPatients": 10,
+    "email": "divya.kapur@softcare.com"
+  },
+  {
+    "doctorId": "DOC1042",
+    "fullName": "Dr. Sneha Khanna",
+    "specialization": "Psychiatrist",
+    "experience": 30,
+    "phone": "+91 83820 72663",
+    "availability": "In Surgery",
+    "assignedPatients": 8,
+    "email": "sneha.khanna@softcare.com"
+  },
+  {
+    "doctorId": "DOC1043",
+    "fullName": "Dr. Ritu Saxena",
+    "specialization": "Urologist",
+    "experience": 13,
+    "phone": "+91 78097 49962",
+    "availability": "On Leave",
+    "assignedPatients": 9,
+    "email": "ritu.saxena@softcare.com"
+  },
+  {
+    "doctorId": "DOC1044",
+    "fullName": "Dr. Aman Menon",
+    "specialization": "Ophthalmologist",
+    "experience": 11,
+    "phone": "+91 70667 59027",
+    "availability": "Available",
+    "assignedPatients": 12,
+    "email": "aman.menon@softcare.com"
+  },
+  {
+    "doctorId": "DOC1045",
+    "fullName": "Dr. Tanvi Sodhi",
+    "specialization": "Ophthalmologist",
+    "experience": 20,
+    "phone": "+91 83542 33107",
+    "availability": "Available",
+    "assignedPatients": 4,
+    "email": "tanvi.sodhi@softcare.com"
+  },
+  {
+    "doctorId": "DOC1046",
+    "fullName": "Dr. Arjun Patil",
+    "specialization": "Pediatrician",
+    "experience": 31,
+    "phone": "+91 87974 91593",
+    "availability": "Available",
+    "assignedPatients": 1,
+    "email": "arjun.patil@softcare.com"
+  },
+  {
+    "doctorId": "DOC1047",
+    "fullName": "Dr. Raj Gupta",
+    "specialization": "General Physician",
+    "experience": 8,
+    "phone": "+91 92158 25065",
+    "availability": "Available",
+    "assignedPatients": 4,
+    "email": "raj.gupta@softcare.com"
+  },
+  {
+    "doctorId": "DOC1048",
+    "fullName": "Dr. Aishwarya Deshmukh",
+    "specialization": "Dermatologist",
+    "experience": 14,
+    "phone": "+91 76751 34594",
+    "availability": "On Leave",
+    "assignedPatients": 9,
+    "email": "aishwarya.deshmukh@softcare.com"
+  },
+  {
+    "doctorId": "DOC1049",
+    "fullName": "Dr. Akash Mehta",
+    "specialization": "Neurologist",
+    "experience": 11,
+    "phone": "+91 73497 10518",
+    "availability": "Busy",
+    "assignedPatients": 5,
+    "email": "akash.mehta@softcare.com"
+  },
+  {
+    "doctorId": "DOC1050",
+    "fullName": "Dr. Amitabh Malhotra",
+    "specialization": "Neurologist",
+    "experience": 5,
+    "phone": "+91 78881 87262",
+    "availability": "In Surgery",
+    "assignedPatients": 15,
+    "email": "amitabh.malhotra@softcare.com"
+  },
+  {
+    "doctorId": "DOC1051",
+    "fullName": "Dr. Deepak Kohli",
+    "specialization": "Ophthalmologist",
+    "experience": 8,
+    "phone": "+91 86509 20767",
+    "availability": "Busy",
+    "assignedPatients": 9,
+    "email": "deepak.kohli@softcare.com"
+  },
+  {
+    "doctorId": "DOC1052",
+    "fullName": "Dr. Simran Roy",
+    "specialization": "Urologist",
+    "experience": 7,
+    "phone": "+91 90530 11937",
+    "availability": "Busy",
+    "assignedPatients": 10,
+    "email": "simran.roy@softcare.com"
+  },
+  {
+    "doctorId": "DOC1053",
+    "fullName": "Dr. Gaurav Malik",
+    "specialization": "Ophthalmologist",
+    "experience": 22,
+    "phone": "+91 84627 54213",
+    "availability": "Available",
+    "assignedPatients": 7,
+    "email": "gaurav.malik@softcare.com"
+  },
+  {
+    "doctorId": "DOC1054",
+    "fullName": "Dr. Bhavna Negi",
+    "specialization": "Dermatologist",
+    "experience": 28,
+    "phone": "+91 86852 25882",
+    "availability": "Busy",
+    "assignedPatients": 9,
+    "email": "bhavna.negi@softcare.com"
+  },
+  {
+    "doctorId": "DOC1055",
+    "fullName": "Dr. Simran Sarin",
+    "specialization": "Pediatrician",
+    "experience": 33,
+    "phone": "+91 77824 69174",
+    "availability": "On Leave",
+    "assignedPatients": 2,
+    "email": "simran.sarin@softcare.com"
+  },
+  {
+    "doctorId": "DOC1056",
+    "fullName": "Dr. Swati Agrawal",
+    "specialization": "Orthopedic",
+    "experience": 27,
+    "phone": "+91 92669 41536",
+    "availability": "In Surgery",
+    "assignedPatients": 2,
+    "email": "swati.agrawal@softcare.com"
+  },
+  {
+    "doctorId": "DOC1057",
+    "fullName": "Dr. Nandini Sodhi",
+    "specialization": "Nephrologist",
+    "experience": 26,
+    "phone": "+91 77494 80087",
+    "availability": "In Surgery",
+    "assignedPatients": 14,
+    "email": "nandini.sodhi@softcare.com"
+  },
+  {
+    "doctorId": "DOC1058",
+    "fullName": "Dr. Komal Pandey",
+    "specialization": "General Physician",
+    "experience": 4,
+    "phone": "+91 78940 85030",
+    "availability": "Available",
+    "assignedPatients": 12,
+    "email": "komal.pandey@softcare.com"
+  },
+  {
+    "doctorId": "DOC1059",
+    "fullName": "Dr. Bhavna Sheikh",
+    "specialization": "Oncologist",
+    "experience": 32,
+    "phone": "+91 80414 38926",
+    "availability": "Available",
+    "assignedPatients": 12,
+    "email": "bhavna.sheikh@softcare.com"
+  },
+  {
+    "doctorId": "DOC1060",
+    "fullName": "Dr. Priya Malhotra",
+    "specialization": "General Physician",
+    "experience": 12,
+    "phone": "+91 92669 82902",
+    "availability": "Busy",
+    "assignedPatients": 3,
+    "email": "priya.malhotra@softcare.com"
+  },
+  {
+    "doctorId": "DOC1061",
+    "fullName": "Dr. Preeti Sen",
+    "specialization": "Neurologist",
+    "experience": 11,
+    "phone": "+91 72290 34747",
+    "availability": "On Leave",
+    "assignedPatients": 2,
+    "email": "preeti.sen@softcare.com"
+  },
+  {
+    "doctorId": "DOC1062",
+    "fullName": "Dr. Riya Varghese",
+    "specialization": "General Physician",
+    "experience": 21,
+    "phone": "+91 76148 71704",
+    "availability": "In Surgery",
+    "assignedPatients": 9,
+    "email": "riya.varghese@softcare.com"
+  },
+  {
+    "doctorId": "DOC1063",
+    "fullName": "Dr. Bhavna Chatterjee",
+    "specialization": "Endocrinology",
+    "experience": 29,
+    "phone": "+91 88143 61462",
+    "availability": "In Surgery",
+    "assignedPatients": 14,
+    "email": "bhavna.chatterjee@softcare.com"
+  },
+  {
+    "doctorId": "DOC1064",
+    "fullName": "Dr. Kunal Mehta",
+    "specialization": "ENT Specialist",
+    "experience": 16,
+    "phone": "+91 98417 36297",
+    "availability": "Available",
+    "assignedPatients": 13,
+    "email": "kunal.mehta@softcare.com"
+  },
+  {
+    "doctorId": "DOC1065",
+    "fullName": "Dr. Tanvi Nair",
+    "specialization": "Nephrologist",
+    "experience": 7,
+    "phone": "+91 97813 90635",
+    "availability": "Available",
+    "assignedPatients": 1,
+    "email": "tanvi.nair@softcare.com"
+  },
+  {
+    "doctorId": "DOC1066",
+    "fullName": "Dr. Sanya Dubey",
+    "specialization": "Nephrologist",
+    "experience": 8,
+    "phone": "+91 97695 26324",
+    "availability": "In Surgery",
+    "assignedPatients": 6,
+    "email": "sanya.dubey@softcare.com"
+  },
+  {
+    "doctorId": "DOC1067",
+    "fullName": "Dr. Meera Negi",
+    "specialization": "ENT Specialist",
+    "experience": 12,
+    "phone": "+91 89758 89938",
+    "availability": "Busy",
+    "assignedPatients": 2,
+    "email": "meera.negi@softcare.com"
+  },
+  {
+    "doctorId": "DOC1068",
+    "fullName": "Dr. Tanvi Menon",
+    "specialization": "Orthopedic",
+    "experience": 22,
+    "phone": "+91 73846 91281",
+    "availability": "Available",
+    "assignedPatients": 11,
+    "email": "tanvi.menon@softcare.com"
+  },
+  {
+    "doctorId": "DOC1069",
+    "fullName": "Dr. Pranav Patil",
+    "specialization": "Oncologist",
+    "experience": 7,
+    "phone": "+91 81485 47831",
+    "availability": "Busy",
+    "assignedPatients": 8,
+    "email": "pranav.patil@softcare.com"
+  },
+  {
+    "doctorId": "DOC1070",
+    "fullName": "Dr. Aman Bajaj",
+    "specialization": "Pediatrician",
+    "experience": 10,
+    "phone": "+91 80387 50847",
+    "availability": "In Surgery",
+    "assignedPatients": 11,
+    "email": "aman.bajaj@softcare.com"
+  },
+  {
+    "doctorId": "DOC1071",
+    "fullName": "Dr. Amitabh Verma",
+    "specialization": "Orthopedic",
+    "experience": 11,
+    "phone": "+91 76743 13924",
+    "availability": "Busy",
+    "assignedPatients": 12,
+    "email": "amitabh.verma@softcare.com"
+  },
+  {
+    "doctorId": "DOC1072",
+    "fullName": "Dr. Akash Das",
+    "specialization": "ENT Specialist",
+    "experience": 15,
+    "phone": "+91 91768 48100",
+    "availability": "Available",
+    "assignedPatients": 7,
+    "email": "akash.das@softcare.com"
+  },
+  {
+    "doctorId": "DOC1073",
+    "fullName": "Dr. Neil Malhotra",
+    "specialization": "Gynecologist",
+    "experience": 22,
+    "phone": "+91 73837 46575",
+    "availability": "Available",
+    "assignedPatients": 1,
+    "email": "neil.malhotra@softcare.com"
+  },
+  {
+    "doctorId": "DOC1074",
+    "fullName": "Dr. Komal Sen",
+    "specialization": "Ophthalmologist",
+    "experience": 3,
+    "phone": "+91 83835 62373",
+    "availability": "Available",
+    "assignedPatients": 15,
+    "email": "komal.sen@softcare.com"
+  }
+]

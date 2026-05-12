@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart | HEALIX</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cart.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="cart-manager.js"></script>
+</head>
+<body>
+
+<nav class="navbar scrolled" id="navbar">
+    <div class="nav-inner">
+      <div class="logo" onclick="location.href='../index.html'">🏥 <span class="logo-healix">HEALIX</span><span class="logo-pill">Rx</span></div>
+      <div class="nav-links">
+        <a href="pharmacy.html" class="navlink">Medicines</a>
+        <a href="labtests.html" class="navlink">Lab Tests</a>
+        <a href="doctors.html" class="navlink">Doctors</a>
+        <a href="category.html?type=ayurveda" class="navlink">Ayurveda</a>
+        <a href="../health-tracking.html" class="navlink">Health Records</a>
+      </div>
+      <div class="nav-right">
+        <a href="cart.html" class="cart-icon-btn">
+          <i data-lucide="shopping-cart"></i>
+          <span id="cart-count" class="cart-badge">0</span>
+        </a>
+      </div>
+    </div>
+</nav>
+
+<main class="cart-container">
+    <div class="cart-section">
+        <h1 class="cart-title"><i data-lucide="shopping-basket"></i> Your Shopping Bag</h1>
+        <div id="cart-list" class="cart-card">
+            <!-- Items appear here -->
+            <div class="empty-state">
+                <i data-lucide="shopping-cart"></i>
+                <h2>Your cart is empty</h2>
+                <p>Add some health essentials and come back!</p>
+                <button onclick="location.href='pharmacy.html'" class="checkout-btn" style="width:auto; padding: 12px 30px;">Shop Now</button>
+            </div>
+        </div>
+    </div>
+
+    <aside class="summary-section">
+        <div class="cart-card summary-card">
+            <h3>Order Summary</h3>
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="subtotal">₹0.00</span>
+            </div>
+            <div class="summary-row">
+                <span>Delivery Charges</span>
+                <span style="color:#22C55E">FREE</span>
+            </div>
+            <div class="summary-row">
+                <span>Tax (GST 12%)</span>
+                <span id="tax">₹0.00</span>
+            </div>
+            <div class="summary-row" id="coupon-row" style="display:none; color:#059669; font-weight:700;">
+                <span>Coupon Discount</span>
+                <span id="coupon-discount">-₹0.00</span>
+            </div>
+            <div class="summary-total">
+                <span>Total Amount</span>
+                <span id="grand-total">₹0.00</span>
+            </div>
+
+            <!-- Coupon Code Section -->
+            <div class="coupon-wrap">
+                <label class="coupon-label">Have a Coupon Code?</label>
+                <div class="coupon-input-group" id="coupon-input-area">
+                    <input type="text" id="coupon-input" class="coupon-input" placeholder="Enter code (e.g. HEALIX20)">
+                    <button class="apply-btn" onclick="applyCoupon()">Apply</button>
+                </div>
+                <div class="applied-coupon" id="applied-coupon-tag">
+                    <span id="coupon-name">HEALIX20</span>
+                    <span class="remove-coupon" onclick="removeCoupon()">&times;</span>
+                </div>
+            </div>
+            <button class="checkout-btn" id="checkout-main-btn" onclick="openPaymentModal()">Proceed to Checkout</button>
+            <p style="text-align:center;font-size:12px;color:#64748B;margin-top:15px">Secure checkout by HEALIX Payment</p>
+        </div>
+    </aside>
+</main>
+
+<script>
+    let appliedCoupon = null;
+    const COUPONS = {
+        'HEALIX20': 0.20, // 20% off
+        'SAVE50': 50,      // Flat ₹50 off
+        'FIRST10': 0.10   // 10% off
+    };
+
+    function renderCart() {
+        const cart = CartManager.getCart();
+        const list = document.getElementById('cart-list');
+        
+        if (cart.length === 0) {
+            list.innerHTML = `
+                <div class="empty-state">
+                    <i data-lucide="shopping-cart" style="width:64px;height:64px;color:#CBD5E1"></i>
+                    <h2 style="margin-top:20px;font-weight:700">Your cart is empty</h2>
+                    <p style="color:#64748B;margin-bottom:24px">Browse our products and find something you need!</p>
+                    <button onclick="location.href='pharmacy.html'" class="checkout-btn" style="width:auto; padding: 12px 30px;">Continue Shopping</button>
+                </div>
+            `;
+            updateSummary(0);
+            return;
+        }
+
+        let total = 0;
+        list.innerHTML = cart.map((item, idx) => {
+            total += item.price * (item.quantity || 1);
+            return `
+                <div class="cart-item">
+                    <img src="${item.image || 'https://via.placeholder.com/150?text=Healix'}" alt="${item.name}" class="item-img">
+                    <div class="item-details">
+                        <h3>${item.name}</h3>
+                        <p>${item.type || 'Healthcare'}</p>
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="updateQty(${idx}, -1)">-</button>
+                            <span>${item.quantity || 1}</span>
+                            <button class="qty-btn" onclick="updateQty(${idx}, 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <div class="item-price">₹${(item.price * (item.quantity || 1)).toFixed(2)}</div>
+                        <button class="remove-btn" onclick="removeItem(${idx})">Remove</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        updateSummary(total);
+        if (window.lucide) window.lucide.createIcons();
+    }
+
+    function updateSummary(subtotal) {
+        let tax = subtotal * 0.12;
+        let discount = 0;
+
+        if (appliedCoupon) {
+            const val = COUPONS[appliedCoupon];
+            discount = val < 1 ? subtotal * val : val;
+            document.getElementById('coupon-row').style.display = 'flex';
+            document.getElementById('coupon-discount').innerText = `-₹${discount.toFixed(2)}`;
+            document.getElementById('applied-coupon-tag').style.display = 'flex';
+            document.getElementById('coupon-input-area').style.display = 'none';
+            document.getElementById('coupon-name').innerText = `${appliedCoupon} Applied!`;
+        } else {
+            document.getElementById('coupon-row').style.display = 'none';
+            document.getElementById('applied-coupon-tag').style.display = 'none';
+            document.getElementById('coupon-input-area').style.display = 'flex';
+        }
+
+        const total = subtotal + tax - discount;
+        document.getElementById('subtotal').innerText = `₹${subtotal.toFixed(2)}`;
+        document.getElementById('tax').innerText = `₹${tax.toFixed(2)}`;
+        document.getElementById('grand-total').innerText = `₹${Math.max(0, total).toFixed(2)}`;
+    }
+
+    function applyCoupon() {
+        const input = document.getElementById('coupon-input').value.toUpperCase().trim();
+        if (COUPONS[input]) {
+            appliedCoupon = input;
+            const currentSubtotal = parseFloat(document.getElementById('subtotal').innerText.replace('₹', ''));
+            updateSummary(currentSubtotal);
+            CartManager.showToast(`🎉 Coupon ${input} applied successfully!`);
+        } else {
+            CartManager.showToast(`❌ Invalid coupon code`);
+        }
+    }
+
+    function removeCoupon() {
+        appliedCoupon = null;
+        const currentSubtotal = parseFloat(document.getElementById('subtotal').innerText.replace('₹', ''));
+        updateSummary(currentSubtotal);
+        document.getElementById('coupon-input').value = '';
+    }
+
+    function updateQty(index, change) {
+        let cart = CartManager.getCart();
+        cart[index].quantity = (cart[index].quantity || 1) + change;
+        if (cart[index].quantity < 1) cart[index].quantity = 1;
+        CartManager.saveCart(cart);
+        renderCart();
+    }
+
+    function removeItem(index) {
+        let cart = CartManager.getCart();
+        cart.splice(index, 1);
+        CartManager.saveCart(cart);
+        renderCart();
+    }
+
+
+    // --- PAYMENT MODAL LOGIC ---
+    function openPaymentModal() {
+        if(CartManager.getCart().length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+
+        // Auto-fill from session if available
+        const user = JSON.parse(localStorage.getItem('healix_user'));
+        if(user) {
+            document.getElementById('notify-email').value = user.email || '';
+            document.getElementById('notify-phone').value = user.phone || '';
+        }
+
+        document.getElementById('payment-modal').style.display = 'flex';
+        document.getElementById('final-amount-display').innerText = document.getElementById('grand-total').innerText;
+    }
+
+    function closePaymentModal() {
+        document.getElementById('payment-modal').style.display = 'none';
+    }
+
+    function selectPayment(method) {
+        document.querySelectorAll('.pay-option').forEach(opt => opt.classList.remove('active'));
+        const selected = event.currentTarget;
+        selected.classList.add('active');
+        
+        // Show/hide sub-fields based on selection
+        document.getElementById('card-fields').style.display = method === 'card' ? 'block' : 'none';
+        document.getElementById('upi-fields').style.display = method === 'upi' ? 'block' : 'none';
+        
+        if (method === 'upi') {
+            const amount = document.getElementById('grand-total').innerText.replace('₹', '').trim();
+            const upiId = "healix@okaxis"; // Mock UPI ID
+            const upiName = "HEALIX HEALTHCARE";
+            const upiUrl = `upi://pay?pa=${upiId}&pn=${upiName}&am=${amount}&cu=INR`;
+            
+            // Generate QR via QRServer API
+            const qrImg = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiUrl)}`;
+            document.getElementById('upi-qr').src = qrImg;
+        }
+
+        window.selectedPaymentMethod = method;
+    }
+
+    async function processPayment() {
+        const email = document.getElementById('notify-email').value;
+        const phone = document.getElementById('notify-phone').value;
+
+        if(!email || !phone) {
+            alert("Please provide Email and Phone for order notifications.");
+            return;
+        }
+
+        if(!window.selectedPaymentMethod) {
+            alert("Please select a payment method");
+            return;
+        }
+
+        const btn = document.getElementById('pay-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="loader"></span> Processing...';
+
+        const cart = CartManager.getCart();
+        const total = cart.reduce((acc, item) => acc + (item.price * (item.quantity || 1)), 0);
+
+        // Optional: Save bill to backend
+        try {
+            await fetch('/api/pharmacy/bills', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    items: cart,
+                    total: total * 1.12, // include tax
+                    paymentMethod: window.selectedPaymentMethod,
+                    customer: { email, phone }
+                })
+            });
+        } catch(e) { console.error("Could not save bill", e); }
+
+        // Simulate network delay
+        await new Promise(r => setTimeout(r, 2000));
+
+        // Show Success
+        document.getElementById('payment-content').style.display = 'none';
+        document.getElementById('success-message').style.display = 'block';
+        document.getElementById('notify-summary').innerText = `Confirmation sent to ${email} and +91 ${phone}`;
+
+        // Start Countdown
+        let count = 3;
+        const timer = setInterval(() => {
+            count--;
+            document.getElementById('timer').innerText = count;
+            if(count <= 0) clearInterval(timer);
+        }, 1000);
+
+        // Clear cart
+        localStorage.removeItem('healix_cart');
+        
+        setTimeout(() => {
+            location.href = '../index.html';
+        }, 3000);
+    }
+
+    function checkout() {
+        openPaymentModal();
+    }
+
+    document.addEventListener('DOMContentLoaded', renderCart);
+</script>
+
+<!-- PAYMENT MODAL -->
+<div id="payment-modal" class="modal-overlay">
+    <div class="modal-card">
+        <button class="close-modal" onclick="closePaymentModal()">&times;</button>
+        
+        <div id="payment-content">
+            <h2 class="modal-title">Complete Your Payment</h2>
+            <p class="modal-sub" style="margin-bottom:15px">Total Amount: <strong id="final-amount-display">₹0.00</strong></p>
+
+            <div class="contact-fields" style="margin-bottom: 20px; padding: 15px; background: #F8FAFC; border-radius: 12px; border: 1px solid var(--border);">
+                <label style="font-size:12px; font-weight:700; color:#64748B; text-transform:uppercase; display:block; margin-bottom:10px;">Notification Details</label>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
+                    <input type="email" id="notify-email" placeholder="Email Address" class="pay-input" style="margin-bottom:0">
+                    <input type="tel" id="notify-phone" placeholder="Phone Number" class="pay-input" style="margin-bottom:0">
+                </div>
+                <p style="font-size:11px; color:#94A3B8; margin-top:8px">Order confirmation will be sent to these details.</p>
+            </div>
+
+            <div class="payment-methods">
+                <div class="pay-option" onclick="selectPayment('card')">
+                    <div class="pay-icon">💳</div>
+                    <div class="pay-label">
+                        <strong>Credit / Debit Card</strong>
+                        <span>Visa, Mastercard, RuPay</span>
+                    </div>
+                </div>
+
+                <div id="card-fields" class="method-fields">
+                    <input type="text" placeholder="Card Number" class="pay-input">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px">
+                        <input type="text" placeholder="MM/YY" class="pay-input">
+                        <input type="password" placeholder="CVV" class="pay-input">
+                    </div>
+                </div>
+
+                <div class="pay-option" onclick="selectPayment('upi')">
+                    <div class="pay-icon">⚡</div>
+                    <div class="pay-label">
+                        <strong>UPI Payment</strong>
+                        <span>Google Pay, PhonePe, Paytm</span>
+                    </div>
+                </div>
+
+                <div id="upi-fields" class="method-fields">
+                    <div class="qr-box">
+                        <div class="qr-scanner-line"></div>
+                        <img id="upi-qr" src="" alt="UPI QR Code">
+                    </div>
+                    <p style="font-size:12px; color:#64748B; margin:10px 0; text-align:center;">Scan QR code with any UPI app</p>
+                    <input type="text" placeholder="Or enter UPI ID (e.g. user@okaxis)" class="pay-input">
+                </div>
+
+                <div class="pay-option" onclick="selectPayment('cod')">
+                    <div class="pay-icon">💵</div>
+                    <div class="pay-label">
+                        <strong>Cash on Delivery</strong>
+                        <span>Pay when you receive</span>
+                    </div>
+                </div>
+            </div>
+
+            <button id="pay-btn" class="checkout-btn" onclick="processPayment()">Confirm Order</button>
+            <p class="secure-label">🔒 256-bit Secure Encryption</p>
+        </div>
+
+        <!-- SUCCESS VIEW -->
+        <div id="success-message" style="display:none; text-align:center; padding:30px 10px;">
+            <div class="success-icon">✅</div>
+            <h2 style="font-size:24px; margin-bottom:10px;">Order Successful!</h2>
+            <p style="color:#64748B; margin-bottom:10px;">Your health essentials are being prepared for delivery.</p>
+            <p id="notify-summary" style="font-size:13px; color:#059669; font-weight:600; background:#F0FDF4; padding:8px; border-radius:8px; display:inline-block; margin-bottom:20px;">Confirmation sent to your contact details.</p>
+            <div class="redirect-timer">Redirecting to home in <span id="timer">3</span>s...</div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

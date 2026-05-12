@@ -1,0 +1,38 @@
+[
+  {
+    "id": "MED001",
+    "name": "Paracetamol 500mg",
+    "stock": 150,
+    "price": 10.5,
+    "expiry": "2026-12-31",
+    "supplier": "Generic Pharma",
+    "category": "Painkiller"
+  },
+  {
+    "id": "MED002",
+    "name": "Cetirizine 10mg",
+    "stock": 80,
+    "price": 5.0,
+    "expiry": "2025-06-30",
+    "supplier": "Cipla Ltd",
+    "category": "Antihistamine"
+  },
+  {
+    "id": "MED003",
+    "name": "Amoxicillin 250mg",
+    "stock": 20,
+    "price": 45.0,
+    "expiry": "2025-09-15",
+    "supplier": "Sun Pharma",
+    "category": "Antibiotic"
+  },
+  {
+    "id": "MED004",
+    "name": "Metformin 500mg",
+    "stock": 200,
+    "price": 15.0,
+    "expiry": "2027-01-10",
+    "supplier": "Generic Pharma",
+    "category": "Antidiabetic"
+  }
+]

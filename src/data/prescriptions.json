@@ -1,0 +1,21 @@
+[
+  {
+    "id": "RX1001",
+    "patientName": "Aarav Sharma",
+    "medicines": [
+      "Paracetamol 500mg (1-0-1)",
+      "Cetirizine 10mg (0-0-1)"
+    ],
+    "status": "Pending",
+    "date": "2026-04-05"
+  },
+  {
+    "id": "RX1002",
+    "patientName": "Ishita Roy",
+    "medicines": [
+      "Amoxicillin 250mg (1-1-1)"
+    ],
+    "status": "Pending",
+    "date": "2026-04-05"
+  }
+]

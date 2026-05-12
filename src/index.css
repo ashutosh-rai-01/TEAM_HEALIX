@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-500: #2563eb;
+  --color-primary-600: #1d4ed8;
+  --font-sans: "Inter", sans-serif;
+}
+
+/* --- THEME SYSTEM (Admin Portal) --- */
+
+/* Base Day Mode (Soft Blue Dashboard) */
+:root {
+  --bg-main: #e0f2ff;
+  --card-bg: #ffffff;
+  --text-main: #0f172a;
+  --border-color: #cbd5e1;
+  --btn-bg: #2563eb;
+  --btn-text: #ffffff;
+}
+
+/* Night Mode (Matching Reference Image: Pitch Black + Gradient Cards) */
+:root[class~="dark"] {
+  --bg-main: #000000;
+  /* Premium Linear Gradient for Cards in Night mode */
+  --card-bg: linear-gradient(180deg, #333333 0%, #a3a3a3 100%);
+  --text-main: #ffffff;
+  --border-color: #ffffff;
+  --btn-bg: #ffffff;
+  --btn-text: #000000;
+}
+
+body {
+  background-color: var(--bg-main) !important;
+  color: var(--text-main) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* --- CARD SYSTEM --- */
+.bg-white {
+  background: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
+}
+
+/* Force Dark Mode Content Styling */
+.dark .bg-white {
+  background: var(--card-bg) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: none !important;
+}
+
+/* Text Overrides for Dark Mode */
+.dark .text-slate-800, 
+.dark .text-slate-700, 
+.dark .text-slate-600,
+.dark .text-slate-900,
+.dark .text-gray-800,
+.dark .text-gray-600,
+.dark h1, .dark h2, .dark h3 {
+  color: var(--text-main) !important;
+}
+
+/* Sub-text contrast in Dark Mode */
+.dark .text-slate-400,
+.dark .text-slate-500,
+.dark .text-gray-500,
+.dark .text-slate-400 p {
+  color: #000000 !important; /* Making sub-text darker on the grey/white gradient card */
+  font-weight: 700;
+}
+
+/* Special Case: If text is on top of the gradient card in dark mode, it should be readable */
+.dark .bg-white p, 
+.dark .bg-white span:not(.bg-red-500) {
+  color: #1a1a1a !important; 
+}
+
+.dark .bg-white h1, 
+.dark .bg-white h2, 
+.dark .bg-white h3 {
+  color: #000000 !important;
+}
+
+/* BUTTONS */
+.dark button:not(.bg-blue-600):not(.bg-red-600):not(.bg-orange-600) {
+  background-color: var(--btn-bg) !important;
+  color: var(--btn-text) !important;
+}
+
+/* Layout Elements */
+nav {
+  backdrop-filter: blur(8px);
+}
+
+.dark nav h2 {
+  color: #ffffff !important;
+}
+
+/* Scrollbar styling for a cleaner look */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #333;
+}

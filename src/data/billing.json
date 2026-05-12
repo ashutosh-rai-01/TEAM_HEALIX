@@ -1,0 +1,227 @@
+[
+  {
+    "billId": "INV-2026001",
+    "patientId": "PAT1025",
+    "patientName": "Rahul Nair",
+    "amount": 1255.2,
+    "status": "Paid",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-01"
+  },
+  {
+    "billId": "INV-2026002",
+    "patientId": "PAT1016",
+    "patientName": "Ayaan Gupta",
+    "amount": 913.91,
+    "status": "Paid",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-01"
+  },
+  {
+    "billId": "INV-2026003",
+    "patientId": "PAT1037",
+    "patientName": "Anya Sharma",
+    "amount": 2656.34,
+    "status": "Pending",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-04"
+  },
+  {
+    "billId": "INV-2026004",
+    "patientId": "PAT1019",
+    "patientName": "Vikram Singh",
+    "amount": 5134.68,
+    "status": "Paid",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-02"
+  },
+  {
+    "billId": "INV-2026005",
+    "patientId": "PAT1026",
+    "patientName": "Ishaan Joshi",
+    "amount": 12206.69,
+    "status": "Pending",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-02"
+  },
+  {
+    "billId": "INV-2026006",
+    "patientId": "PAT1034",
+    "patientName": "Ayaan Gupta",
+    "amount": 7018.37,
+    "status": "Paid",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-02"
+  },
+  {
+    "billId": "INV-2026007",
+    "patientId": "PAT1024",
+    "patientName": "Krishna Iyer",
+    "amount": 9545.18,
+    "status": "Pending",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-05"
+  },
+  {
+    "billId": "INV-2026008",
+    "patientId": "PAT1013",
+    "patientName": "Arjun Verma",
+    "amount": 1150.36,
+    "status": "Paid",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-03"
+  },
+  {
+    "billId": "INV-2026009",
+    "patientId": "PAT1006",
+    "patientName": "Pooja Bose",
+    "amount": 8435.23,
+    "status": "Pending",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-02"
+  },
+  {
+    "billId": "INV-2026010",
+    "patientId": "PAT1028",
+    "patientName": "Krishna Iyer",
+    "amount": 10590.93,
+    "status": "Pending",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-04"
+  },
+  {
+    "billId": "INV-2026011",
+    "patientId": "PAT1016",
+    "patientName": "Riya Iyer",
+    "amount": 11734.22,
+    "status": "Pending",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-01"
+  },
+  {
+    "billId": "INV-2026012",
+    "patientId": "PAT1031",
+    "patientName": "Ishaan Joshi",
+    "amount": 8414.5,
+    "status": "Pending",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-01"
+  },
+  {
+    "billId": "INV-2026013",
+    "patientId": "PAT1014",
+    "patientName": "Riya Iyer",
+    "amount": 4302.26,
+    "status": "Pending",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-02"
+  },
+  {
+    "billId": "INV-2026014",
+    "patientId": "PAT1022",
+    "patientName": "Ayaan Gupta",
+    "amount": 9439.82,
+    "status": "Pending",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-03"
+  },
+  {
+    "billId": "INV-2026015",
+    "patientId": "PAT1037",
+    "patientName": "Amit Shah",
+    "amount": 2857.68,
+    "status": "Paid",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-04"
+  },
+  {
+    "billId": "INV-2026016",
+    "patientId": "PAT1021",
+    "patientName": "Aarav Sharma",
+    "amount": 7465.68,
+    "status": "Paid",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-05"
+  },
+  {
+    "billId": "INV-2026017",
+    "patientId": "PAT1009",
+    "patientName": "Myra Singh",
+    "amount": 12910.6,
+    "status": "Pending",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-05"
+  },
+  {
+    "billId": "INV-2026018",
+    "patientId": "PAT1017",
+    "patientName": "Myra Singh",
+    "amount": 8523.18,
+    "status": "Pending",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-01"
+  },
+  {
+    "billId": "INV-2026019",
+    "patientId": "PAT1012",
+    "patientName": "Ananya Verma",
+    "amount": 12667.23,
+    "status": "Pending",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-01"
+  },
+  {
+    "billId": "INV-2026020",
+    "patientId": "PAT1027",
+    "patientName": "Priya Das",
+    "amount": 9779.65,
+    "status": "Paid",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-01"
+  },
+  {
+    "billId": "INV-2026021",
+    "patientId": "PAT1007",
+    "patientName": "Krishna Iyer",
+    "amount": 11282.52,
+    "status": "Pending",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-03"
+  },
+  {
+    "billId": "INV-2026022",
+    "patientId": "PAT1012",
+    "patientName": "Sai Kumar",
+    "amount": 2136.59,
+    "status": "Paid",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-01"
+  },
+  {
+    "billId": "INV-2026023",
+    "patientId": "PAT1027",
+    "patientName": "Sara Joshi",
+    "amount": 5581.18,
+    "status": "Paid",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-01"
+  },
+  {
+    "billId": "INV-2026024",
+    "patientId": "PAT1039",
+    "patientName": "Arjun Verma",
+    "amount": 9399.48,
+    "status": "Paid",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-01"
+  },
+  {
+    "billId": "INV-2026025",
+    "patientId": "PAT1002",
+    "patientName": "Ayaan Gupta",
+    "amount": 7033.33,
+    "status": "Pending",
+    "services": "Consultation, Lab Tests",
+    "date": "2026-04-04"
+  }
+]
