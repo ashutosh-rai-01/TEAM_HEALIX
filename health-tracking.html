@@ -3,443 +3,351 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Health Tracking | Healix</title>
+<title>Admin Dashboard | Healix</title>
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
 
 <style>
-/* CSS VARIABLES (DAY) */
 :root {
-  --bg: #f8fafc;
-  --panel: #ffffff;
+  --bg: #f0f7ff;
+  --surface: #ffffff;
   --text: #0f172a;
-  --text-muted: #64748b;
+  --text-soft: #64748b;
   --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --border: #f1f5f9;
-  
-  --success: #059669;
-  --success-bg: #d1fae5;
-  --warning: #d97706;
-  --warning-bg: #fef3c7;
-  --danger: #dc2626;
-  --danger-bg: #fee2e2;
-  --cyan: #0284c7;
-  --cyan-bg: #e0f2fe;
-
-  --sidebar-w: 260px;
+  --primary-soft: #dbeafe;
+  --border: #e2e8f0;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-/* NIGHT MODE */
-
-body.night .card, body.night .metric-card {
-   backdrop-filter: blur(15px); 
-   background: linear-gradient(135deg, #111111, rgba(255,255,255,0.05));
-   border-color: #334155;
-}
 body.night {
-  --bg: #000000;
-  --panel: #111111;
+  --bg: #0f172a;
+  --surface: #1e293b;
   --text: #f8fafc;
-  --text-muted: #94a3b8;
-  --primary: #38bdf8;
-  --primary-hover: #0ea5e9;
+  --text-soft: #94a3b8;
+  --primary: #3b82f6;
+  --primary-soft: #1e3a8a;
   --border: #334155;
-  
-  --success: #34d399;
-  --success-bg: rgba(52, 211, 153, 0.2);
-  --warning: #fbbf24;
-  --warning-bg: rgba(251, 191, 36, 0.2);
-  --danger: #f87171;
-  --danger-bg: rgba(248, 113, 113, 0.2);
+  --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
 }
 
-* { box-sizing: border-box; }
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   background: var(--bg);
   color: var(--text);
-  display: flex;
-  transition: background 0.3s, color 0.3s;
-}
-
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
-}
-
-body.night .card, body.night .metric-card {
-   backdrop-filter: blur(15px); 
-   background: linear-gradient(135deg, #111111, rgba(255,255,255,0.05));
-   border-color: #334155;
-}
-body.night {
-  background: #000000 !important;
-  animation: none;
-}
-
-/* SIDEBAR */
-.sidebar {
-  width: var(--sidebar-w);
-  background: var(--panel);
-  height: 100vh;
-  position: fixed;
-  border-right: 1px solid var(--border);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-}
-.sidebar .logo {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 40px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.sidebar-link {
-  padding: 12px 15px;
-  border-radius: 10px;
-  color: var(--text-muted);
-  text-decoration: none;
-  font-weight: 500;
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  transition: 0.2s;
-}
-.sidebar-link:hover, .sidebar-link.active {
-  background: var(--primary);
-  color: white;
-}
-
-/* MAIN CONTENT */
-.main {
-  margin-left: var(--sidebar-w);
-  padding: 30px 40px;
-  flex: 1;
+  transition: all 0.3s ease;
   min-height: 100vh;
 }
 
-/* HEADER */
-header {
+nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  padding: 20px 5%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-.header-info h1 {
-  margin: 0 0 5px 0;
-  font-size: 28px;
-}
-.header-info p {
-  margin: 0;
-  color: var(--text-muted);
-}
-.theme-btn {
-  padding: 8px 16px;
-  border: 1px solid var(--border);
-  background: var(--panel);
-  color: var(--text);
-  border-radius: 20px;
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 800;
   cursor: pointer;
-  font-weight: 500;
-  transition: 0.3s;
-}
-.theme-btn:hover {
-  border-color: var(--primary);
   color: var(--primary);
 }
 
-/* METRICS GRID */
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-bottom: 30px;
+.theme-toggle {
+  display: flex;
+  background: var(--primary-soft);
+  padding: 4px;
+  border-radius: 12px;
+  gap: 4px;
 }
-.metric-card { background: var(--panel); border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-  padding: 20px;
-  border-radius: 16px;
+
+.theme-toggle button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.theme-toggle button.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.hero {
+  padding: 60px 20px 40px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 38px;
+  font-weight: 800;
+  margin: 0 0 12px 0;
+  letter-spacing: -1px;
+}
+
+.hero p {
+  color: var(--text-soft);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  padding: 40px 5%;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--surface);
   border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 30px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: var(--card-shadow);
+  position: relative;
+  overflow: hidden;
 }
-.metric-card .icon { font-size: 24px; margin-bottom: 10px; }
-.metric-card .label { color: var(--text-muted); font-size: 14px; font-weight: 500; }
-.metric-card .val { font-size: 24px; font-weight: 700; margin-top: 5px; }
 
-/* LOWER GRID */
-.lower-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-bottom: 30px;
+.card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
 }
-.card { background: var(--panel); border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-  padding: 25px;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-}
-.card h3 {
-  margin-top: 0;
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--primary-soft);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 20px;
-  font-size: 18px;
+  color: var(--primary);
 }
 
-/* FORM */
-.input-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
+.card h3 {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  font-weight: 700;
 }
-.input-group label {
-  display: block;
-  font-size: 13px;
-  color: var(--text-muted);
-  font-weight: 500;
-  margin-bottom: 5px;
+
+.card p {
+  margin: 0 0 24px 0;
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 1.5;
 }
-.input-group input {
-  background: rgba(255, 255, 255, 0.5);
-  border: 1px solid var(--border);
-  color: var(--text);
-  border-radius: 8px;
-  outline: none;
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
 }
-body.night .input-group input, body.night .input-group select {
-  background: var(--bg);
-}
-.input-group input:focus { border-color: var(--primary); }
-.btn {
-  width: 100%;
-  padding: 12px;
-  margin-top: 20px;
+
+.btn-open {
+  padding: 10px 24px;
   background: var(--primary);
   color: white;
   border: none;
-  font-size: 15px;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.btn:hover { background: var(--primary-hover); }
-.modal {
-  display: none;
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5); z-index: 100;
-  justify-content: center; align-items: center;
-}
-.modal-content {
-  width: 90%; max-width: 600px;
-  max-height: 90vh; overflow-y: auto;
-  position: relative;
-}
-.close-btn {
-  position: absolute; right: 20px; top: 20px;
-  cursor: pointer; font-size: 20px; color: var(--text-muted);
-}
-
-/* DATA TABLE */
-.table-container {
-  overflow-x: auto;
-}
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-th, td {
-  padding: 14px 10px;
-  text-align: left;
-  border-bottom: 1px solid var(--border);
-  font-size: 14px;
-}
-th {
-  color: var(--text-muted);
-  font-weight: 600;
-}
-.badge {
-  padding: 4px 10px;
   border-radius: 12px;
-  font-size: 12px;
   font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
 }
-.badge.normal { background: var(--success-bg); color: var(--success); }
-.badge.moderate { background: var(--warning-bg); color: var(--warning); }
-.badge.high { background: var(--danger-bg); color: var(--danger); }
 
-@media (max-width: 1024px) {
-  .metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-bottom: 30px;
+.btn-open:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
 }
-  .lower-grid { grid-template-columns: 1fr; }
+
+.card.emergency {
+  border-left: 4px solid #ef4444;
 }
-@media (max-width: 768px) {
-  .sidebar { transform: translateX(-100%); z-index: 10; padding-top: 60px; }
-  .main { margin-left: 0; padding: 20px; }
+
+.card.emergency .card-icon {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.card.emergency .btn-open {
+  background: #ef4444;
+}
+
+@media (max-width: 600px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  .hero h1 { font-size: 30px; }
 }
 </style>
 </head>
+
 <body>
 
-<aside class="sidebar">
-  <div class="logo">🏥 <span>Healix</span></div>
-  <a href="pateintportal.html" class="sidebar-link">🏠 Dashboard</a>
-  <a href="#" class="sidebar-link active">📊 Health Tracking</a>
-  <a href="appointments.html" class="sidebar-link">📅 Appointments</a>
-  <a href="medicine.html" class="sidebar-link">💊 Medicines</a>
-  <a href="reports.html" class="sidebar-link">🧾 Reports</a>
-</aside>
+<nav>
+  <div class="logo" onclick="location.href='index.html'">
+    <i data-lucide="hospital"></i>
+    <span>Healix Admin</span>
+  </div>
+  <div class="theme-toggle">
+    <button id="day-btn" onclick="setTheme('day')">Day</button>
+    <button id="night-btn" onclick="setTheme('night')">Night</button>
+  </div>
+</nav>
 
-<main class="main">
-  <header>
-    <div class="header-info">
-      <h1>Health Tracking</h1>
-      <p>Monitor your vitals and daily activity trends</p>
-    </div>
-    <div style="display:flex; gap:10px;">
-      <button class="btn" style="width:auto; margin:0; padding:8px 16px; border-radius:20px;" onclick="document.getElementById('vitalsModal').style.display='flex'">Log Vitals</button>
-      <button class="theme-btn" onclick="toggleTheme()">Day / Night</button>
-    </div>
-  </header>
+<section class="hero">
+  <h1>Administrative Dashboard</h1>
+  <p>Overview of hospital operations, staff management, and system-wide controls.</p>
+</section>
 
-  <div class="metrics-grid">
-    <div class="metric-card">
-      <div class="icon">👟</div>
-      <div class="label">Daily Steps</div>
-      <div class="val" id="mockSteps">8,432</div>
+<div class="container">
+
+  <!-- MANAGE PATIENTS -->
+  <div class="card" onclick="location.href='dr_patients.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="users"></i></div>
+      <h3>Manage Patients</h3>
+      <p>Access patient history, registration details, and health records database.</p>
     </div>
-    <div class="metric-card">
-      <div class="icon">🔥</div>
-      <div class="label">Calories Burned</div>
-      <div class="val" id="mockCals">2,150</div>
-    </div>
-    <div class="metric-card">
-      <div class="icon">❤️</div>
-      <div class="label">Average HR</div>
-      <div class="val" id="mockHr">68 bpm</div>
-    </div>
-    <div class="metric-card">
-      <div class="icon">😴</div>
-      <div class="label">Sleep Last Night</div>
-      <div class="val" id="mockSleep">7h 15m</div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">120 Active</span>
+      <button class="btn-open">Open</button>
     </div>
   </div>
 
-  <div class="lower-grid">
-    <div class="card">
-      <h3>Log Vitals (Systolic)</h3>
-      <div style="position: relative; height: 200px; width: 100%;">
-         <canvas id="sysChart"></canvas>
-      </div>
+  <!-- MANAGE DOCTORS -->
+  <div class="card" onclick="location.href='dr_profile.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="stethoscope"></i></div>
+      <h3>Manage Doctors</h3>
+      <p>Configure doctor profiles, department assignments, and shift schedules.</p>
     </div>
-
-    <div class="card">
-      <h3>Vitals Analytics (BP)</h3>
-      <div style="position: relative; height: 200px; width: 100%;">
-         <canvas id="healthChart"></canvas>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Heart Rate Monitoring</h3>
-      <div style="position: relative; height: 200px; width: 100%;">
-         <canvas id="hrChart"></canvas>
-      </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">45 On-Duty</span>
+      <button class="btn-open">Open</button>
     </div>
   </div>
 
-  <!-- Modal for Logging Vitals -->
-  <div id="vitalsModal" class="modal">
-    <div class="modal-content card">
-      <span class="close-btn" onclick="document.getElementById('vitalsModal').style.display='none'">&times;</span>
-      <h3 style="margin-top:0;">Log Vitals Form</h3>
-      <div class="input-grid" style="margin-bottom: 15px;">
-        <div class="input-group">
-          <label>Age</label>
-          <input type="number" id="ageIn" value="30">
-        </div>
-        <div class="input-group">
-          <label>Gender</label>
-          <select id="genderIn" style="width:100%; padding:10px; border-radius:8px; border:1px solid var(--border); outline:none; background:rgba(255,255,255,0.5); color:var(--text);">
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        <div class="input-group">
-          <label>Height (cm)</label>
-          <input type="number" id="heightIn" value="175">
-        </div>
-        <div class="input-group">
-          <label>Weight (kg)</label>
-          <input type="number" id="weightIn" value="70">
-        </div>
-      </div>
-      <div class="input-grid">
-        <div class="input-group">
-          <label>Systolic (mmHg)</label>
-          <input type="number" id="sysIn" placeholder="120">
-        </div>
-        <div class="input-group">
-          <label>Diastolic (mmHg)</label>
-          <input type="number" id="diaIn" placeholder="80">
-        </div>
-        <div class="input-group">
-          <label>Blood Sugar (mg/dL)</label>
-          <input type="number" id="sugarIn" placeholder="110">
-        </div>
-        <div class="input-group">
-          <label>Heart Rate (BPM)</label>
-          <input type="number" id="hrIn" placeholder="75">
-        </div>
-        <div class="input-group">
-          <label>SpO2 (%)</label>
-          <input type="number" id="spo2In" placeholder="98">
-        </div>
-        <div class="input-group">
-          <label>Body Temp (°C)</label>
-          <input type="number" step="0.1" id="tempIn" placeholder="37.0">
-        </div>
-      </div>
-      <div class="input-group" style="margin-top: 15px;">
-        <label>Symptoms (e.g., Fever, Cough - optional)</label>
-        <input type="text" id="symptomsIn" placeholder="E.g., Fever, Chest Pain">
-      </div>
-      <button class="btn" onclick="saveVitals()">Save Entry</button>
+  <!-- APPOINTMENTS -->
+  <div class="card" onclick="location.href='dr_appointments.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="calendar"></i></div>
+      <h3>Appointments</h3>
+      <p>Real-time monitoring of scheduled consultations and emergency bookings.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">8 Pending</span>
+      <button class="btn-open">Open</button>
     </div>
   </div>
 
-  <div class="card">
-    <h3>Recent Vitals History</h3>
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>BP (Sys/Dia)</th>
-            <th>Sugar</th>
-            <th>Health Score</th>
-            <th>Risk Alert</th>
-            <th>AI Suggestion</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody id="historyTable">
-          <!-- Populated by JS -->
-        </tbody>
-      </table>
+  <!-- BED MANAGEMENT -->
+  <div class="card" onclick="location.href='admin_beds.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="bed"></i></div>
+      <h3>Bed Management</h3>
+      <p>Track ICU, General Ward, and Emergency bed occupancy across wings.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">12 Available</span>
+      <button class="btn-open">Open</button>
     </div>
   </div>
-</main>
 
-<script src="health-tracking.js"></script>
-<script>if(localStorage.getItem("theme") === "night") { document.body.classList.add("night"); }</script></body>
+  <!-- REPORTS & BILLING -->
+  <div class="card" onclick="location.href='dr_reports.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="file-text"></i></div>
+      <h3>Reports & Billing</h3>
+      <p>Financial overview, diagnostic reports, and administrative data exports.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">Updated 2m ago</span>
+      <button class="btn-open">Open</button>
+    </div>
+  </div>
+
+  <!-- SYSTEM ALERTS -->
+  <div class="card emergency" onclick="location.href='dr_emergency.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="alert-triangle"></i></div>
+      <h3>System Alerts</h3>
+      <p>Critical notifications, emergency overrides, and security protocols.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:700; color:#ef4444">3 Critical</span>
+      <button class="btn-open">SOS Hub</button>
+    </div>
+  </div>
+
+  <!-- PHARMACY MANAGEMENT -->
+  <div class="card" onclick="location.href='pharmacy.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="pill"></i></div>
+      <h3>Pharmacy Hub</h3>
+      <p>Inventory tracking, stock alerts, and pharmaceutical sales management.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">Low Stock (2)</span>
+      <button class="btn-open">Manage</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function setTheme(mode){
+  const body = document.body;
+  const dayBtn = document.getElementById('day-btn');
+  const nightBtn = document.getElementById('night-btn');
+
+  if(mode === "night"){
+    body.classList.add("night");
+    localStorage.setItem("theme", "night");
+    nightBtn.classList.add('active');
+    dayBtn.classList.remove('active');
+  } else {
+    body.classList.remove("night");
+    localStorage.setItem("theme", "day");
+    dayBtn.classList.add('active');
+    nightBtn.classList.remove('active');
+  }
+}
+
+// Init theme
+const saved = localStorage.getItem("theme");
+setTheme(saved === "night" ? "night" : "day");
+
+lucide.createIcons();
+</script>
+</body>
 </html>
+
