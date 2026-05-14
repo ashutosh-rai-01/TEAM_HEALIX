@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AnimatedCounter from '../components/AnimatedCounter';
 import { 
   UserPlus, Search, Filter, MoreVertical, X, CheckCircle, 
   Clock, Activity, Phone, Shield, Calendar, ChevronRight, 
@@ -434,19 +435,19 @@ export default function DoctorsPage() {
       {/* KPI Section */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
-          <div><p className="text-slate-500 font-bold text-xs uppercase mb-1">Total</p><p className="text-2xl font-bold text-slate-800">{totalDocs}</p></div>
+          <div><p className="text-slate-500 font-bold text-xs uppercase mb-1">Total</p><p className="text-2xl font-bold text-slate-800"><AnimatedCounter value={totalDocs} /></p></div>
           <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500"><Shield size={20}/></div>
         </div>
         <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
-          <div><p className="text-green-600 font-bold text-xs uppercase mb-1">Available</p><p className="text-2xl font-bold text-slate-800">{availDocs}</p></div>
+          <div><p className="text-green-600 font-bold text-xs uppercase mb-1">Available</p><p className="text-2xl font-bold text-slate-800"><AnimatedCounter value={availDocs} /></p></div>
           <div className="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center text-green-600"><CheckCircle size={20}/></div>
         </div>
         <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
-          <div><p className="text-amber-600 font-bold text-xs uppercase mb-1">Busy / Surgery</p><p className="text-2xl font-bold text-slate-800">{busyDocs}</p></div>
+          <div><p className="text-amber-600 font-bold text-xs uppercase mb-1">Busy / Surgery</p><p className="text-2xl font-bold text-slate-800"><AnimatedCounter value={busyDocs} /></p></div>
           <div className="w-10 h-10 rounded-full bg-amber-50 flex items-center justify-center text-amber-600"><Activity size={20}/></div>
         </div>
         <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
-          <div><p className="text-slate-500 font-bold text-xs uppercase mb-1">Off Duty</p><p className="text-2xl font-bold text-slate-800">{offDocs}</p></div>
+          <div><p className="text-slate-500 font-bold text-xs uppercase mb-1">Off Duty</p><p className="text-2xl font-bold text-slate-800"><AnimatedCounter value={offDocs} /></p></div>
           <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500"><Clock size={20}/></div>
         </div>
       </div>
