@@ -110,19 +110,21 @@
         .btn-save:hover { opacity: 0.9; transform: translateY(-2px); }
 
         .toast {
-            display: none;
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--success);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 20px;
-            font-weight: 600;
+            background: var(--card);
+            border-left: 4px solid var(--primary);
+            padding: 15px 25px;
+            border-radius: 12px;
             box-shadow: var(--shadow);
-            z-index: 1000;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(120%);
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-weight: 500;
+            margin-top: 10px;
         }
+        .toast.show { transform: translateX(0); }
     </style>
 </head>
 <body>
@@ -185,9 +187,28 @@
     </div>
 </div>
 
-<div id="toast" class="toast">Profile Updated Successfully! ✅</div>
+
 
 <script>
+    function showToast(message) {
+        let container = document.getElementById('toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toast-container';
+            container.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; justify-content: flex-end;';
+            document.body.appendChild(container);
+        }
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `<span>${message}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 10);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
     function loadProfile() {
         const profile = JSON.parse(localStorage.getItem('patientProfile') || '{}');
         if (profile.name) {
@@ -212,16 +233,14 @@
         };
 
         if (!profile.name || !profile.emergencyContact) {
-            alert("Name and Emergency Contact are required!");
+            showToast("⚠️ Name and Emergency Contact are required!");
             return;
         }
 
         localStorage.setItem('patientProfile', JSON.stringify(profile));
         
         // Show Success Toast
-        const toast = document.getElementById('toast');
-        toast.style.display = 'block';
-        setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        showToast("✅ Profile Updated Successfully!");
     }
 
     // Load data on start
