@@ -187,6 +187,23 @@
         }
 
         .empty-state { text-align: center; color: var(--text-light); padding: 50px; grid-column: 1 / -1; }
+
+        .toast {
+            background: var(--card);
+            border-left: 4px solid var(--primary);
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(120%);
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            font-weight: 500;
+            margin-top: 10px;
+        }
+        .toast.show { transform: translateX(0); }
     </style>
 </head>
 <body>
@@ -249,6 +266,25 @@
 </div>
 
 <script>
+    function showToast(message) {
+        let container = document.getElementById('toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.id = 'toast-container';
+            container.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; justify-content: flex-end;';
+            document.body.appendChild(container);
+        }
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `<span>${message}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 10);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
     function saveReport() {
         const title = document.getElementById('title').value;
         const doctor = document.getElementById('doctor').value;
@@ -257,7 +293,7 @@
         const fileInput = document.getElementById('fileInput');
 
         if (!title || !date || !fileInput.files[0]) {
-            alert("Please fill in title, date, and attach a file.");
+            showToast("⚠️ Please fill in title, date, and attach a file.");
             return;
         }
 
@@ -282,7 +318,7 @@
             reports.push(report);
             localStorage.setItem('reports', JSON.stringify(reports));
 
-            alert("Report saved successfully!");
+            showToast("✅ Report saved successfully!");
             clearForm();
             loadReports();
         };
