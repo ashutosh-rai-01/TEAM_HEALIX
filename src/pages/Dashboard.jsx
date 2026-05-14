@@ -1,4 +1,51 @@
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend
+);
+
+const AnimatedCounter = ({ value }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let startTimestamp = null;
+    const duration = 1500;
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      const easeProgress = 1 - (1 - progress) * (1 - progress);
+      setCount(Math.floor(easeProgress * value));
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        setCount(value);
+      }
+    };
+    window.requestAnimationFrame(step);
+  }, [value]);
+
+  return <>{count}</>;
+};
 import { 
   Users, UserPlus, Calendar, Bed, Pill, TestTube, FileText, 
   AlertOctagon, Receipt, Activity, CheckCircle, Clock, ChevronRight,
@@ -61,7 +108,9 @@ export default function Dashboard() {
           <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-black text-xs">AD</div>
           <div>
             <p className="text-[10px] font-black text-slate-400 uppercase leading-none">Logged as</p>
-            <p className="text-sm font-black text-slate-800">Hospital Admin</p>
+            <p className="text-sm font-black text-slate-800">
+              {new Date().getHours() < 12 ? 'Good Morning' : new Date().getHours() < 18 ? 'Good Afternoon' : 'Good Evening'}, Admin!
+            </p>
           </div>
           <div className="ml-4 pl-4 border-l border-slate-100">
             <div className="relative">
@@ -85,7 +134,7 @@ export default function Dashboard() {
             </div>
             <div>
               <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">{stat.title}</p>
-              <h3 className="text-3xl font-black text-slate-800 tracking-tighter">{stat.value}</h3>
+              <h3 className="text-3xl font-black text-slate-800 tracking-tighter"><AnimatedCounter value={stat.value} /></h3>
               <p className="text-[10px] font-bold text-slate-400 mt-2 uppercase flex items-center gap-1">
                 <TrendingUp size={12} className="text-emerald-500" /> {stat.subtitle}
               </p>
@@ -100,6 +149,46 @@ export default function Dashboard() {
       <h2 className="text-xs font-black text-slate-400 uppercase tracking-[0.3em] mb-6 flex items-center gap-4">
         Core Command Modules <span className="h-px bg-slate-100 flex-1"></span>
       </h2>
+
+      {/* Hospital Activity Chart */}
+      <div className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-50 mb-12">
+        <h3 className="text-xl font-black text-slate-800 tracking-tight mb-6">Hospital Activity (Last 7 Days)</h3>
+        <div className="h-64 w-full">
+          <Line 
+            data={{
+              labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+              datasets: [
+                {
+                  label: 'Admissions',
+                  data: [12, 19, 15, 25, 22, 30, 28],
+                  borderColor: '#2563eb',
+                  backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                  fill: true,
+                  tension: 0.4
+                },
+                {
+                  label: 'Discharges',
+                  data: [10, 15, 13, 20, 18, 25, 22],
+                  borderColor: '#10b981',
+                  backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                  fill: true,
+                  tension: 0.4
+                }
+              ]
+            }}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { legend: { display: false } },
+              scales: {
+                y: { display: false, grid: { display: false } },
+                x: { grid: { display: false }, border: { display: false } }
+              },
+              interaction: { intersect: false, mode: 'index' }
+            }}
+          />
+        </div>
+      </div>
 
       {/* Main Module Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
