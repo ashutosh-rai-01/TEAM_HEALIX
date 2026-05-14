@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AnimatedCounter from '../components/AnimatedCounter';
 import { Calendar, Plus, Search, Filter, X, CheckCircle, Clock, User, UserPlus } from 'lucide-react';
 import appointmentsData from '../data/appointments.json';
 import patientsData from '../data/patients.json';
@@ -148,7 +149,7 @@ export default function AppointmentsPage() {
           <h1 className="text-3xl font-black text-slate-800 flex items-center gap-3">
              Scheduling
           </h1>
-          <p className="text-slate-400 font-bold text-xs uppercase tracking-widest mt-1">Manage {appointments.length} active bookings</p>
+          <p className="text-slate-400 font-bold text-xs uppercase tracking-widest mt-1">Manage <AnimatedCounter value={appointments.length} /> active bookings</p>
         </div>
         
         <div className="flex flex-col md:flex-row gap-3">
