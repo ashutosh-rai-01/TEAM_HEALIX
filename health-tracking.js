@@ -1,3 +1,4 @@
+
 // Constants
 const API_BASE = 'http://localhost:5000'; // Target FastAPI backend
 const DEVICE_ID = 'demo-user';
@@ -18,6 +19,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetchHistory();
 });
+
+// Toast Notification System
+function showToast(message) {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.style.cssText = 'position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; justify-content: flex-end;';
+        document.body.appendChild(container);
+    }
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `<span>${message}</span>`;
+    container.appendChild(toast);
+    setTimeout(() => toast.classList.add('show'), 10);
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
 
 // Theme Toggle
 function toggleTheme() {
@@ -196,7 +217,7 @@ async function saveVitals() {
 
     // Validate
     if(!sys || !dia || !sugar || !hr || !spo2 || !temp) {
-        alert("Please fill in all vitals to get an accurate Health Index score.");
+        showToast("⚠️ Please fill in all vitals to get an accurate Health Index score.");
         return;
     }
 
@@ -231,15 +252,16 @@ async function saveVitals() {
             document.getElementById('vitalsModal').style.display='none';
             // Reload history to see the new backend AI prediction score
             fetchHistory();
+            showToast("✅ Vitals logged successfully!");
         } else {
             const err = await res.json();
             console.log("Validation Error:", err);
-            alert("Error saving data: Check your vital formats.");
+            showToast("⚠️ Error saving data: Check your vital formats.");
         }
 
     } catch(err) {
         console.error(err);
-        alert("Network Error: Could not reach the backend at " + API_BASE);
+        showToast("❌ Network Error: Could not reach the backend at " + API_BASE);
     }
 }
 
