@@ -3,151 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard</title>
+<title>Admin Dashboard | Healix</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
 
 <style>
-:root{
-  --bg:#e0f2ff;
-  --card:#ffffffdd;
-  --text:#0f172a;
-  --accent:#2563eb;
+:root {
+  --bg: #f0f7ff;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --text-soft: #64748b;
+  --primary: #2563eb;
+  --primary-soft: #dbeafe;
+  --border: #e2e8f0;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-/* NIGHT MODE */
-body.night{
-  --bg: #000000;
-  --card: #111111;
-  --text:#fffefe;
-  --accent:#474747;
+body.night {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --text: #f8fafc;
+  --text-soft: #94a3b8;
+  --primary: #3b82f6;
+  --primary-soft: #1e3a8a;
+  --border: #334155;
+  --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
 }
 
-body{
-  margin:0;
-  font-family:'Inter',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  transition: background 0.3s, color 0.3s;
-}
-
-/* NAV */
-nav{
-  display:flex;
-  justify-content:space-between;
-  padding:20px 40px;
-}
-
-nav h2 {
+body {
   margin: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: all 0.3s ease;
+  min-height: 100vh;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 5%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
   display: flex;
   align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  color: var(--primary);
 }
 
-.theme button{
-  margin-left:10px;
-  padding:6px 14px;
-  border-radius:20px;
-  border:1px solid var(--accent);
-  background:transparent;
-  color:var(--accent);
-  cursor:pointer;
-  transition: 0.3s;
+.theme-toggle {
+  display: flex;
+  background: var(--primary-soft);
+  padding: 4px;
+  border-radius: 12px;
+  gap: 4px;
 }
 
-.theme button:hover {
-  background: var(--accent);
-  color: white;
+.theme-toggle button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: 0.2s;
 }
 
-/* HERO */
-.hero{
-  text-align:center;
-  padding:40px 20px;
+.theme-toggle button.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-.hero h1{
-  font-size:36px;
-  margin: 0 0 10px 0;
-}
-
-.hero p {
-  color: var(--text);
-  margin: 0;
-  opacity: 0.8;
-}
-
-/* GRID */
-.container{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:25px;
-  padding:30px;
-  max-width: 1200px;
+.hero {
+  padding: 60px 20px 40px;
+  text-align: center;
+  max-width: 800px;
   margin: 0 auto;
 }
 
-/* CARD */
-.card{
-  backdrop-filter: blur(15px); background: linear-gradient(135deg, var(--card), #ffffffaa);
-  padding:25px;
-  border-radius:25px;
-  transition:0.3s;
+.hero h1 {
+  font-size: 38px;
+  font-weight: 800;
+  margin: 0 0 12px 0;
+  letter-spacing: -1px;
+}
+
+.hero p {
+  color: var(--text-soft);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  padding: 40px 5%;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 30px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  text-decoration: none;
-  color: var(--text);
-  border: 2px solid transparent;
+  cursor: pointer;
+  box-shadow: var(--card-shadow);
+  position: relative;
+  overflow: hidden;
 }
 
-.card:hover{
-  transform:translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+.card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.card-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--primary-soft);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: var(--primary);
 }
 
 .card h3 {
   margin: 0 0 10px 0;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .card p {
-  margin: 0;
+  margin: 0 0 24px 0;
   font-size: 14px;
-  opacity: 0.8;
-  margin-bottom: 20px;
+  color: var(--text-soft);
+  line-height: 1.5;
 }
 
-/* EMERGENCY */
-.emergency{
-  border-color: red;
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
 }
 
-/* BUTTON */
-.btn{
-  padding:8px 18px;
-  border:none;
-  border-radius:20px;
-  background:var(--accent);
-  color:white;
-  cursor:pointer;
-  display: inline-block;
+.btn-open {
+  padding: 10px 24px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
   font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-@media (max-width: 900px) {
-  .container {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.btn-open:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.card.emergency {
+  border-left: 4px solid #ef4444;
+}
+
+.card.emergency .card-icon {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.card.emergency .btn-open {
+  background: #ef4444;
 }
 
 @media (max-width: 600px) {
   .container {
     grid-template-columns: 1fr;
   }
+  .hero h1 { font-size: 30px; }
 }
 </style>
 </head>
@@ -155,94 +213,140 @@ nav h2 {
 <body>
 
 <nav>
-  <h2 onclick="location.href='index.html'" style="cursor:pointer">🏥 Healix</h2>
-  <div class="theme">
-    <button onclick="setTheme('day')">Day</button>
-    <button onclick="setTheme('night')">Night</button>
+  <div class="logo" onclick="location.href='index.html'">
+    <i data-lucide="hospital"></i>
+    <span>Healix Admin</span>
+  </div>
+  <div class="theme-toggle">
+    <button id="day-btn" onclick="setTheme('day')">Day</button>
+    <button id="night-btn" onclick="setTheme('night')">Night</button>
   </div>
 </nav>
 
 <section class="hero">
-  <h1>Admin Dashboard</h1>
-  <p>Manage hospital data, staff, and system settings in one place</p>
+  <h1>Administrative Dashboard</h1>
+  <p>Overview of hospital operations, staff management, and system-wide controls.</p>
 </section>
 
 <div class="container">
 
-<!-- MANAGE PATIENTS -->
-<div class="card" onclick="location.href='dr_patients.html'" style="cursor:pointer">
-  <div>
-    <h3>👥 Manage Patients</h3>
-    <p>View, register, and update patient records</p>
+  <!-- MANAGE PATIENTS -->
+  <div class="card" onclick="location.href='dr_patients.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="users"></i></div>
+      <h3>Manage Patients</h3>
+      <p>Access patient history, registration details, and health records database.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">120 Active</span>
+      <button class="btn-open">Open</button>
+    </div>
   </div>
-  <div><button class="btn">Open</button></div>
-</div>
 
-<!-- MANAGE DOCTORS -->
-<div class="card" onclick="location.href='dr_profile.html'" style="cursor:pointer">
-  <div>
-    <h3>👨‍⚕️ Manage Doctors</h3>
-    <p>Manage doctor profiles and schedules</p>
+  <!-- MANAGE DOCTORS -->
+  <div class="card" onclick="location.href='dr_profile.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="stethoscope"></i></div>
+      <h3>Manage Doctors</h3>
+      <p>Configure doctor profiles, department assignments, and shift schedules.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">45 On-Duty</span>
+      <button class="btn-open">Open</button>
+    </div>
   </div>
-  <div><button class="btn">Open</button></div>
-</div>
 
-<!-- APPOINTMENTS -->
-<div class="card" onclick="location.href='dr_appointments.html'" style="cursor:pointer">
-  <div>
-    <h3>📅 Appointments</h3>
-    <p>Monitor and manage hospital appointments</p>
+  <!-- APPOINTMENTS -->
+  <div class="card" onclick="location.href='dr_appointments.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="calendar"></i></div>
+      <h3>Appointments</h3>
+      <p>Real-time monitoring of scheduled consultations and emergency bookings.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">8 Pending</span>
+      <button class="btn-open">Open</button>
+    </div>
   </div>
-  <div><button class="btn">Open</button></div>
-</div>
 
-<!-- BED MANAGEMENT -->
-<div class="card" onclick="location.href='admin_beds.html'" style="cursor:pointer">
-  <div>
-    <h3>🛏️ Bed Management</h3>
-    <p>Track bed availability and assignments</p>
+  <!-- BED MANAGEMENT -->
+  <div class="card" onclick="location.href='admin_beds.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="bed"></i></div>
+      <h3>Bed Management</h3>
+      <p>Track ICU, General Ward, and Emergency bed occupancy across wings.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">12 Available</span>
+      <button class="btn-open">Open</button>
+    </div>
   </div>
-  <div><button class="btn">Open</button></div>
-</div>
 
-<!-- REPORTS & BILLING -->
-<div class="card" onclick="location.href='dr_reports.html'" style="cursor:pointer">
-  <div>
-    <h3>🧾 Reports & Billing</h3>
-    <p>View administrative and financial reports</p>
+  <!-- REPORTS & BILLING -->
+  <div class="card" onclick="location.href='dr_reports.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="file-text"></i></div>
+      <h3>Reports & Billing</h3>
+      <p>Financial overview, diagnostic reports, and administrative data exports.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">Updated 2m ago</span>
+      <button class="btn-open">Open</button>
+    </div>
   </div>
-  <div><button class="btn">Open</button></div>
-</div>
 
-<!-- SYSTEM ALERTS -->
-<div class="card emergency" onclick="location.href='dr_emergency.html'" style="cursor:pointer">
-  <div>
-    <h3>🚨 System Alerts</h3>
-    <p>Monitor critical issues and system overrides</p>
+  <!-- SYSTEM ALERTS -->
+  <div class="card emergency" onclick="location.href='dr_emergency.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="alert-triangle"></i></div>
+      <h3>System Alerts</h3>
+      <p>Critical notifications, emergency overrides, and security protocols.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:700; color:#ef4444">3 Critical</span>
+      <button class="btn-open">SOS Hub</button>
+    </div>
   </div>
-  <div><button class="btn" style="background:red;">SOS</button></div>
-</div>
 
-<!-- PHARMACY MANAGEMENT -->
-<div class="card" onclick="location.href='pharmacy.html'" style="cursor:pointer">
-  <div>
-    <h3>💊 Pharmacy Inventory & Sales</h3>
-    <p>Manage inventory, stock, and sales records</p>
+  <!-- PHARMACY MANAGEMENT -->
+  <div class="card" onclick="location.href='pharmacy.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="pill"></i></div>
+      <h3>Pharmacy Hub</h3>
+      <p>Inventory tracking, stock alerts, and pharmaceutical sales management.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">Low Stock (2)</span>
+      <button class="btn-open">Manage</button>
+    </div>
   </div>
-  <div><button class="btn">View Hub</button></div>
-</div>
 
 </div>
 
 <script>
 function setTheme(mode){
-  if(mode==="night"){
-    document.body.classList.add("night"); localStorage.setItem("theme", "night");
+  const body = document.body;
+  const dayBtn = document.getElementById('day-btn');
+  const nightBtn = document.getElementById('night-btn');
+
+  if(mode === "night"){
+    body.classList.add("night");
+    localStorage.setItem("theme", "night");
+    nightBtn.classList.add('active');
+    dayBtn.classList.remove('active');
   } else {
-    document.body.classList.remove("night"); localStorage.setItem("theme", "day");
+    body.classList.remove("night");
+    localStorage.setItem("theme", "day");
+    dayBtn.classList.add('active');
+    nightBtn.classList.remove('active');
   }
 }
-</script>
 
-<script>if(localStorage.getItem("theme") === "night") { document.body.classList.add("night"); }</script></body>
+// Init theme
+const saved = localStorage.getItem("theme");
+setTheme(saved === "night" ? "night" : "day");
+
+lucide.createIcons();
+</script>
+</body>
 </html>
