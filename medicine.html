@@ -1,280 +1,353 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meds & First Aid - Healix</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --emergency: #ef4444;
-            --text: #0f172a;
-            --text-light: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard | Healix</title>
 
-        /* NIGHT MODE (Globally injected) */
-        body.night {
-            --bg: #000000;
-            --card: #111111;
-            --panel: #111111;
-            --text: #ffffff;
-            --text-light: #cbd5e1;
-            --muted: #cbd5e1;
-            --border: #334155;
-            --border-color: #334155;
-            --primary-light: #1e3a8a;
-            background: var(--bg);
-            color: var(--text);
-        }
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
 
+<style>
+:root {
+  --bg: #f0f7ff;
+  --surface: #ffffff;
+  --text: #0f172a;
+  --text-soft: #64748b;
+  --primary: #2563eb;
+  --primary-soft: #dbeafe;
+  --border: #e2e8f0;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            margin: 0; padding: 0;
-            line-height: 1.6;
-        }
+body.night {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --text: #f8fafc;
+  --text-soft: #94a3b8;
+  --primary: #3b82f6;
+  --primary-soft: #1e3a8a;
+  --border: #334155;
+  --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+}
 
-        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+body {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: all 0.3s ease;
+  min-height: 100vh;
+}
 
-        header { text-align: center; margin-bottom: 40px; }
-        header h1 { font-size: 2.2rem; margin-bottom: 10px; color: var(--primary); }
-        header p { color: var(--text-light); }
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 5%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 
-        .search-container {
-            position: relative;
-            background: var(--card);
-            border-radius: 24px;
-            padding: 10px;
-            box-shadow: var(--shadow);
-            display: flex;
-            gap: 10px;
-            margin-bottom: 40px;
-        }
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+  color: var(--primary);
+}
 
-        .search-container input {
-            flex: 1;
-            border: none;
-            padding: 15px 20px;
-            font-size: 1rem;
-            outline: none;
-            background: transparent;
-        }
+.theme-toggle {
+  display: flex;
+  background: var(--primary-soft);
+  padding: 4px;
+  border-radius: 12px;
+  gap: 4px;
+}
 
-        .btn-search {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+.theme-toggle button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: 0.2s;
+}
 
-        .btn-search:hover { background: var(--primary-dark); }
+.theme-toggle button.active {
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
 
-        .results { display: none; }
+.hero {
+  padding: 60px 20px 40px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
 
-        .emergency-banner {
-            background: #fef2f2;
-            border: 2px solid var(--emergency);
-            padding: 25px;
-            border-radius: 20px;
-            margin-bottom: 30px;
-            color: #991b1b;
-        }
+.hero h1 {
+  font-size: 38px;
+  font-weight: 800;
+  margin: 0 0 12px 0;
+  letter-spacing: -1px;
+}
 
-        .emergency-banner h2 { margin: 0 0 15px; display: flex; align-items: center; gap: 10px; }
+.hero p {
+  color: var(--text-soft);
+  font-size: 16px;
+  line-height: 1.6;
+}
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  padding: 40px 5%;
+  max-width: 1300px;
+  margin: 0 auto;
+}
 
-        .card {
-            backdrop-filter: blur(15px); background: linear-gradient(135deg, var(--card), #ffffffaa);
-            padding: 25px;
-            border-radius: 24px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            border: 1px solid var(--border);
-        }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 30px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: var(--card-shadow);
+  position: relative;
+  overflow: hidden;
+}
 
-        .card h3 { margin: 0 0 15px; font-size: 1.1rem; color: var(--primary); display: flex; align-items: center; gap: 10px; }
-        .card p { margin: 5px 0; font-size: 0.95rem; }
-        .card b { color: var(--text); }
+.card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
 
-        .full-width { grid-column: span 2; }
+.card-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--primary-soft);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  color: var(--primary);
+}
 
-        .disclaimer {
-            margin-top: 50px;
-            padding: 20px;
-            background: #f1f5f9;
-            border-radius: 15px;
-            text-align: center;
-            font-size: 0.85rem;
-            color: var(--text-light);
-        }
+.card h3 {
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  font-weight: 700;
+}
 
-        .loading { display: none; text-align: center; padding: 20px; font-weight: 500; color: var(--primary); }
+.card p {
+  margin: 0 0 24px 0;
+  font-size: 14px;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
 
-        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } }
-    </style>
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.btn-open {
+  padding: 10px 24px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.btn-open:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
+}
+
+.card.emergency {
+  border-left: 4px solid #ef4444;
+}
+
+.card.emergency .card-icon {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.card.emergency .btn-open {
+  background: #ef4444;
+}
+
+@media (max-width: 600px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  .hero h1 { font-size: 30px; }
+}
+</style>
 </head>
+
 <body>
 
+<nav>
+  <div class="logo" onclick="location.href='index.html'">
+    <i data-lucide="hospital"></i>
+    <span>Healix Admin</span>
+  </div>
+  <div class="theme-toggle">
+    <button id="day-btn" onclick="setTheme('day')">Day</button>
+    <button id="night-btn" onclick="setTheme('night')">Night</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>Administrative Dashboard</h1>
+  <p>Overview of hospital operations, staff management, and system-wide controls.</p>
+</section>
+
 <div class="container">
-    <header>
-        <h1>💊 Meds & First Aid</h1>
-        <p>Describe your symptoms or condition to get instant guidance</p>
-    </header>
 
-    <div class="search-container">
-        <input type="text" id="symptomInput" placeholder="e.g. Fever, Headache, Bleeding, Choking..." onkeypress="if(event.key==='Enter') analyze()">
-        <button class="btn-search" onclick="analyze()">Analyze</button>
+  <!-- MANAGE PATIENTS -->
+  <div class="card" onclick="location.href='dr_patients.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="users"></i></div>
+      <h3>Manage Patients</h3>
+      <p>Access patient history, registration details, and health records database.</p>
     </div>
-
-    <div id="loading" class="loading">Analyzing symptoms... 🩺</div>
-
-    <div id="results" class="results">
-        <!-- Emergency Alert -->
-        <div id="emergencySection" class="emergency-banner" style="display: none;">
-            <h2>🚨 EMERGENCY FIRST AID</h2>
-            <ul id="firstAidSteps" style="padding-left: 20px; font-weight: 600;"></ul>
-            <p style="margin-top: 15px; font-weight: 700; text-decoration: underline;">Call 108 immediately if someone is in danger!</p>
-        </div>
-
-        <div class="grid">
-            <!-- Medicine Card -->
-            <div class="card" id="medicineCard">
-                <h3>💊 Recommended Medicine</h3>
-                <p>Medicine: <b id="res-med">--</b></p>
-                <p>Precaution: <b id="res-pre">--</b></p>
-            </div>
-
-            <!-- Remedies Card -->
-            <div class="card" id="remedyCard">
-                <h3>🏠 Home Remedies</h3>
-                <p id="res-rem">--</p>
-            </div>
-
-            <!-- Advice Card -->
-            <div class="card full-width">
-                <h3>👨‍⚕️ Doctor's Advice</h3>
-                <p id="res-adv" style="font-weight: 500;">--</p>
-            </div>
-        </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">120 Active</span>
+      <button class="btn-open">Open</button>
     </div>
+  </div>
 
-    <div class="disclaimer">
-        ⚠️ <b>Disclaimer:</b> This system provides basic first-aid and over-the-counter medicine guidance only. 
-        It is NOT a substitute for professional medical advice. Always consult a doctor before taking any medication.
+  <!-- MANAGE DOCTORS -->
+  <div class="card" onclick="location.href='dr_profile.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="stethoscope"></i></div>
+      <h3>Manage Doctors</h3>
+      <p>Configure doctor profiles, department assignments, and shift schedules.</p>
     </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">45 On-Duty</span>
+      <button class="btn-open">Open</button>
+    </div>
+  </div>
+
+  <!-- APPOINTMENTS -->
+  <div class="card" onclick="location.href='dr_appointments.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="calendar"></i></div>
+      <h3>Appointments</h3>
+      <p>Real-time monitoring of scheduled consultations and emergency bookings.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">8 Pending</span>
+      <button class="btn-open">Open</button>
+    </div>
+  </div>
+
+  <!-- BED MANAGEMENT -->
+  <div class="card" onclick="location.href='admin_beds.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="bed"></i></div>
+      <h3>Bed Management</h3>
+      <p>Track ICU, General Ward, and Emergency bed occupancy across wings.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">12 Available</span>
+      <button class="btn-open">Open</button>
+    </div>
+  </div>
+
+  <!-- REPORTS & BILLING -->
+  <div class="card" onclick="location.href='dr_reports.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="file-text"></i></div>
+      <h3>Reports & Billing</h3>
+      <p>Financial overview, diagnostic reports, and administrative data exports.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">Updated 2m ago</span>
+      <button class="btn-open">Open</button>
+    </div>
+  </div>
+
+  <!-- SYSTEM ALERTS -->
+  <div class="card emergency" onclick="location.href='dr_emergency.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="alert-triangle"></i></div>
+      <h3>System Alerts</h3>
+      <p>Critical notifications, emergency overrides, and security protocols.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:700; color:#ef4444">3 Critical</span>
+      <button class="btn-open">SOS Hub</button>
+    </div>
+  </div>
+
+  <!-- PHARMACY MANAGEMENT -->
+  <div class="card" onclick="location.href='pharmacy.html'">
+    <div>
+      <div class="card-icon"><i data-lucide="pill"></i></div>
+      <h3>Pharmacy Hub</h3>
+      <p>Inventory tracking, stock alerts, and pharmaceutical sales management.</p>
+    </div>
+    <div class="card-footer">
+      <span style="font-size:12px; font-weight:600; color:var(--text-soft)">Low Stock (2)</span>
+      <button class="btn-open">Manage</button>
+    </div>
+  </div>
+
 </div>
 
 <script>
-    // Dataset for Client-side fallback (Netlify support)
-    const medicalData = {
-        medicines: [
-            { "condition": "Fever", "medicine": "Paracetamol", "remedy": "Hydration, rest, sponging", "precaution": "Max 4g/day", "advice": ">3 days → doctor" },
-            { "condition": "Mild Pain", "medicine": "Ibuprofen", "remedy": "Warm compress", "precaution": "Avoid empty stomach", "advice": "Gastric history → consult" },
-            { "condition": "Severe Pain", "medicine": "Diclofenac", "remedy": "Ice pack", "precaution": "Kidney risk", "advice": "Use short-term only" },
-            { "condition": "Allergy", "medicine": "Cetirizine", "remedy": "Avoid allergen", "precaution": "Drowsiness", "advice": "Persistent → allergy test" },
-            { "condition": "Cold", "medicine": "Chlorpheniramine", "remedy": "Steam inhalation", "precaution": "Sedation", "advice": "Avoid driving" },
-            { "condition": "Vomiting", "medicine": "Ondansetron", "remedy": "ORS, ginger", "precaution": "QT prolongation", "advice": "Frequent → investigate" },
-            { "condition": "Acidity", "medicine": "Omeprazole", "remedy": "Avoid spicy food", "precaution": "Long-term B12 deficiency", "advice": "Chronic → endoscopy" },
-            { "condition": "Diarrhea", "medicine": "ORS", "remedy": "Banana, rice", "precaution": "Dehydration risk", "advice": "Blood in stool → urgent" },
-            { "condition": "Asthma", "medicine": "Salbutamol", "remedy": "Steam", "precaution": "Overuse harmful", "advice": "Maintenance inhaler needed" },
-            { "condition": "Bleeding", "type": "emergency", "steps": ["Apply direct pressure", "Use clean cloth", "Elevate wound", "Call emergency (108)"]},
-            { "condition": "Choking", "type": "emergency", "steps": ["5 back blows", "5 chest thrusts", "Repeat", "Call 108"]}
-        ],
-        firstAid: {
-            "bleeding": ["Apply direct pressure", "Use clean cloth", "Elevate wound", "Call 108"],
-            "choking": ["5 back blows", "5 chest thrusts", "Repeat", "Call 108"],
-            "burn": ["Cool with water 20 min", "No ice", "Cover clean"],
-            "snake": ["Keep still", "Bandage", "Hospital ASAP"]
-        }
-    };
+function setTheme(mode){
+  const body = document.body;
+  const dayBtn = document.getElementById('day-btn');
+  const nightBtn = document.getElementById('night-btn');
 
-    async function analyze() {
-        const input = document.getElementById('symptomInput').value.trim();
-        if (!input) return;
+  if(mode === "night"){
+    body.classList.add("night");
+    localStorage.setItem("theme", "night");
+    nightBtn.classList.add('active');
+    dayBtn.classList.remove('active');
+  } else {
+    body.classList.remove("night");
+    localStorage.setItem("theme", "day");
+    dayBtn.classList.add('active');
+    nightBtn.classList.remove('active');
+  }
+}
 
-        const resultsDiv = document.getElementById('results');
-        const loading = document.getElementById('loading');
-        const emergencySection = document.getElementById('emergencySection');
-        
-        loading.style.display = 'block';
-        resultsDiv.style.display = 'none';
-        emergencySection.style.display = 'none';
+// Init theme
+const saved = localStorage.getItem("theme");
+setTheme(saved === "night" ? "night" : "day");
 
-        try {
-            // Try Backend first
-            const response = await fetch('http://localhost:5001/api/medicine/analyze', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ symptoms: input })
-            });
-
-            if(!response.ok) throw new Error("Offline");
-            const data = await response.json();
-            displayResults(data);
-
-        } catch (err) {
-            console.warn('Backend offline, using Client-side engine...');
-            performLocalSearch(input);
-        } finally {
-            loading.style.display = 'none';
-        }
-    }
-
-    function performLocalSearch(query) {
-        query = query.toLowerCase();
-        const resultsDiv = document.getElementById('results');
-        const emergencySection = document.getElementById('emergencySection');
-        
-        // 1. Emergency Check
-        const emergencyKey = Object.keys(medicalData.firstAid).find(k => query.includes(k));
-        if (emergencyKey) {
-            emergencySection.style.display = 'block';
-            document.getElementById('firstAidSteps').innerHTML = medicalData.firstAid[emergencyKey].map(s => `<li>${s}</li>`).join('');
-        }
-
-        // 2. Med Match
-        const match = medicalData.medicines.find(m => query.includes(m.condition.toLowerCase()));
-        if (match && match.medicine) {
-            document.getElementById('res-med').innerText = match.medicine;
-            document.getElementById('res-pre').innerText = match.precaution;
-            document.getElementById('res-rem').innerText = match.remedy;
-            document.getElementById('res-adv').innerText = match.advice;
-        } else {
-            document.getElementById('res-med').innerText = "Consult Doctor";
-            document.getElementById('res-rem').innerText = "No direct match found. Try another symptom.";
-            document.getElementById('res-adv').innerText = "Please contact a professional.";
-        }
-        resultsDiv.style.display = 'block';
-    }
-
-    function displayResults(data) {
-        const emergencySection = document.getElementById('emergencySection');
-        if (data.severity === 'emergency') {
-            emergencySection.style.display = 'block';
-            document.getElementById('firstAidSteps').innerHTML = data.firstAid.map(step => `<li>${step}</li>`).join('');
-        }
-        if (data.medicines && data.medicines.length > 0) {
-            const med = data.medicines[0];
-            document.getElementById('res-med').innerText = med.medicine;
-            document.getElementById('res-pre').innerText = med.precaution;
-            document.getElementById('res-rem').innerText = med.remedy;
-        }
-        document.getElementById('res-adv').innerText = data.advice;
-        document.getElementById('results').style.display = 'block';
-    }
+lucide.createIcons();
 </script>
-
-<script>if(localStorage.getItem("theme") === "night") { document.body.classList.add("night"); }</script></body>
+</body>
 </html>
