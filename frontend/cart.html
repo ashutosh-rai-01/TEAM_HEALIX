@@ -285,8 +285,11 @@
         document.getElementById('success-message').style.display = 'block';
         document.getElementById('notify-summary').innerText = `Confirmation sent to ${email} and +91 ${phone}`;
 
+        // Simulate SMS & Email Notification
+        simulateNotification(phone, email, cart.length, total * 1.12);
+
         // Start Countdown
-        let count = 3;
+        let count = 5; // Increased to 5s so they can see the SMS
         const timer = setInterval(() => {
             count--;
             document.getElementById('timer').innerText = count;
@@ -298,14 +301,68 @@
         
         setTimeout(() => {
             location.href = '../index.html';
-        }, 3000);
+        }, 5000);
     }
 
     function checkout() {
         openPaymentModal();
     }
 
+    function simulateNotification(phone, email, itemCount, totalAmount) {
+        const orderId = 'HX' + Math.floor(Math.random() * 1000000);
+        
+        // SMS Notification
+        const sms = document.createElement('div');
+        sms.innerHTML = `
+            <div style="font-weight: bold; font-size: 14px; margin-bottom: 4px; color: #fff;">💬 Messages</div>
+            <div style="font-size: 13px; line-height: 1.4; color: #fff;">
+                HEALIX: Your order <b>${orderId}</b> for ${itemCount} items (Rs. ${totalAmount.toFixed(2)}) is confirmed and out for delivery!
+            </div>
+        `;
+        sms.style.cssText = `
+            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 350px; background: #2563EB;
+            border-radius: 16px; padding: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 10000; font-family: sans-serif;
+            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        `;
+        document.body.appendChild(sms);
+
+        // Email Notification
+        const mail = document.createElement('div');
+        mail.innerHTML = `
+            <div style="font-weight: bold; font-size: 14px; margin-bottom: 4px; color: #333; display: flex; align-items: center; gap: 8px;">
+              <span style="background: #ef4444; color: white; border-radius: 4px; padding: 2px 6px; font-size: 11px;">M</span> Mail
+            </div>
+            <div style="font-size: 13px; font-weight: 600; color: #111;">Healix Healthcare</div>
+            <div style="font-size: 13px; line-height: 1.4; color: #444;">
+                Subject: Order Confirmation #${orderId}<br>
+                Hi, your medicine order of ${itemCount} items (Rs. ${totalAmount.toFixed(2)}) is confirmed and will be delivered shortly.
+            </div>
+        `;
+        mail.style.cssText = `
+            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 350px; background: #ffffff; border: 1px solid #e2e8f0;
+            border-radius: 16px; padding: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 9999; font-family: sans-serif;
+            transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        `;
+        document.body.appendChild(mail);
+
+        // Slide down
+        setTimeout(() => { sms.style.top = '20px'; }, 500);
+        setTimeout(() => { mail.style.top = '120px'; }, 1000);
+
+        // Slide up and remove
+        setTimeout(() => {
+            sms.style.top = '-150px';
+            mail.style.top = '-150px';
+            setTimeout(() => { sms.remove(); mail.remove(); }, 500);
+        }, 4500);
+    }
+
     document.addEventListener('DOMContentLoaded', renderCart);
+
 </script>
 
 <!-- PAYMENT MODAL -->
