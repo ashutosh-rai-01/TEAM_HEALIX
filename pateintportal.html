@@ -3,172 +3,721 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Patient Dashboard</title>
+<title>Healix | Patient Dashboard</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Modern Typography -->
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!-- Lucide Icons -->
+<script src="https://unpkg.com/lucide@latest"></script>
 
+<link rel="stylesheet" href="style.css">
 <style>
-:root{
-  --bg:#e0f2ff;
-  --card:#ffffffdd;
-  --text:#0f172a;
-  --accent:#2563eb;
-  --btn-text:#ffffff;
-  --border-color:#2563eb;
+:root {
+  --primary: #2563eb;
+  --secondary: #60a5fa;
+  --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2ff 100%);
+  --glass: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
 }
 
-/* NIGHT MODE */
-body.night{
-  --bg: #000000;
-  --card: #111111;
-  --text:#ffffff;
-  --accent:#ffffff;
-  --btn-text:#000000;
-  --border-color:#ffffff;
+body.night {
+  --primary: #ffffff;
+  --secondary: #94a3b8;
+  --bg-gradient: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+  --glass: rgba(15, 23, 42, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text: #f8fafc;
+  --muted: #94a3b8;
 }
 
-body{
-  margin:0;
-  font-family:'Inter',sans-serif;
-  background:var(--bg);
-  color:var(--text);
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  margin: 0;
+  color: var(--text);
+  overflow-x: hidden;
 }
 
-/* NAV */
-nav{
-  display:flex;
-  justify-content:space-between;
-  padding:20px 40px;
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
 }
 
-.theme button{
-  margin-left:10px;
-  padding:6px 16px;
-  border-radius:20px;
-  border:1px solid var(--border-color);
-  background:transparent;
-  color:var(--border-color);
-  cursor:pointer;
-  transition:0.3s;
-  font-weight:600;
-  font-size:14px;
+/* Sidebar Styling */
+.sidebar {
+  width: 280px;
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid var(--glass-border);
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 100;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.theme button:hover {
-  background: var(--border-color);
-  color: var(--bg);
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 50px;
+  padding: 0 10px;
 }
 
-/* HERO */
-.hero{
-  text-align:center;
-  padding:40px 20px;
+.logo-area h2 {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
 }
 
-.hero h1{
-  font-size:36px;
+nav.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
-/* GRID */
-.container{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:25px;
-  padding:30px;
+.nav-item {
+  margin-bottom: 8px;
 }
 
-/* CARD */
-.card{
-  backdrop-filter: blur(15px); background: linear-gradient(135deg, var(--card), #ffffffaa);
-  padding:25px;
-  border-radius:16px;
-  transition:0.3s;
-  border:none;
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  text-decoration: none;
+  color: var(--muted);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
-.card:hover{
-  transform:translateY(-5px);
+.nav-link:hover, .nav-link.active {
+  background: var(--primary);
+  color: #fff;
+  transform: translateX(5px);
 }
 
-/* BUTTON */
-.btn{
-  margin-top:10px;
-  padding:8px 24px;
-  border:none;
-  border-radius:20px;
-  background:var(--accent);
-  color:var(--btn-text);
-  cursor:pointer;
-  font-weight:600;
-  transition: background 0.3s;
+.nav-link i {
+  width: 20px;
+  height: 20px;
 }
 
-/* INPUT */
-input{
-  width:100%;
-  padding:10px;
-  border-radius:10px;
-  border:1px solid #ccc;
-  margin-top:10px;
+/* Main Content Area */
+.main-content {
+  flex-grow: 1;
+  margin-left: 280px;
+  padding: 40px;
+  transition: all 0.4s ease;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.welcome-msg h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.welcome-msg p {
+  color: var(--muted);
+  margin: 5px 0 0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.theme-toggle {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+  transform: rotate(15deg);
+  border-color: var(--primary);
+}
+
+/* Stats Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  padding: 25px;
+  border-radius: 24px;
+  box-shadow: var(--card-shadow);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, var(--primary), transparent);
+  opacity: 0.05;
+  border-radius: 0 0 0 100%;
+}
+
+.stat-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--primary);
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  display: flex;
+  opacity: 1;
+}
+
+.vitals-modal {
+  background: var(--glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  padding: 40px;
+  border-radius: 30px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: var(--card-shadow);
+  transform: scale(0.9);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-overlay.active .vitals-modal {
+  transform: scale(1);
+}
+
+.modal-header {
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.modal-header h3 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.input-group {
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  border-color: var(--primary);
+}
+
+.modal-footer {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.secondary-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background: transparent;
+  color: var(--text);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.stat-card.blue .stat-icon { background: #dbeafe; color: #2563eb; }
+.stat-card.pink .stat-icon { background: #fce7f3; color: #db2777; }
+.stat-card.green .stat-icon { background: #dcfce7; color: #16a34a; }
+.stat-card.purple .stat-icon { background: #f3e8ff; color: #9333ea; }
+
+.stat-info h3 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.stat-info p {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 5px 0 0;
+}
+
+/* Features Section */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.section-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.feature-card {
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  padding: 30px;
+  border-radius: 24px;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+
+.feature-card i {
+  color: var(--primary);
+  width: 32px;
+  height: 32px;
+}
+
+.feature-card h4 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.feature-card p {
+  color: var(--muted);
+  font-size: 15px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.feature-btn {
+  margin-top: 10px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.feature-btn:hover {
+  background: #1d4ed8;
+  gap: 12px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 80px;
+    padding: 30px 10px;
+  }
+  .sidebar h2, .sidebar .nav-link span {
+    display: none;
+  }
+  .main-content {
+    margin-left: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .main-content {
+    margin-left: 0;
+    padding: 20px;
+  }
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
 }
 </style>
 </head>
 
-<body>
+<body class="">
 
-<nav>
-  <h2>🏥 Healix</h2>
-  <div class="theme">
-    <button onclick="setTheme('day')">Day</button>
-    <button onclick="setTheme('night')">Night</button>
+<div class="dashboard-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo-area">
+      <i data-lucide="activity" style="color: var(--primary); width: 32px; height: 32px;"></i>
+      <h2>Healix</h2>
+    </div>
+    
+    <nav class="nav-links">
+      <div class="nav-item">
+        <a href="#" class="nav-link active">
+          <i data-lucide="layout-dashboard"></i>
+          <span>Dashboard</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="appointments.html" class="nav-link">
+          <i data-lucide="calendar"></i>
+          <span>Appointments</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="reports.html" class="nav-link">
+          <i data-lucide="file-text"></i>
+          <span>My Reports</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="health-tracking.html" class="nav-link">
+          <i data-lucide="trending-up"></i>
+          <span>Health Trends</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="medicine.html" class="nav-link">
+          <i data-lucide="pill"></i>
+          <span>Medicines</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="profile.html" class="nav-link">
+          <i data-lucide="user"></i>
+          <span>My Profile</span>
+        </a>
+      </div>
+    </nav>
+
+    <div class="nav-item" style="margin-top: auto;">
+      <a href="/" class="nav-link" style="color: #ef4444;">
+        <i data-lucide="log-out"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="top-bar animate-fade">
+      <div class="welcome-msg">
+        <h1>Hello, {{ user_name }}! 👋</h1>
+        <p>Here's what's happening with your health today.</p>
+      </div>
+      
+      <div class="action-buttons">
+        <div class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">
+          <i data-lucide="sun" id="theme-icon"></i>
+        </div>
+        <a href="emergency.html" class="feature-btn" style="background: #ef4444;">
+          <i data-lucide="alert-circle"></i>
+          <span>Emergency</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Health Overview Stats -->
+    <div class="stats-grid">
+      <div class="stat-card blue animate-fade delay-1">
+        <div class="stat-icon">
+          <i data-lucide="heart"></i>
+        </div>
+        <div class="stat-info">
+          <h3 id="stat-bpm">-- bpm</h3>
+          <p>Heart Rate</p>
+        </div>
+      </div>
+      <div class="stat-card pink animate-fade delay-2">
+        <div class="stat-icon">
+          <i data-lucide="droplet"></i>
+        </div>
+        <div class="stat-info">
+          <h3 id="stat-bp">--/--</h3>
+          <p>Blood Pressure</p>
+        </div>
+      </div>
+      <div class="stat-card green animate-fade delay-3">
+        <div class="stat-icon">
+          <i data-lucide="zap"></i>
+        </div>
+        <div class="stat-info">
+          <h3 id="stat-temp">--°F</h3>
+          <p>Body Temp</p>
+        </div>
+      </div>
+      <div class="stat-card purple animate-fade delay-1">
+        <div class="stat-icon">
+          <i data-lucide="thermometer"></i>
+        </div>
+        <div class="stat-info">
+          <h3 id="stat-sugar">-- mg/dL</h3>
+          <p>Sugar Level</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Features Section -->
+    <div class="section-header animate-fade delay-2">
+      <h2>Health Services</h2>
+      <button class="feature-btn" onclick="openVitalsModal()" style="margin: 0; background: var(--secondary);">
+        <i data-lucide="plus-circle"></i>
+        Update Vitals
+      </button>
+    </div>
+
+    <div class="features-grid">
+      <!-- ... (Rest of features) -->
+      <div class="feature-card animate-fade delay-2">
+        <i data-lucide="calendar"></i>
+        <h4>Appointments</h4>
+        <p>Schedule a visit with your preferred specialists or manage your upcoming consultations.</p>
+        <a href="appointments.html" class="feature-btn">
+          Book Now
+          <i data-lucide="chevron-right"></i>
+        </a>
+      </div>
+
+      <div class="feature-card animate-fade delay-3">
+        <i data-lucide="clipboard-list"></i>
+        <h4>Medical Reports</h4>
+        <p>Access your lab results, prescriptions, and historical health records securely.</p>
+        <a href="reports.html" class="feature-btn">
+          View Reports
+          <i data-lucide="chevron-right"></i>
+        </a>
+      </div>
+
+      <div class="feature-card animate-fade delay-1">
+        <i data-lucide="shopping-cart"></i>
+        <h4>Pharmacy Store</h4>
+        <p>Order your prescribed medicines and healthcare products with home delivery.</p>
+        <a href="frontend/pharmacy.html" class="feature-btn">
+          Go Shopping
+          <i data-lucide="chevron-right"></i>
+        </a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Vitals Modal -->
+<div class="modal-overlay" id="vitals-modal">
+  <div class="vitals-modal">
+    <div class="modal-header">
+      <h3>Update Health Vitals</h3>
+      <p>Enter your current readings</p>
+    </div>
+    
+    <div class="input-group">
+      <label>Heart Rate (bpm)</label>
+      <input type="number" id="input-bpm" placeholder="e.g. 72">
+    </div>
+    
+    <div class="input-group">
+      <label>Blood Pressure (sys/dia)</label>
+      <input type="text" id="input-bp" placeholder="e.g. 120/80">
+    </div>
+    
+    <div class="input-group">
+      <label>Body Temperature (°F)</label>
+      <input type="number" step="0.1" id="input-temp" placeholder="e.g. 98.6">
+    </div>
+    
+    <div class="input-group">
+      <label>Sugar Level (mg/dL)</label>
+      <input type="number" id="input-sugar" placeholder="e.g. 100">
+    </div>
+
+    <div class="modal-footer">
+      <button class="secondary-btn" onclick="closeVitalsModal()">Cancel</button>
+      <button class="feature-btn" style="flex: 2; margin: 0;" onclick="saveVitals()">Save Readings</button>
+    </div>
   </div>
-</nav>
-
-<section class="hero">
-  <h1>Patient Dashboard</h1>
-  <p>Manage your health, reports, and appointments in one place</p>
-</section>
-
-<div class="container">
-
-<!-- PROFILE -->
-<div class="card">
-  <div class="icon">👤</div>
-  <h3>My Profile</h3>
-  <p>Manage your health data and contacts</p>
-  <a href="profile.html"><button class="btn">Settings</button></a>
-</div>
-
-<!-- HEALTH TRACKING -->
-<div class="card">
-  <h3>📊 Health Tracking</h3>
-  <p>Monitor BP, sugar and trends</p>
-  <a href="health-tracking.html"><button class="btn">Open</button></a>
-</div>
-
-<!-- APPOINTMENTS -->
-<div class="card">
-  <h3>📅 Appointments</h3>
-  <p>Book and manage doctor visits</p>
-  <a href="appointments.html"><button class="btn">Open</button></a>
-</div>
-
-<!-- REPORTS -->
-<div class="card">
-  <h3>🧾 Reports</h3>
-  <p>View and manage medical reports</p>
-  <a href="reports.html"><button class="btn">Open</button></a>
 </div>
 
 <script>
-function setTheme(mode){
-  if(mode==="night"){
-    document.body.classList.add("night"); localStorage.setItem("theme", "night");
-  } else {
-    document.body.classList.remove("night"); localStorage.setItem("theme", "day");
-  }
+// Initialize Lucide Icons
+lucide.createIcons();
+
+// Vitals Management
+function openVitalsModal() {
+  document.getElementById('vitals-modal').classList.add('active');
+  // Pre-fill with current values
+  const vitals = JSON.parse(localStorage.getItem('user_vitals') || '{}');
+  if(vitals.bpm) document.getElementById('input-bpm').value = vitals.bpm;
+  if(vitals.bp) document.getElementById('input-bp').value = vitals.bp;
+  if(vitals.temp) document.getElementById('input-temp').value = vitals.temp;
+  if(vitals.sugar) document.getElementById('input-sugar').value = vitals.sugar;
 }
+
+function closeVitalsModal() {
+  document.getElementById('vitals-modal').classList.remove('active');
+}
+
+function saveVitals() {
+  const vitals = {
+    bpm: document.getElementById('input-bpm').value,
+    bp: document.getElementById('input-bp').value,
+    temp: document.getElementById('input-temp').value,
+    sugar: document.getElementById('input-sugar').value
+  };
+
+  localStorage.setItem('user_vitals', JSON.stringify(vitals));
+  updateVitalsUI(vitals);
+  closeVitalsModal();
+}
+
+function updateVitalsUI(vitals) {
+  if(vitals.bpm) document.getElementById('stat-bpm').innerText = `${vitals.bpm} bpm`;
+  if(vitals.bp) document.getElementById('stat-bp').innerText = vitals.bp;
+  if(vitals.temp) document.getElementById('stat-temp').innerText = `${vitals.temp}°F`;
+  if(vitals.sugar) document.getElementById('stat-sugar').innerText = `${vitals.sugar} mg/dL`;
+}
+
+// Load Vitals on Init
+const savedVitals = JSON.parse(localStorage.getItem('user_vitals') || '{}');
+updateVitalsUI(savedVitals);
+
+// Theme Management
+function toggleTheme() {
+  const isNight = document.body.classList.toggle('night');
+  localStorage.setItem('theme', isNight ? 'night' : 'day');
+  updateThemeIcon(isNight);
+}
+
+function updateThemeIcon(isNight) {
+  const icon = document.getElementById('theme-icon');
+  icon.setAttribute('data-lucide', isNight ? 'moon' : 'sun');
+  lucide.createIcons();
+}
+
+// Load saved theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'night') {
+  document.body.classList.add('night');
+  updateThemeIcon(true);
+} else {
+  updateThemeIcon(false);
+}
+
+// Smooth scroll for nav links (if any internal)
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+});
 </script>
 
-<script>if(localStorage.getItem("theme") === "night") { document.body.classList.add("night"); }</script></body>
+</body>
 </html>
+
